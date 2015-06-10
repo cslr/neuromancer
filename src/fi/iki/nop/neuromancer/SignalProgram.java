@@ -1,5 +1,9 @@
 package fi.iki.nop.neuromancer;
 
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.*;
+import org.eclipse.swt.graphics.*;
+
 /**
  * Stimulation program
  * 
@@ -9,6 +13,109 @@ package fi.iki.nop.neuromancer;
 public class SignalProgram {
 	protected float[] targetSignal;
 	protected String signalName;
+	
+	
+	public SignalProgram(){
+		targetSignal = new float[0];
+	}
+	
+	
+	public SignalProgram(int seconds){
+		if(seconds >= 0)
+			targetSignal = new float[seconds];
+		
+		for(int i=0;i<targetSignal.length;i++)
+			targetSignal[i] = -1.0f;
+	}
+	
+	
+	/**
+	 * Returns signal name
+	 * @return signal name
+	 */
+	public String getSignalName(){ return signalName; }
+	
+	
+	/**
+	 * Sets signal name
+	 * @param name signal name
+	 */
+	public void setSignalName(String name){ signalName = name; }
+	
+	
+	/**
+	 * Draws new stimulation program to a canvas
+	 * @param canvas canvas
+	 */
+	public Image draw(Canvas canvas){
+		Point size = canvas.getSize();
+		
+		System.out.println("CANVAS SIZE: " + size.x + " x " + size.y);
+		
+		final int SEC_WIDTH_GUI = 10;
+		int imWidth = SEC_WIDTH_GUI*(targetSignal.length + 1);
+		if(imWidth < size.x) imWidth = size.x;
+		Image im = new Image(canvas.getDisplay(), imWidth, size.y);
+		
+		Rectangle b = im.getBounds();
+		System.out.println("IMAGE SIZE: " + b.width + " x " + b.height);
+		
+		// draws current simulation program to the image
+		GC gc = new GC(im);
+		gc.setAntialias(SWT.ON);
+		gc.setForeground(canvas.getDisplay().getSystemColor(SWT.COLOR_BLACK));
+		
+		int latestSecs = 0;
+		float latestValue = 1.0f;
+		
+		for(int i=0;i<targetSignal.length;i++){
+			if(targetSignal[i] >= 0.0){
+				int startX = SEC_WIDTH_GUI/2 + latestSecs*SEC_WIDTH_GUI;
+				int endX   = SEC_WIDTH_GUI/2 + i*SEC_WIDTH_GUI;
+				
+				int startY = (int)Math.floor(size.y*(1.0f - latestValue));
+				int endY   = (int)Math.floor(size.y*(1.0f - targetSignal[i]));
+				
+				gc.drawLine(startX, startY, endX, endY);
+				gc.fillOval(endX, endY, SEC_WIDTH_GUI/4, SEC_WIDTH_GUI/4);
+				
+				latestSecs = i;
+				latestValue = targetSignal[i];
+			}
+		}
+		
+		// draws final line from the latest position to the end
+		{
+			int startX = SEC_WIDTH_GUI/2 + latestSecs*SEC_WIDTH_GUI;
+			int endX   = SEC_WIDTH_GUI/2 + (targetSignal.length-1)*SEC_WIDTH_GUI;
+			
+			int startY = (int)Math.floor(size.y*(1.0f - latestValue));
+			int endY   = (int)Math.floor(size.y*(1.0f - latestValue));
+			
+			gc.drawLine(startX, startY, endX, endY);
+		}
+		
+		gc.dispose();
+		
+		return im;
+	}
+	
+	
+	public boolean resizeProgram(int seconds){
+		if(seconds < 0) return false;
+		
+		float[] p = new float[seconds];
+		
+		int min = seconds;
+		if(targetSignal.length < min) min = targetSignal.length;
+		
+		for(int i=0;i<min;i++) p[i] = targetSignal[i];
+		
+		for(int i=min;i<p.length;i++) p[i] = -1.0f;
+		
+		return true;
+	}
+	
 	
 	/**
 	 * Returns stimulation program

@@ -1,17 +1,21 @@
 package fi.iki.nop.neuromancer;
 
+
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.ScrollBar;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Label;
@@ -22,18 +26,25 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Spinner;
+import org.eclipse.swt.graphics.Rectangle;
+import org.eclipse.swt.events.MouseAdapter;
+import org.eclipse.swt.events.MouseEvent;
+
 
 
 public class NeuromancerWindow {
-
+	
+	protected static NeuromancerModel model;
+	protected static NeuromancerWindow window;
+	
 	protected Shell shell;
 	protected Display display;
-	protected final String VERSION = "0.01 alpha";
 	
-	protected static NeuromancerWindow window;
 	private Text text;
 	private Text text_1;
 	private Text text_2;
+	
+	private final Image[] programCanvas = new Image[2];
 
 	/**
 	 * Launch the application.
@@ -41,6 +52,7 @@ public class NeuromancerWindow {
 	 */
 	public static void main(String[] args) {
 		try {
+			model  = new NeuromancerModel();
 			window = new NeuromancerWindow();
 			window.open();
 		} catch (Exception e) {
@@ -151,7 +163,7 @@ public class NeuromancerWindow {
 			public void widgetSelected(SelectionEvent e) {
 				MessageBox mbox = new MessageBox(shell, SWT.ICON_INFORMATION | SWT.OK);
 				mbox.setText("About Neuromancer..");
-				mbox.setMessage("Neuromancer " + window.VERSION + "\n(C) Copyright Tomas Ukkonen 2015\ntomas.ukkonen@iki.fi");
+				mbox.setMessage("Neuromancer " + model.getVersion() + "\n(C) Copyright Tomas Ukkonen 2015\ntomas.ukkonen@iki.fi");
 				mbox.open();
 			}
 		});
@@ -223,14 +235,35 @@ public class NeuromancerWindow {
 		Combo combo = new Combo(composite_2, SWT.NONE);
 		combo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		
-		Canvas canvas = new Canvas(composite_2, SWT.H_SCROLL);
-		canvas.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		final Canvas canvas1 = new Canvas(composite_2, SWT.H_SCROLL);
+		canvas1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseDown(MouseEvent e) {
+				System.out.println("CLICK: " + e.x + " x " + e.y);
+			}
+		});
+		
+		canvas1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		final ScrollBar bar1 = canvas1.getHorizontalBar();
+		bar1.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e){
+				int sel = bar1.getSelection();
+				
+				if(programCanvas[0] != null){
+					GC gc = new GC(canvas1);
+					gc.drawImage(programCanvas[0], -sel, 0);
+					canvas1.update();
+				}
+				
+				
+			}
+		});
 		
 		Combo combo_1 = new Combo(composite_2, SWT.NONE);
 		combo_1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		
-		Canvas canvas_1 = new Canvas(composite_2, SWT.H_SCROLL);
-		canvas_1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		final Canvas canvas2 = new Canvas(composite_2, SWT.H_SCROLL);
+		canvas2.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
 		Composite composite_3 = new Composite(composite_2, SWT.NONE);
 		composite_3.setBounds(0, 0, 64, 64);
@@ -239,7 +272,38 @@ public class NeuromancerWindow {
 		Label lblNewLabel_2 = new Label(composite_3, SWT.NONE);
 		lblNewLabel_2.setText("Length");
 		
-		Spinner spinner = new Spinner(composite_3, SWT.BORDER);
+		final Spinner spinner = new Spinner(composite_3, SWT.BORDER);
+		spinner.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				int value = Integer.parseInt(spinner.getText());
+				
+				model.setProgramLength(value);
+				
+				Image im1 = model.getProgram(0).draw(canvas1);
+				Image im2 = model.getProgram(1).draw(canvas2);
+				
+				{
+					if(programCanvas[0] != null) programCanvas[0].dispose();
+					programCanvas[0] = im1;
+					
+					GC gc = new GC(canvas1);
+					gc.drawImage(im1, 0, 0);
+					canvas1.update();
+				}
+				
+				{
+					if(programCanvas[1] != null) programCanvas[1].dispose();
+					programCanvas[1] = im1;
+					
+					GC gc = new GC(canvas2);
+					gc.drawImage(im2, 0, 0);
+					canvas2.update();
+				}
+				
+			}
+		});
+		spinner.setSelection(model.getProgramLength());
 		spinner.setMaximum(1000);
 		spinner.setMinimum(1);
 		
