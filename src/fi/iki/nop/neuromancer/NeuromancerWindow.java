@@ -128,13 +128,7 @@ public class NeuromancerWindow {
 		mntmFile.setMenu(menu_1);
 		
 		MenuItem mntmNew = new MenuItem(menu_1, SWT.NONE);
-		mntmNew.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				System.out.println("Initializing new program");
-			}
-		});
-		mntmNew.setText("New");
+		mntmNew.setText("New program");
 		
 		MenuItem mntmOpenPreset = new MenuItem(menu_1, SWT.NONE);
 		mntmOpenPreset.addSelectionListener(new SelectionAdapter() {
@@ -317,8 +311,7 @@ public class NeuromancerWindow {
 					gc.drawImage(im1, -sel, 0);
 					canvas1.update();
 					gc.dispose();
-				}
-								
+				}			
 			}
 		});
 		
@@ -396,6 +389,104 @@ public class NeuromancerWindow {
 		final Canvas canvas2 = new Canvas(composite_2, SWT.BORDER | SWT.H_SCROLL);
 		canvas2.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
+		final ScrollBar bar2 = canvas2.getHorizontalBar();
+		bar2.setMaximum(model.getProgramLength()*model.getProgram(1).SEC_WIDTH_GUI);
+		
+		
+		bar2.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e){
+				int sel = bar2.getSelection();
+				
+				if(programCanvas[1] != null){
+					GC gc = new GC(canvas2);
+					gc.drawImage(programCanvas[1], -sel, 0);
+					canvas1.update();
+					gc.dispose();
+				}
+			}
+		});
+		
+		
+		canvas2.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseDown(MouseEvent e) {
+				int second = model.getProgram(1).coordinateToSeconds(canvas2, e.x + bar2.getSelection());
+				float value = model.getProgram(1).coordinateToValue(canvas2, e.y);
+				
+				model.getProgram(1).setProgramValue(second, value);
+				
+				Image im2 = model.getProgram(1).draw(canvas1);
+				
+				{
+					int sel = bar2.getSelection();
+					
+					if(programCanvas[1] != null) programCanvas[1].dispose();
+					programCanvas[1] = im2;
+					
+					GC gc = new GC(canvas2);
+					gc.drawImage(im2, -sel, 0);
+					canvas2.update();
+					gc.dispose();
+				}
+			}
+			@Override
+			public void mouseDoubleClick(MouseEvent e) {
+				int second = model.getProgram(1).coordinateToSeconds(canvas2, e.x + bar2.getSelection());
+				float value = model.getProgram(1).coordinateToValue(canvas2, e.y);
+				
+				model.getProgram(1).setProgramValue(second, -1.0f);
+				
+				Image im2 = model.getProgram(1).draw(canvas2);
+				
+				{
+					int sel = bar2.getSelection();
+					
+					if(programCanvas[1] != null) programCanvas[1].dispose();
+					programCanvas[1] = im2;
+					
+					GC gc = new GC(canvas2);
+					gc.drawImage(im2, -sel, 0);
+					canvas2.update();
+					gc.dispose();
+				}
+			}
+		});
+		
+		canvas2.addMouseTrackListener(new MouseTrackAdapter() {
+			@Override
+			public void mouseHover(MouseEvent e) {
+				if(canvas2.getEnabled() == false){
+					canvas2.setToolTipText("");
+					return;
+				}
+				
+				int second = model.getProgram(1).coordinateToSeconds(canvas2, e.x + bar2.getSelection());
+				float value = model.getProgram(1).coordinateToValue(canvas2, e.y);
+				
+				canvas2.setToolTipText(Integer.toString(second) + ", " + String.format("%.2f", value));
+			}
+		});
+		
+		
+		
+		canvas2.addPaintListener(new PaintListener() {
+			public void paintControl(PaintEvent arg0) {
+				Image im2 = model.getProgram(1).draw(canvas2);
+				
+				{
+					if(programCanvas[1] != null) programCanvas[1].dispose();
+					programCanvas[1] = im2;
+							
+					int sel = bar2.getSelection();
+							
+					GC gc = new GC(canvas2);
+					gc.drawImage(im2, -sel, 0);
+					canvas2.update();
+					gc.dispose();
+				}	
+			}
+		});
+		
 		combo2.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -405,22 +496,6 @@ public class NeuromancerWindow {
 					canvas2.setEnabled(false);
 				else
 					canvas2.setEnabled(true);
-			}
-		});
-		
-		final ScrollBar bar2 = canvas2.getHorizontalBar();
-		bar2.addSelectionListener(new SelectionAdapter() {
-			public void widgetSelected(SelectionEvent e){
-				int sel = bar2.getSelection();
-				
-				if(programCanvas[1] != null){
-					GC gc = new GC(canvas2);
-					gc.drawImage(programCanvas[1], -sel, 0);
-					canvas2.update();
-					gc.dispose();
-				}
-				
-				
 			}
 		});
 		
@@ -481,6 +556,27 @@ public class NeuromancerWindow {
 		Button btnExecute = new Button(composite_2, SWT.NONE);
 		btnExecute.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		btnExecute.setText("Execute");
+		
+		mntmNew.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				model.setProgramLength(60);
+				model.getProgram(0).resizeProgram(0);
+				model.getProgram(0).resizeProgram(60);
+				model.getProgram(1).resizeProgram(0);
+				model.getProgram(1).resizeProgram(60);
+				
+				model.getProgram(0).setProgramValue(0, 1.0f);
+				model.getProgram(0).setProgramValue(59, 1.0f);
+				model.getProgram(1).setProgramValue(0, 1.0f);
+				model.getProgram(1).setProgramValue(59, 1.0f);
+				
+				spinner.setSelection(60);
+				
+				canvas1.redraw();
+				canvas2.redraw();
+			}
+		});
 		
 	}
 }
