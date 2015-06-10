@@ -20,6 +20,14 @@ public interface SignalSource {
 	 */
 	public String getSignalName(int index);
 	
+	
+	/**
+	 * Returns index for signal name (signal number)
+	 * @param name the name of the signal
+	 * @return signal index
+	 */
+	public int getSignalNameNumber(String name);
+	
 	/**
 	 * Returns current value of the signal
 	 * @param index signal index

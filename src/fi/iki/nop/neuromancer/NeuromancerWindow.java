@@ -128,21 +128,6 @@ public class NeuromancerWindow {
 		mntmNew.setText("New program");
 		
 		MenuItem mntmOpenPreset = new MenuItem(menu_1, SWT.NONE);
-		mntmOpenPreset.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				FileDialog fd = new FileDialog(shell, SWT.OPEN);
-				fd.setText("Open stimulation program..");
-				fd.setFilterExtensions(new String[] { "*.nmc", "*.*" });
-				String filename = fd.open();
-				
-				if(filename != null)
-					if(model.loadProgramPreset(filename))
-						System.out.println("Loading program: " + filename);
-				
-				// + update the view
-			}
-		});
 		mntmOpenPreset.setText("Open program..");
 		
 		MenuItem mntmSaveProgram = new MenuItem(menu_1, SWT.NONE);
@@ -618,10 +603,36 @@ public class NeuromancerWindow {
 				model.getProgram(1).setProgramValue(0, 1.0f);
 				model.getProgram(1).setProgramValue(59, 1.0f);
 				
+				// updates view
 				spinner.setSelection(60);
 				
 				canvas1.redraw();
 				canvas2.redraw();
+				
+				combo1.select(0);
+				combo2.select(0);
+			}
+		});
+		
+		
+		mntmOpenPreset.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				FileDialog fd = new FileDialog(shell, SWT.OPEN);
+				fd.setText("Open stimulation program..");
+				fd.setFilterExtensions(new String[] { "*.nmc", "*.*" });
+				String filename = fd.open();
+				
+				if(filename != null)
+					if(model.loadProgramPreset(filename))
+						System.out.println("Loading program: " + filename);
+				
+				// updates view
+				spinner.setSelection(model.getProgramLength());
+				canvas1.redraw();
+				canvas2.redraw();
+				combo1.select(eeg.getSignalNameNumber(model.getProgram(0).getSignalName()) + 1);
+				combo2.select(eeg.getSignalNameNumber(model.getProgram(1).getSignalName()) + 1);
 			}
 		});
 		

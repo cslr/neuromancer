@@ -1,11 +1,13 @@
 
-- saving and loading signal program presets
 
-- integrate with resonanz (create 64bit DLL in Cygwin64 + Java JNI)
-  * resonanz command line accepts signal preset files generated using Neuromancer
+- integrate with resonanz (create 64bit DLL in Cygwin64/MinGW64 + Java JNI)
   * enable showing random stimulus ("test") from the interface
   * add direct support ("measure") to populate database with measurements
   * add direct support ("optimize") to learn neural network model from measurements
+  * resonanz command line accepts signal preset files generated using Neuromancer
   
 - implement "execute" using measurement database (initially fabricated data/measurements)
+
+- get Emotiv Insight SDKLite and implement implementation that reads (fabricated) values using
+  real Emotiv DLL interface
 

@@ -22,6 +22,22 @@ public class EmotivInsightSignalSourceStub implements SignalSource {
 		else return "";
 	}
 
+	
+	@Override
+	public int getSignalNameNumber(String name) {
+		if(name == null) return -1;
+		
+		if     (name.compareTo("Insight: Attention") == 0)  return 0;
+		else if(name.compareTo("Insight: Focus") == 0)      return 1;
+		else if(name.compareTo("Insight: Engagement") == 0) return 2;
+		else if(name.compareTo("Insight: Interest") == 0)   return 3;
+		else if(name.compareTo("Insight: Excitement") == 0) return 4;
+		else if(name.compareTo("Insight: Affinity") == 0)   return 5;
+		else if(name.compareTo("Insight: Relaxation") == 0) return 6;
+		else if(name.compareTo("Insight: Stress") == 0)     return 7;
+		else return -1;
+	}
+
 	@Override
 	public float getSignalValue(int index) {
 		
