@@ -29,6 +29,11 @@ import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseTrackAdapter;
+import org.eclipse.swt.events.ControlAdapter;
+import org.eclipse.swt.events.ControlEvent;
+import org.eclipse.swt.events.PaintListener;
+import org.eclipse.swt.events.PaintEvent;
 
 
 
@@ -36,6 +41,7 @@ public class NeuromancerWindow {
 	
 	protected static NeuromancerModel model;
 	protected static NeuromancerWindow window;
+	protected static SignalSource eeg;
 	
 	protected Shell shell;
 	protected Display display;
@@ -52,6 +58,7 @@ public class NeuromancerWindow {
 	 */
 	public static void main(String[] args) {
 		try {
+			eeg    = new EmotivInsightSignalSourceStub();
 			model  = new NeuromancerModel();
 			window = new NeuromancerWindow();
 			window.open();
@@ -68,6 +75,28 @@ public class NeuromancerWindow {
 		createContents();
 		shell.open();
 		shell.layout();
+		
+		// creates updater thread that updates canvas periodically
+		/*
+		Thread updaterThread = new Thread(){
+			public void run(){
+				while(true){
+					
+					Display.getDefault().syncExec(new Runnable(){
+						public void run(){
+							
+						}
+					});
+					
+					try{ Thread.sleep(1000); }
+					catch(InterruptedException e){ }
+				}
+			}
+		};
+		*/
+		
+		
+		
 		while (!shell.isDisposed()) {
 			if (!display.readAndDispatch()) {
 				display.sleep();
@@ -82,8 +111,11 @@ public class NeuromancerWindow {
 	 */
 	protected void createContents() {
 		shell = new Shell(display);
-		shell.setSize(450, 300);
-		shell.setText("Neuromancer (Emotiv Insight)");
+		shell.setSize(600, 500);
+		shell.setText(model.getSoftwareName());
+		display.setAppName(model.getSoftwareName());
+		display.setAppVersion(model.getVersion());
+		
 		shell.setLayout(new FillLayout(SWT.HORIZONTAL));
 		
 		Menu menu = new Menu(shell, SWT.BAR);
@@ -163,7 +195,7 @@ public class NeuromancerWindow {
 			public void widgetSelected(SelectionEvent e) {
 				MessageBox mbox = new MessageBox(shell, SWT.ICON_INFORMATION | SWT.OK);
 				mbox.setText("About Neuromancer..");
-				mbox.setMessage("Neuromancer " + model.getVersion() + "\n(C) Copyright Tomas Ukkonen 2015\ntomas.ukkonen@iki.fi");
+				mbox.setMessage("Neuromancer " + model.getVersion() + "\n(C) Copyright Tomas Ukkonen 2015\ntomas.ukkonen@iki.fi\n\nThis software requires Emotiv Insight device.");
 				mbox.open();
 			}
 		});
@@ -232,19 +264,32 @@ public class NeuromancerWindow {
 		tbtmProgram.setControl(composite_2);
 		composite_2.setLayout(new GridLayout(2, false));
 		
-		Combo combo = new Combo(composite_2, SWT.NONE);
-		combo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		final Combo combo1 = new Combo(composite_2, SWT.READ_ONLY);
+		combo1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		
-		final Canvas canvas1 = new Canvas(composite_2, SWT.H_SCROLL);
-		canvas1.addMouseListener(new MouseAdapter() {
+		combo1.add("<disabled>");
+		for(int i=0;i<eeg.getNumberOfSignals();i++)
+			combo1.add(eeg.getSignalName(i));
+		combo1.select(0);
+		
+		final Canvas canvas1 = new Canvas(composite_2, SWT.BORDER | SWT.H_SCROLL);
+		
+		canvas1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		final ScrollBar bar1 = canvas1.getHorizontalBar();
+		bar1.setMaximum(model.getProgramLength()*model.getProgram(0).SEC_WIDTH_GUI);
+		
+		combo1.addSelectionListener(new SelectionAdapter() {
 			@Override
-			public void mouseDown(MouseEvent e) {
-				System.out.println("CLICK: " + e.x + " x " + e.y);
+			public void widgetSelected(SelectionEvent e) {
+				model.getProgram(0).setSignalName(combo1.getText());
+				
+				if(combo1.getText() == "<disabled>")
+					canvas1.setEnabled(false);
+				else
+					canvas1.setEnabled(true);
 			}
 		});
 		
-		canvas1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		final ScrollBar bar1 = canvas1.getHorizontalBar();
 		bar1.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e){
 				int sel = bar1.getSelection();
@@ -253,17 +298,132 @@ public class NeuromancerWindow {
 					GC gc = new GC(canvas1);
 					gc.drawImage(programCanvas[0], -sel, 0);
 					canvas1.update();
+					gc.dispose();
+				}
+			}
+		});
+		
+		canvas1.addPaintListener(new PaintListener() {
+			public void paintControl(PaintEvent arg0) {
+				Image im1 = model.getProgram(0).draw(canvas1);
+						
+				{
+					if(programCanvas[0] != null) programCanvas[0].dispose();
+					programCanvas[0] = im1;
+							
+					int sel = bar1.getSelection();
+							
+					GC gc = new GC(canvas1);
+					gc.drawImage(im1, -sel, 0);
+					canvas1.update();
+					gc.dispose();
+				}
+								
+			}
+		});
+		
+		canvas1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseDown(MouseEvent e) {
+			
+				int second = model.getProgram(0).coordinateToSeconds(canvas1, e.x + bar1.getSelection());
+				float value = model.getProgram(0).coordinateToValue(canvas1, e.y);
+				
+				model.getProgram(0).setProgramValue(second, value);
+				
+				Image im1 = model.getProgram(0).draw(canvas1);
+				
+				{
+					int sel = bar1.getSelection();
+					
+					if(programCanvas[0] != null) programCanvas[0].dispose();
+					programCanvas[0] = im1;
+					
+					GC gc = new GC(canvas1);
+					gc.drawImage(im1, -sel, 0);
+					canvas1.update();
+					gc.dispose();
+				}
+			}
+			@Override
+			public void mouseDoubleClick(MouseEvent e) {
+				
+				int second = model.getProgram(0).coordinateToSeconds(canvas1, e.x + bar1.getSelection());
+				float value = model.getProgram(0).coordinateToValue(canvas1, e.y);
+				
+				model.getProgram(0).setProgramValue(second, -1.0f);
+				
+				Image im1 = model.getProgram(0).draw(canvas1);
+				
+				{
+					int sel = bar1.getSelection();
+					
+					if(programCanvas[0] != null) programCanvas[0].dispose();
+					programCanvas[0] = im1;
+					
+					GC gc = new GC(canvas1);
+					gc.drawImage(im1, -sel, 0);
+					canvas1.update();
+					gc.dispose();
+				}
+			}
+		});
+		
+		
+		canvas1.addMouseTrackListener(new MouseTrackAdapter() {
+			@Override
+			public void mouseHover(MouseEvent e) {
+				if(canvas1.getEnabled() == false){
+					canvas1.setToolTipText("");
+					return;
+				}
+				
+				int second = model.getProgram(0).coordinateToSeconds(canvas1, e.x + bar1.getSelection());
+				float value = model.getProgram(0).coordinateToValue(canvas1, e.y);
+				
+				canvas1.setToolTipText(Integer.toString(second) + ", " + String.format("%.2f", value));
+			}
+		});
+	
+		final Combo combo2 = new Combo(composite_2, SWT.READ_ONLY);
+		combo2.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		
+		combo2.add("<disabled>");
+		for(int i=0;i<eeg.getNumberOfSignals();i++)
+			combo2.add(eeg.getSignalName(i));
+		combo2.select(0);
+		
+		final Canvas canvas2 = new Canvas(composite_2, SWT.BORDER | SWT.H_SCROLL);
+		canvas2.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		
+		combo2.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				model.getProgram(1).setSignalName(combo2.getText());
+				
+				if(combo2.getText() == "<disabled>")
+					canvas2.setEnabled(false);
+				else
+					canvas2.setEnabled(true);
+			}
+		});
+		
+		final ScrollBar bar2 = canvas2.getHorizontalBar();
+		bar2.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e){
+				int sel = bar2.getSelection();
+				
+				if(programCanvas[1] != null){
+					GC gc = new GC(canvas2);
+					gc.drawImage(programCanvas[1], -sel, 0);
+					canvas2.update();
+					gc.dispose();
 				}
 				
 				
 			}
 		});
 		
-		Combo combo_1 = new Combo(composite_2, SWT.NONE);
-		combo_1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-		
-		final Canvas canvas2 = new Canvas(composite_2, SWT.H_SCROLL);
-		canvas2.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
 		Composite composite_3 = new Composite(composite_2, SWT.NONE);
 		composite_3.setBounds(0, 0, 64, 64);
@@ -279,6 +439,8 @@ public class NeuromancerWindow {
 				int value = Integer.parseInt(spinner.getText());
 				
 				model.setProgramLength(value);
+				bar1.setMaximum(model.getProgramLength()*model.getProgram(0).SEC_WIDTH_GUI);
+				bar2.setMaximum(model.getProgramLength()*model.getProgram(1).SEC_WIDTH_GUI);
 				
 				Image im1 = model.getProgram(0).draw(canvas1);
 				Image im2 = model.getProgram(1).draw(canvas2);
@@ -287,18 +449,24 @@ public class NeuromancerWindow {
 					if(programCanvas[0] != null) programCanvas[0].dispose();
 					programCanvas[0] = im1;
 					
+					int sel = bar1.getSelection();
+					
 					GC gc = new GC(canvas1);
-					gc.drawImage(im1, 0, 0);
+					gc.drawImage(im1, -sel, 0);
 					canvas1.update();
+					gc.dispose();
 				}
 				
 				{
 					if(programCanvas[1] != null) programCanvas[1].dispose();
-					programCanvas[1] = im1;
+					programCanvas[1] = im2;
+					
+					int sel = bar2.getSelection();
 					
 					GC gc = new GC(canvas2);
-					gc.drawImage(im2, 0, 0);
+					gc.drawImage(im2, -sel, 0);
 					canvas2.update();
+					gc.dispose();
 				}
 				
 			}
@@ -313,6 +481,6 @@ public class NeuromancerWindow {
 		Button btnExecute = new Button(composite_2, SWT.NONE);
 		btnExecute.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		btnExecute.setText("Execute");
-
+		
 	}
 }

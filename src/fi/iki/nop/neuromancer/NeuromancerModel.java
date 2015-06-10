@@ -2,6 +2,7 @@ package fi.iki.nop.neuromancer;
 
 public class NeuromancerModel
 {
+	protected final String SOFTWARE_NAME = "Neuromancer";
 	protected final String VERSION = "0.01 alpha";
 	
 	private int programLength; // length of program in seconds
@@ -19,6 +20,13 @@ public class NeuromancerModel
 			programs[i].setProgramValue(programLength-1, 1.0f);
 		}
 	}
+	
+	
+	/**
+	 * Returns software name
+	 * @return software name
+	 */
+	public String getSoftwareName(){ return SOFTWARE_NAME; }
 	
 	/**
 	 * Returns software version number

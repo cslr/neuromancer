@@ -14,6 +14,7 @@ public class SignalProgram {
 	protected float[] targetSignal;
 	protected String signalName;
 	
+	public final int SEC_WIDTH_GUI = 12;
 	
 	public SignalProgram(){
 		targetSignal = new float[0];
@@ -52,8 +53,8 @@ public class SignalProgram {
 		
 		System.out.println("CANVAS SIZE: " + size.x + " x " + size.y);
 		
-		final int SEC_WIDTH_GUI = 10;
 		int imWidth = SEC_WIDTH_GUI*(targetSignal.length + 1);
+		imWidth = imWidth + size.x;
 		if(imWidth < size.x) imWidth = size.x;
 		Image im = new Image(canvas.getDisplay(), imWidth, size.y);
 		
@@ -64,6 +65,7 @@ public class SignalProgram {
 		GC gc = new GC(im);
 		gc.setAntialias(SWT.ON);
 		gc.setForeground(canvas.getDisplay().getSystemColor(SWT.COLOR_BLACK));
+		gc.setBackground(canvas.getDisplay().getSystemColor(SWT.COLOR_BLACK));
 		
 		int latestSecs = 0;
 		float latestValue = 1.0f;
@@ -77,7 +79,7 @@ public class SignalProgram {
 				int endY   = (int)Math.floor(size.y*(1.0f - targetSignal[i]));
 				
 				gc.drawLine(startX, startY, endX, endY);
-				gc.fillOval(endX, endY, SEC_WIDTH_GUI/4, SEC_WIDTH_GUI/4);
+				gc.fillOval(endX - SEC_WIDTH_GUI/4, endY - SEC_WIDTH_GUI/4, SEC_WIDTH_GUI/2, SEC_WIDTH_GUI/2);
 				
 				latestSecs = i;
 				latestValue = targetSignal[i];
@@ -100,6 +102,30 @@ public class SignalProgram {
 		return im;
 	}
 	
+	/**
+	 * Transforms image coordinates (canvas) into stimulation program second
+	 * @param x image x coordinate
+	 * @return program second (s)
+	 */
+	public int coordinateToSeconds(Canvas canvas, int x){
+		int seconds = (x - SEC_WIDTH_GUI/2)/SEC_WIDTH_GUI;
+		if(seconds < 0) seconds = 0;
+		return seconds;
+	}
+	
+	
+	/**
+	 * Transforms image coordinate y (canvas) into stimulation program value
+	 * @param y image y coordinate
+	 * @return stimulation program value [0,1]
+	 */
+	public float coordinateToValue(Canvas canvas, int y){
+		Point size = canvas.getSize();
+		float value = (float)(size.y - y)/((float)size.y);
+		if(value < 0.0f) value = 0.0f;
+		else if(value > 1.0f) value = 1.0f;
+		return value;
+	}
 	
 	public boolean resizeProgram(int seconds){
 		if(seconds < 0) return false;
@@ -112,6 +138,8 @@ public class SignalProgram {
 		for(int i=0;i<min;i++) p[i] = targetSignal[i];
 		
 		for(int i=min;i<p.length;i++) p[i] = -1.0f;
+		
+		targetSignal = p;
 		
 		return true;
 	}
