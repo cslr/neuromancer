@@ -5,6 +5,10 @@ public class NeuromancerModel
 	protected final String SOFTWARE_NAME = "Neuromancer";
 	protected final String VERSION = "0.01 alpha";
 	
+	protected String pictureDirectory;
+	protected String keywordsFile;
+	protected String modelDirectory;
+	
 	private int programLength; // length of program in seconds
 	
 	private SignalProgram[] programs; // Emotiv meta-signal programs
@@ -33,6 +37,15 @@ public class NeuromancerModel
 	 * @return version number
 	 */
 	public String getVersion(){ return VERSION; }
+	
+	public String getPictureDirectory(){ return pictureDirectory; }
+	public void setPictureDirectory(String picdir){ pictureDirectory = picdir; }
+	
+	public String getKeywordsFile(){ return keywordsFile; }
+	public void setKeywordsFile(String keywords){ keywordsFile = keywords; }
+	
+	public String getModelDirectory(){ return modelDirectory; }
+	public void setModelDirectory(String model){ modelDirectory = model; }
 	
 	public int getProgramLength(){ return programLength; }
 	

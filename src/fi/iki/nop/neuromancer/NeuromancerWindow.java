@@ -11,6 +11,7 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.widgets.FileDialog;
+import org.eclipse.swt.widgets.DirectoryDialog;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
@@ -45,10 +46,6 @@ public class NeuromancerWindow {
 	
 	protected Shell shell;
 	protected Display display;
-	
-	private Text text;
-	private Text text_1;
-	private Text text_2;
 	
 	private final Image[] programCanvas = new Image[2];
 
@@ -197,62 +194,106 @@ public class NeuromancerWindow {
 		
 		TabFolder tabFolder = new TabFolder(shell, SWT.NONE);
 		
-		TabItem tbtmDatabase = new TabItem(tabFolder, SWT.NONE);
-		tbtmDatabase.setText("Learn/Database");
+		TabItem tbtmInputModel = new TabItem(tabFolder, SWT.NONE);
+		tbtmInputModel.setText("Input && Model");
 		
 		Composite composite = new Composite(tabFolder, SWT.NONE);
-		tbtmDatabase.setControl(composite);
+		tbtmInputModel.setControl(composite);
 		composite.setLayout(new GridLayout(3, false));
 		
 		Label lblDatabaseDirectory = new Label(composite, SWT.NONE);
-		lblDatabaseDirectory.setBounds(0, 0, 55, 15);
-		lblDatabaseDirectory.setText("Database directory: ");
+		lblDatabaseDirectory.setText("Picture folder");
 		
-		text_2 = new Text(composite, SWT.BORDER);
-		text_2.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		text_2.setBounds(0, 0, 76, 21);
+		final Text text_3 = new Text(composite, SWT.BORDER);
+		text_3.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		text_3.setEditable(false);
+		if(model.getPictureDirectory() != null) text_3.setText(model.getPictureDirectory());
+		else text_3.setText("");
+
 		
 		Button btnSelect = new Button(composite, SWT.NONE);
-		btnSelect.setBounds(0, 0, 75, 25);
+		btnSelect.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				DirectoryDialog dd = new DirectoryDialog(shell);
+				dd.setFilterPath("c:\\");
+				String directory = dd.open();
+				
+				if(directory != null){
+					model.setPictureDirectory(directory);
+					text_3.setText(directory);
+				}
+			}
+		});
 		btnSelect.setText("Select");
 		
 		Label lblNewLabel = new Label(composite, SWT.NONE);
-		lblNewLabel.setBounds(0, 0, 55, 15);
-		lblNewLabel.setText("Picture directory: ");
+		lblNewLabel.setText("Keywords file");
 		
-		text = new Text(composite, SWT.BORDER);
-		text.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		text.setBounds(0, 0, 76, 21);
+		final Text text_4 = new Text(composite, SWT.BORDER);
+		text_4.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		text_4.setEditable(false);
+		if(model.getKeywordsFile() != null) text_4.setText(model.getKeywordsFile());
+		else text_4.setText("");
 		
 		Button btnNewButton = new Button(composite, SWT.NONE);
-		btnNewButton.setBounds(0, 0, 75, 25);
+		btnNewButton.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				FileDialog fd = new FileDialog(shell, SWT.OPEN);
+				fd.setFilterExtensions(new String[] { "*.txt", "*.*" });
+				String filename = fd.open();
+				
+				if(filename != null){
+					model.setKeywordsFile(filename);
+					text_4.setText(filename);
+				}
+				
+				System.out.println("Saving program: " + filename);
+			}
+		});
 		btnNewButton.setText("Select");
 		
 		Label lblNewLabel_1 = new Label(composite, SWT.NONE);
-		lblNewLabel_1.setBounds(0, 0, 55, 15);
-		lblNewLabel_1.setText("Keywords file:");
+		lblNewLabel_1.setText("Database/Model folder");
 		
-		text_1 = new Text(composite, SWT.BORDER);
-		text_1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-		text_1.setBounds(0, 0, 76, 21);
+		final Text text_5 = new Text(composite, SWT.BORDER);
+		text_5.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		text_5.setEditable(false);
+		if(model.getModelDirectory() != null) text_5.setText(model.getModelDirectory());
+		else text_5.setText("");
 		
 		Button btnNewButton_1 = new Button(composite, SWT.NONE);
+		btnNewButton_1.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				DirectoryDialog dd = new DirectoryDialog(shell);
+				dd.setFilterPath("c:\\");
+				String directory = dd.open();
+				
+				if(directory != null){
+					model.setModelDirectory(directory);
+					text_5.setText(directory);
+				}
+			}
+		});
 		btnNewButton_1.setText("Select");
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
 		
 		Composite composite_1 = new Composite(composite, SWT.NONE);
-		composite_1.setLayoutData(new GridData(SWT.LEFT, SWT.BOTTOM, false, true, 1, 1));
+		composite_1.setLayoutData(new GridData(SWT.RIGHT, SWT.BOTTOM, false, true, 3, 1));
 		composite_1.setLayout(new RowLayout(SWT.HORIZONTAL));
 		
 		Button btnRandom = new Button(composite_1, SWT.NONE);
-		btnRandom.setText("Random");
+		btnRandom.setText("Test input");
+		
+		Button btnNewButton_2 = new Button(composite_1, SWT.NONE);
+		btnNewButton_2.setText("Measure database");
 		
 		Button btnLearn = new Button(composite_1, SWT.NONE);
-		btnLearn.setText("Learn");
+		btnLearn.setText("Optimize model");
 
 		TabItem tbtmProgram = new TabItem(tabFolder, SWT.NONE);
-		tbtmProgram.setText("Program");
+		tbtmProgram.setText("Target / Program");
 		
 		Composite composite_2 = new Composite(tabFolder, SWT.NONE);
 		tbtmProgram.setControl(composite_2);
@@ -501,7 +542,6 @@ public class NeuromancerWindow {
 		
 		
 		Composite composite_3 = new Composite(composite_2, SWT.NONE);
-		composite_3.setBounds(0, 0, 64, 64);
 		composite_3.setLayout(new RowLayout(SWT.HORIZONTAL));
 		
 		Label lblNewLabel_2 = new Label(composite_3, SWT.NONE);
@@ -555,8 +595,8 @@ public class NeuromancerWindow {
 		
 		Button btnExecute = new Button(composite_2, SWT.NONE);
 		btnExecute.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		btnExecute.setText("Execute");
-		
+		btnExecute.setText("Execute program");
+				
 		mntmNew.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
