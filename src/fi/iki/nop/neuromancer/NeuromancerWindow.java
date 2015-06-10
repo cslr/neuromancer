@@ -136,7 +136,11 @@ public class NeuromancerWindow {
 				fd.setFilterExtensions(new String[] { "*.nmc", "*.*" });
 				String filename = fd.open();
 				
-				System.out.println("Loading program: " + filename);
+				if(filename != null)
+					if(model.loadProgramPreset(filename))
+						System.out.println("Loading program: " + filename);
+				
+				// + update the view
 			}
 		});
 		mntmOpenPreset.setText("Open program..");
@@ -150,7 +154,10 @@ public class NeuromancerWindow {
 				fd.setFilterExtensions(new String[] { "*.nmc", "*.*" });
 				String filename = fd.open();
 				
-				System.out.println("Saving program: " + filename);
+				if(filename != null){
+					if(model.saveProgramPreset(filename))
+						System.out.println("Saving program: " + filename);
+				}
 			}
 		});
 		mntmSaveProgram.setText("Save program..");

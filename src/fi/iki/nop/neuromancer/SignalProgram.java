@@ -51,15 +51,12 @@ public class SignalProgram {
 	public Image draw(Canvas canvas){
 		Point size = canvas.getSize();
 		
-		System.out.println("CANVAS SIZE: " + size.x + " x " + size.y);
-		
 		int imWidth = SEC_WIDTH_GUI*(targetSignal.length + 1);
 		imWidth = imWidth + size.x;
 		if(imWidth < size.x) imWidth = size.x;
 		Image im = new Image(canvas.getDisplay(), imWidth, size.y);
 		
 		Rectangle b = im.getBounds();
-		System.out.println("IMAGE SIZE: " + b.width + " x " + b.height);
 		
 		// draws current simulation program to the image
 		GC gc = new GC(im);
