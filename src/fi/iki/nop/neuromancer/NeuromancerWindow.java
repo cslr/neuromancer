@@ -43,6 +43,7 @@ public class NeuromancerWindow {
 	protected static NeuromancerModel model;
 	protected static NeuromancerWindow window;
 	protected static SignalSource eeg;
+	protected static ResonanzEngine engine;
 	
 	protected Shell shell;
 	protected Display display;
@@ -56,6 +57,7 @@ public class NeuromancerWindow {
 	public static void main(String[] args) {
 		try {
 			eeg    = new EmotivInsightSignalSourceStub();
+			engine = new ResonanzEngine();
 			model  = new NeuromancerModel();
 			window = new NeuromancerWindow();
 			window.open();
