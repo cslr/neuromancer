@@ -115,6 +115,8 @@ public class NeuromancerWindow {
 		display.setAppName(model.getSoftwareName());
 		display.setAppVersion(model.getVersion());
 		
+		shell.setImage(new Image(display, "brain.ico"));
+		
 		shell.setLayout(new FillLayout(SWT.HORIZONTAL));
 		
 		Menu menu = new Menu(shell, SWT.BAR);
