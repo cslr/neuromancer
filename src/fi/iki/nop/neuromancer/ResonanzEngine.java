@@ -26,7 +26,7 @@ public class ResonanzEngine {
 	 * @param keywordsFile text file containing keywords to show together with keywords (one keyword per line)
 	 * @return true if stimulation started successfully, false if there was error and stimulation didn't start
 	 */
-	public synchronized native boolean startRandomStimulation(String pictureDir, String keywordsFile);
+	public native boolean startRandomStimulation(String pictureDir, String keywordsFile);
 	
 	/**
 	 * Starts measuring (Emotiv Affectiv) responses to random stimulation (pictures, keywords).
@@ -37,7 +37,7 @@ public class ResonanzEngine {
 	 * @param modelDirectory directory where measurements are stored
 	 * @return true if measurements and stimulation started successfully and false if there was an error
 	 */
-	public synchronized native boolean startMeasureStimulation(String pictureDir, String keywordsFile, String modelDirectory);
+	public native boolean startMeasureStimulation(String pictureDir, String keywordsFile, String modelDirectory);
 	
 	
 	/**
@@ -46,18 +46,18 @@ public class ResonanzEngine {
 	 * @param modelDirectory directory into which measurements and optimized models are stored
 	 * @return true if optimization process was started successfully and false if it did not start
 	 */
-	public synchronized native boolean startOptimizeModel(String modelDirectory);
+	public native boolean startOptimizeModel(String modelDirectory);
 	
 	
 	/**
 	 * Gets current status of the optimization
 	 * @return null if there is no running optimization process, otherwise current status (including ETA) of the process
 	 */
-	public synchronized native String getOptimizeModelStatus();
+	public native String getOptimizeModelStatus();
 	
 	/**
 	 * Stops model optimization
 	 * @return true if running optimization process was successfully stopped and false there was an error or no process to stop 
 	 */
-	public synchronized native boolean stopOptimizeModel();
+	public native boolean stopOptimizeModel();
 }

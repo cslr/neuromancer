@@ -278,12 +278,30 @@ public class NeuromancerWindow {
 		composite_1.setLayout(new RowLayout(SWT.HORIZONTAL));
 		
 		Button btnRandom = new Button(composite_1, SWT.NONE);
+		btnRandom.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				engine.startRandomStimulation(model.getPictureDirectory(), model.getKeywordsFile());
+			}
+		});
 		btnRandom.setText("Test input");
 		
 		Button btnNewButton_2 = new Button(composite_1, SWT.NONE);
+		btnNewButton_2.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				engine.startMeasureStimulation(model.getPictureDirectory(), model.getKeywordsFile(), model.getModelDirectory());
+			}
+		});
 		btnNewButton_2.setText("Measure database");
 		
 		Button btnLearn = new Button(composite_1, SWT.NONE);
+		btnLearn.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				engine.startOptimizeModel(model.getModelDirectory());
+			}
+		});
 		btnLearn.setText("Optimize model");
 
 		TabItem tbtmProgram = new TabItem(tabFolder, SWT.NONE);

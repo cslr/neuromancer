@@ -33,6 +33,10 @@ public class NeuromancerModel
 			programs[i].setProgramValue(0, 1.0f);
 			programs[i].setProgramValue(programLength-1, 1.0f);
 		}
+		
+		pictureDirectory = "";
+		keywordsFile = "";
+		modelDirectory = "";
 	}
 	
 	

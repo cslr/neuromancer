@@ -1,6 +1,4 @@
 
-- compile dinrhiw2 and resonanz in windows 64bit
-
 - integrate with resonanz (create 64bit DLL in Cygwin64/MinGW64 + Java JNI)
   * enable showing random stimulus ("test") from the interface
   * add direct support ("measure") to populate database with measurements
