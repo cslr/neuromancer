@@ -53,11 +53,25 @@ public class ResonanzEngine {
 	 * Gets current status of the optimization
 	 * @return null if there is no running optimization process, otherwise current status (including ETA) of the process
 	 */
-	public native String getOptimizeModelStatus();
+	public native String getOptimizeModelStatus(); // deprecated WILL BE REMOVED
 	
 	/**
 	 * Stops model optimization
 	 * @return true if running optimization process was successfully stopped and false there was an error or no process to stop 
 	 */
-	public native boolean stopOptimizeModel();
+	public native boolean stopOptimizeModel(); // deprecated WILL BE REMOVED
+	
+	
+	/**
+	 * Gets current status of the resonanz-engine: optimization status etc.
+	 * @return current status of the resonanz-engine or empty string (rarely)
+	 */
+	public native String getStatusLine();
+	
+	
+	/**
+	 * Stops current resonanz-engine activity and resets into idle state
+	 * @return false if there was an error and true otherwise
+	 */
+	public native boolean stopCommand();
 }

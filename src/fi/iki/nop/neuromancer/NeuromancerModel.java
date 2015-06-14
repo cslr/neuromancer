@@ -12,8 +12,8 @@ import java.util.Arrays;
 
 public class NeuromancerModel
 {
-	protected final String SOFTWARE_NAME = "Neuromancer";
-	protected final String VERSION = "0.02 alpha";
+	protected final String SOFTWARE_NAME = "Renaissance";
+	protected final String VERSION = "0.1 alpha";
 	
 	protected String pictureDirectory;
 	protected String keywordsFile;

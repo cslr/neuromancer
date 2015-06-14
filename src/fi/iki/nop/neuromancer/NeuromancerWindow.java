@@ -49,6 +49,7 @@ public class NeuromancerWindow {
 	protected Display display;
 	
 	private final Image[] programCanvas = new Image[2];
+	private Text statusLine;
 
 	/**
 	 * Launch the application.
@@ -75,25 +76,30 @@ public class NeuromancerWindow {
 		shell.open();
 		shell.layout();
 		
-		// creates updater thread that updates canvas periodically
-		/*
+		// creates updater thread that updates UI periodically
+		
 		Thread updaterThread = new Thread(){
 			public void run(){
 				while(true){
 					
 					Display.getDefault().syncExec(new Runnable(){
 						public void run(){
-							
+							if(!shell.isDisposed()){
+								String engineState = engine.getStatusLine();
+								if(engineState == null) engineState = "";
+								window.statusLine.setText(engineState);
+							}
 						}
 					});
 					
-					try{ Thread.sleep(1000); }
+					try{ Thread.sleep(500); }
 					catch(InterruptedException e){ }
 				}
 			}
 		};
-		*/
 		
+		updaterThread.setDaemon(true);
+		updaterThread.start();
 		
 		
 		while (!shell.isDisposed()) {
@@ -116,8 +122,7 @@ public class NeuromancerWindow {
 		display.setAppVersion(model.getVersion());
 		
 		shell.setImage(new Image(display, "brain.ico"));
-		
-		shell.setLayout(new FillLayout(SWT.HORIZONTAL));
+		shell.setLayout(new GridLayout(1, false));
 		
 		Menu menu = new Menu(shell, SWT.BAR);
 		shell.setMenuBar(menu);
@@ -181,14 +186,24 @@ public class NeuromancerWindow {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				MessageBox mbox = new MessageBox(shell, SWT.ICON_INFORMATION | SWT.OK);
-				mbox.setText("About Neuromancer..");
-				mbox.setMessage("Neuromancer " + model.getVersion() + "\n(C) Copyright Tomas Ukkonen 2015\ntomas.ukkonen@iki.fi\n\nThis software requires Emotiv Insight device.");
+				mbox.setText("About..");
+				
+				String msg = model.getSoftwareName() + " " + model.getVersion() + " (64bit)\n";
+				msg += "© Copyright Tomas Ukkonen (\"CSRL\") 2015 <tomas.ukkonen@iki.fi>\n";
+				msg += "\n";
+				msg += "This software requires Emotiv Insight (tm) device <www.emotiv.com>.\n";
+				msg += "\n";
+				msg += "Library licenses can be found from the application root directory.\n";
+				msg += "You can obtain source code of the libraries from their respective websites.\n";
+				
+				mbox.setMessage(msg);
 				mbox.open();
 			}
 		});
 		mntmAbout.setText("About");
 		
 		TabFolder tabFolder = new TabFolder(shell, SWT.NONE);
+		tabFolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
 		TabItem tbtmInputModel = new TabItem(tabFolder, SWT.NONE);
 		tbtmInputModel.setText("Input && Model");
@@ -244,8 +259,6 @@ public class NeuromancerWindow {
 					model.setKeywordsFile(filename);
 					text_4.setText(filename);
 				}
-				
-				System.out.println("Saving program: " + filename);
 			}
 		});
 		btnNewButton.setText("Select");
@@ -305,6 +318,15 @@ public class NeuromancerWindow {
 			}
 		});
 		btnLearn.setText("Optimize model");
+		
+		Button btnNewButton_3 = new Button(composite_1, SWT.NONE);
+		btnNewButton_3.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				engine.stopCommand();
+			}
+		});
+		btnNewButton_3.setText("Stop activity");
 
 		TabItem tbtmProgram = new TabItem(tabFolder, SWT.NONE);
 		tbtmProgram.setText("Target / Program");
@@ -610,6 +632,10 @@ public class NeuromancerWindow {
 		Button btnExecute = new Button(composite_2, SWT.NONE);
 		btnExecute.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		btnExecute.setText("Execute program");
+		
+		statusLine = new Text(shell, SWT.BORDER);
+		statusLine.setEditable(false);
+		statusLine.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 				
 		mntmNew.addSelectionListener(new SelectionAdapter() {
 			@Override
