@@ -1,0 +1,14 @@
+.NMC FILE FORMAT
+
+Initial (version 1) .NMC file format is used by NeuromancerUI to save dynamic targeted signal values.
+
+FILE FORMAT IS AS FOLLOWS (LITTLE ENDIAN)
+
+BYTES			CONTENT
+0	-	31		Signal Name 1 (ISO-8859-1/US-ASCII) [32 characters] (1 byte per char)
+32	-	63		Signal Name 2 (ISO-8859-1/US-ASCII) [32 characters] (1 byte per char)
+64 -	67		Program length in seconds [4 bytes unsigned int]
+68 -	X		Program 1 [4 bytes per sample, 1 Hz, little endian floats]
+X	-	Y		Program 2 [4 bytes per sample, 1 Hz, little endian floats]
+
+

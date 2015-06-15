@@ -116,7 +116,7 @@ public class NeuromancerModel
 			signal1Name = signal1Name + " ";
 		
 		byte[] name1;
-		try{ name1 = signal1Name.getBytes(StandardCharsets.UTF_16LE); }
+		try{ name1 = signal1Name.getBytes(StandardCharsets.ISO_8859_1); }
 		catch(Exception e){ return false; }
 		
 		if(signal2Name.length() > 32) signal2Name = signal2Name.substring(0, 32);
@@ -124,7 +124,7 @@ public class NeuromancerModel
 			signal2Name = signal2Name + " ";
 		
 		byte[] name2;
-		try{ name2 = signal2Name.getBytes(StandardCharsets.UTF_16LE); }
+		try{ name2 = signal2Name.getBytes(StandardCharsets.ISO_8859_1); }
 		catch(Exception e){ return false; }
 		
 		ByteBuffer b = ByteBuffer.allocate(4);
@@ -181,20 +181,21 @@ public class NeuromancerModel
 		}
 		catch(Exception e){ return false; }
 		
-		if(input.length < (64+64+4))
+		if(input.length < (32+32+4))
 			return false; // doesn't contain signal names and signal length information
 		
 		try{
-			byte[] name1  = Arrays.copyOfRange(input, 0, 64);
-			byte[] name2  = Arrays.copyOfRange(input, 64, 128);
-			byte[] length = Arrays.copyOfRange(input, 128, 128+4);
+			byte[] name1  = Arrays.copyOfRange(input, 0, 32);
+			byte[] name2  = Arrays.copyOfRange(input, 32, 64);
+			byte[] length = Arrays.copyOfRange(input, 64, 64+4);
 			
-			String n1      = ByteBuffer.wrap(name1).order(ByteOrder.LITTLE_ENDIAN).asCharBuffer().toString().trim();
-			String n2      = ByteBuffer.wrap(name2).order(ByteOrder.LITTLE_ENDIAN).asCharBuffer().toString().trim();
+			String n1      = new String(name1, StandardCharsets.ISO_8859_1).trim();
+			String n2      = new String(name2, StandardCharsets.ISO_8859_1).trim();
+
 			int dataLength = ByteBuffer.wrap(length).order(ByteOrder.LITTLE_ENDIAN).getInt();
 			
-			byte[] data1  = Arrays.copyOfRange(input, 128+4, 128+4+dataLength*4);
-			byte[] data2  = Arrays.copyOfRange(input, 128+4+dataLength*4, 128+4+dataLength*4+dataLength*4);
+			byte[] data1  = Arrays.copyOfRange(input, 64+4, 64+4+dataLength*4);
+			byte[] data2  = Arrays.copyOfRange(input, 64+4+dataLength*4, 64+4+dataLength*4+dataLength*4);
 			
 			FloatBuffer f1 = ByteBuffer.wrap(data1).order(ByteOrder.LITTLE_ENDIAN).asFloatBuffer();
 			FloatBuffer f2 = ByteBuffer.wrap(data2).order(ByteOrder.LITTLE_ENDIAN).asFloatBuffer();
