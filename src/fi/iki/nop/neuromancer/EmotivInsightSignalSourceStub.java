@@ -11,14 +11,11 @@ public class EmotivInsightSignalSourceStub implements SignalSource {
 	public String getSignalName(int index) {
 		if(index < 0) return null;
 		
-		if(index == 0)      return "Insight: Attention";
-		else if(index == 1) return "Insight: Focus";
-		else if(index == 2) return "Insight: Engagement";
-		else if(index == 3) return "Insight: Interest";
-		else if(index == 4) return "Insight: Excitement";
-		else if(index == 5) return "Insight: Affinity";
-		else if(index == 6) return "Insight: Relaxation";
-		else if(index == 7) return "Insight: Stress";
+		if(index == 0)      return "Insight: Excitement";
+		else if(index == 1) return "Insight: Relaxation";
+		else if(index == 2) return "Insight: Stress";
+		else if(index == 3) return "Insight: Engagement";
+		else if(index == 4) return "Insight: Interest";
 		else return "";
 	}
 
@@ -27,14 +24,11 @@ public class EmotivInsightSignalSourceStub implements SignalSource {
 	public int getSignalNameNumber(String name) {
 		if(name == null) return -1;
 		
-		if     (name.compareTo("Insight: Attention") == 0)  return 0;
-		else if(name.compareTo("Insight: Focus") == 0)      return 1;
-		else if(name.compareTo("Insight: Engagement") == 0) return 2;
-		else if(name.compareTo("Insight: Interest") == 0)   return 3;
-		else if(name.compareTo("Insight: Excitement") == 0) return 4;
-		else if(name.compareTo("Insight: Affinity") == 0)   return 5;
-		else if(name.compareTo("Insight: Relaxation") == 0) return 6;
-		else if(name.compareTo("Insight: Stress") == 0)     return 7;
+		if     (name.compareTo("Insight: Excitement") == 0) return 0;
+		else if(name.compareTo("Insight: Relaxation") == 0) return 1;
+		else if(name.compareTo("Insight: Stress") == 0)     return 2;
+		else if(name.compareTo("Insight: Engagement") == 0) return 3;
+		else if(name.compareTo("Insight: Interest") == 0)   return 4;
 		else return -1;
 	}
 

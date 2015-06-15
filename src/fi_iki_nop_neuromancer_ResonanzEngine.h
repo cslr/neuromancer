@@ -26,25 +26,25 @@ JNIEXPORT jboolean JNICALL Java_fi_iki_nop_neuromancer_ResonanzEngine_startMeasu
 /*
  * Class:     fi_iki_nop_neuromancer_ResonanzEngine
  * Method:    startOptimizeModel
- * Signature: (Ljava/lang/String;)Z
+ * Signature: (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Z
  */
 JNIEXPORT jboolean JNICALL Java_fi_iki_nop_neuromancer_ResonanzEngine_startOptimizeModel
-  (JNIEnv *, jobject, jstring);
+  (JNIEnv *, jobject, jstring, jstring, jstring);
 
 /*
  * Class:     fi_iki_nop_neuromancer_ResonanzEngine
- * Method:    getOptimizeModelStatus
- * Signature: ()Ljava/lang/String;
+ * Method:    stopCommand
+ * Signature: ()Z
  */
-JNIEXPORT jstring JNICALL Java_fi_iki_nop_neuromancer_ResonanzEngine_getOptimizeModelStatus
+JNIEXPORT jboolean JNICALL Java_fi_iki_nop_neuromancer_ResonanzEngine_stopCommand
   (JNIEnv *, jobject);
 
 /*
  * Class:     fi_iki_nop_neuromancer_ResonanzEngine
- * Method:    stopOptimizeModel
+ * Method:    isBusy
  * Signature: ()Z
  */
-JNIEXPORT jboolean JNICALL Java_fi_iki_nop_neuromancer_ResonanzEngine_stopOptimizeModel
+JNIEXPORT jboolean JNICALL Java_fi_iki_nop_neuromancer_ResonanzEngine_isBusy
   (JNIEnv *, jobject);
 
 /*
@@ -57,11 +57,11 @@ JNIEXPORT jstring JNICALL Java_fi_iki_nop_neuromancer_ResonanzEngine_getStatusLi
 
 /*
  * Class:     fi_iki_nop_neuromancer_ResonanzEngine
- * Method:    stopCommand
- * Signature: ()Z
+ * Method:    getAnalyzeModel
+ * Signature: (Ljava/lang/String;)Ljava/lang/String;
  */
-JNIEXPORT jboolean JNICALL Java_fi_iki_nop_neuromancer_ResonanzEngine_stopCommand
-  (JNIEnv *, jobject);
+JNIEXPORT jstring JNICALL Java_fi_iki_nop_neuromancer_ResonanzEngine_getAnalyzeModel
+  (JNIEnv *, jobject, jstring);
 
 #ifdef __cplusplus
 }

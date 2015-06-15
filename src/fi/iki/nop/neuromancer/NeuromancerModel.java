@@ -93,13 +93,16 @@ public class NeuromancerModel
 		int dataLength      = 0;
 		
 		// loads program data into variables
-		signal1Name = this.getProgram(0).getSignalName().trim();
+		signal1Name = this.getProgram(0).getSignalName();
 		signal1Data = this.getProgram(0).getProgram();
-		signal2Name = this.getProgram(1).getSignalName().trim();
+		signal2Name = this.getProgram(1).getSignalName();
 		signal2Data = this.getProgram(1).getProgram();
 		
 		if(signal1Name == null) signal1Name = "<disabled>";
 		if(signal2Name == null) signal2Name = "<disabled>";
+		
+		signal1Name = signal1Name.trim();
+		signal2Name = signal2Name.trim();
 		
 		if(signal1Data.length != signal2Data.length)
 			return false;

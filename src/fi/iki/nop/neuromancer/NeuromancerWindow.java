@@ -49,7 +49,14 @@ public class NeuromancerWindow {
 	protected Display display;
 	
 	private final Image[] programCanvas = new Image[2];
+	
+	private Button btnRandom;
+	private Button btnMeasure;
+	private Button btnLearn;
+	private Button btnStopAction;
 	private Text statusLine;
+	
+	private Label lblDatabasemodelInformation;
 
 	/**
 	 * Launch the application.
@@ -85,6 +92,21 @@ public class NeuromancerWindow {
 					Display.getDefault().syncExec(new Runnable(){
 						public void run(){
 							if(!shell.isDisposed()){
+								boolean busy = engine.isBusy();
+								
+								if(busy){
+									btnRandom.setEnabled(false);
+									btnMeasure.setEnabled(false);
+									btnLearn.setEnabled(false);
+									btnStopAction.setEnabled(true);
+								}
+								else{
+									btnRandom.setEnabled(true);
+									btnMeasure.setEnabled(true);
+									btnLearn.setEnabled(true);
+									btnStopAction.setEnabled(false);
+								}
+								
 								String engineState = engine.getStatusLine();
 								if(engineState == null) engineState = "";
 								window.statusLine.setText(engineState);
@@ -92,7 +114,7 @@ public class NeuromancerWindow {
 						}
 					});
 					
-					try{ Thread.sleep(500); }
+					try{ Thread.sleep(500); } // 500ms
 					catch(InterruptedException e){ }
 				}
 			}
@@ -101,6 +123,34 @@ public class NeuromancerWindow {
 		updaterThread.setDaemon(true);
 		updaterThread.start();
 		
+		
+		Thread databaseScanThread = new Thread(){
+			public void run(){
+				while(true){
+					
+					Display.getDefault().syncExec(new Runnable(){
+						public void run(){
+							if(!shell.isDisposed()){
+								String modelDir = model.getModelDirectory();
+								if(modelDir == null) return;
+								String dbInfo = engine.getAnalyzeModel(model.getModelDirectory());
+								
+								if(dbInfo != null)
+									window.lblDatabasemodelInformation.setText(dbInfo);
+								else
+									window.lblDatabasemodelInformation.setText("");								
+							}
+						}
+					});
+					
+					try{ Thread.sleep(10000); } // 10 second interval
+					catch(InterruptedException e){ }
+				}
+			}
+		};
+		
+		databaseScanThread.setDaemon(true);
+		databaseScanThread.start();
 		
 		while (!shell.isDisposed()) {
 			if (!display.readAndDispatch()) {
@@ -288,11 +338,20 @@ public class NeuromancerWindow {
 		});
 		btnNewButton_1.setText("Select");
 		
+		new Label(composite, SWT.NONE);
+		
+		lblDatabasemodelInformation = new Label(composite, SWT.NONE);
+		lblDatabasemodelInformation.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		lblDatabasemodelInformation.setText("Database/model information");
+		lblDatabasemodelInformation.setToolTipText("Model optimization requires at least 10 samples for all instances.");
+		
+		new Label(composite, SWT.NONE);
+		
 		Composite composite_1 = new Composite(composite, SWT.NONE);
 		composite_1.setLayoutData(new GridData(SWT.RIGHT, SWT.BOTTOM, false, true, 3, 1));
 		composite_1.setLayout(new RowLayout(SWT.HORIZONTAL));
 		
-		Button btnRandom = new Button(composite_1, SWT.NONE);
+		btnRandom = new Button(composite_1, SWT.NONE);
 		btnRandom.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -301,35 +360,38 @@ public class NeuromancerWindow {
 		});
 		btnRandom.setText("Test input");
 		
-		Button btnNewButton_2 = new Button(composite_1, SWT.NONE);
-		btnNewButton_2.addSelectionListener(new SelectionAdapter() {
+		btnMeasure = new Button(composite_1, SWT.NONE);
+		btnMeasure.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				engine.startMeasureStimulation(model.getPictureDirectory(), model.getKeywordsFile(), model.getModelDirectory());
 			}
 		});
-		btnNewButton_2.setText("Measure database");
+		btnMeasure.setText("Measure database");
 		
-		Button btnLearn = new Button(composite_1, SWT.NONE);
+		btnLearn = new Button(composite_1, SWT.NONE);
 		btnLearn.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				engine.startOptimizeModel(model.getModelDirectory());
+				engine.startOptimizeModel(
+						model.getPictureDirectory(),
+						model.getKeywordsFile(),
+						model.getModelDirectory());
 			}
 		});
 		btnLearn.setText("Optimize model");
 		
-		Button btnNewButton_3 = new Button(composite_1, SWT.NONE);
-		btnNewButton_3.addSelectionListener(new SelectionAdapter() {
+		btnStopAction = new Button(composite_1, SWT.NONE);
+		btnStopAction.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				engine.stopCommand();
 			}
 		});
-		btnNewButton_3.setText("Stop activity");
+		btnStopAction.setText("Stop activity");
 
 		TabItem tbtmProgram = new TabItem(tabFolder, SWT.NONE);
-		tbtmProgram.setText("Target / Program");
+		tbtmProgram.setText("Targets / Program");
 		
 		Composite composite_2 = new Composite(tabFolder, SWT.NONE);
 		tbtmProgram.setControl(composite_2);

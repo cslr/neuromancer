@@ -46,20 +46,22 @@ public class ResonanzEngine {
 	 * @param modelDirectory directory into which measurements and optimized models are stored
 	 * @return true if optimization process was started successfully and false if it did not start
 	 */
-	public native boolean startOptimizeModel(String modelDirectory);
+	public native boolean startOptimizeModel(String pictureDir, String keywordsFile, String modelDirectory);
 	
 	
 	/**
-	 * Gets current status of the optimization
-	 * @return null if there is no running optimization process, otherwise current status (including ETA) of the process
+	 * Stops current resonanz-engine activity and resets into idle state
+	 * @return false if there was an error and true otherwise
 	 */
-	public native String getOptimizeModelStatus(); // deprecated WILL BE REMOVED
+	public native boolean stopCommand();
+	
 	
 	/**
-	 * Stops model optimization
-	 * @return true if running optimization process was successfully stopped and false there was an error or no process to stop 
+	 * Returns true if resonanz-engine is executing some command which will be overriden 
+	 * if a new command is given
+	 * @return true if engine is executing or about to execute new command (incoming command) and false if the engine is idle
 	 */
-	public native boolean stopOptimizeModel(); // deprecated WILL BE REMOVED
+	public native boolean isBusy();
 	
 	
 	/**
@@ -70,8 +72,10 @@ public class ResonanzEngine {
 	
 	
 	/**
-	 * Stops current resonanz-engine activity and resets into idle state
-	 * @return false if there was an error and true otherwise
+	 * Returns database size and model performance information
+	 * @param modelDir database and model directory
+	 * @return text string about database size and model performace
 	 */
-	public native boolean stopCommand();
+	public native String getAnalyzeModel(String modelDir);
+	
 }
