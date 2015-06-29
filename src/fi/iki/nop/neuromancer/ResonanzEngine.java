@@ -50,6 +50,39 @@ public class ResonanzEngine {
 	
 	
 	/**
+	 * Starts executing stimulation program according to target values
+	 * 
+	 * @param pictureDir source picture dir to show pictures from
+	 * @param keywordsFile source keyword file to show keywords from
+	 * @param modelDir model directory to estimate reactions to a model
+	 * @param targetNames signal target names (Emotiv metasignal names)
+	 * @param programs float valued targets for program names
+	 * @return true if starting showing the target command was successful and false otherwise
+	 */
+	public native boolean startExecuteProgram(String pictureDir, String keywordsFile, String modelDir, 
+			String[] targetNames, float[][] programs);
+	/*
+	{
+		
+		System.out.println("EXECUTE COMMAND 1: " + pictureDir + " " + keywordsFile);
+		
+		if(targetNames.length != programs.length)
+			return false;
+		
+		System.out.println("EXECUTE COMMAND 2: ");
+		
+		for(int i=0;i<targetNames.length;i++)
+			System.out.println(targetNames[i]);
+		
+		for(int i=0;i<programs.length;i++)
+			System.out.println(programs[i].length);
+		
+		return true;
+	}
+	*/
+	
+	
+	/**
 	 * Stops current resonanz-engine activity and resets into idle state
 	 * @return false if there was an error and true otherwise
 	 */

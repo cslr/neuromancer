@@ -239,7 +239,7 @@ public class NeuromancerWindow {
 				mbox.setText("About..");
 				
 				String msg = model.getSoftwareName() + " " + model.getVersion() + " (64bit)\n";
-				msg += "© Copyright Tomas Ukkonen (\"CSRL\") 2015 <tomas.ukkonen@iki.fi>\n";
+				msg += "© Copyright Tomas Ukkonen 2015 <tomas.ukkonen@iki.fi>\n";
 				msg += "\n";
 				msg += "This software requires Emotiv Insight (tm) device <www.emotiv.com>.\n";
 				msg += "\n";
@@ -692,8 +692,29 @@ public class NeuromancerWindow {
 		lblSecs.setText("secs");
 		
 		Button btnExecute = new Button(composite_2, SWT.NONE);
+		btnExecute.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				
+				String[] targets = new String[2];
+				targets[0] = model.getProgram(0).getSignalName();
+				targets[1] = model.getProgram(1).getSignalName();
+				
+				float[][] programs = new float[2][];
+				
+				programs[0] = model.getProgram(0).getProgram();
+				programs[1] = model.getProgram(1).getProgram();
+				
+				engine.startExecuteProgram(
+						model.getPictureDirectory(),
+						model.getKeywordsFile(),
+						model.getModelDirectory(),
+						targets, programs);
+			}
+		});
 		btnExecute.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		btnExecute.setText("Execute program");
+		btnExecute.setToolTipText("Execution requires > 10 examples per picture/keyword.");
 		
 		statusLine = new Text(shell, SWT.BORDER);
 		statusLine.setEditable(false);

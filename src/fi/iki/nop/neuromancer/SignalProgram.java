@@ -22,6 +22,8 @@ public class SignalProgram {
 	
 	
 	public SignalProgram(int seconds){
+		signalName = "<disabled>";
+		
 		if(seconds >= 0)
 			targetSignal = new float[seconds];
 		
