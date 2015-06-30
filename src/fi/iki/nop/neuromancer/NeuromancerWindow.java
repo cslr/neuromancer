@@ -380,6 +380,7 @@ public class NeuromancerWindow {
 			}
 		});
 		btnLearn.setText("Optimize model");
+		btnLearn.setToolTipText("Optimization requires > 10 examples per picture/keyword.");
 		
 		btnStopAction = new Button(composite_1, SWT.NONE);
 		btnStopAction.addSelectionListener(new SelectionAdapter() {
@@ -714,7 +715,6 @@ public class NeuromancerWindow {
 		});
 		btnExecute.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		btnExecute.setText("Execute program");
-		btnExecute.setToolTipText("Execution requires > 10 examples per picture/keyword.");
 		
 		statusLine = new Text(shell, SWT.BORDER);
 		statusLine.setEditable(false);
