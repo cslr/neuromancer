@@ -14,5 +14,6 @@
 	<classpathentry kind="lib" path="C:/eclipse/plugins/org.eclipse.ui.workbench_3.106.2.v20150204-1030.jar" sourcepath="C:/eclipse/plugins/org.eclipse.ui.workbench_3.106.2.v20150204-1030.jar"/>
 	<classpathentry kind="lib" path="C:/eclipse/plugins/com.ibm.icu_52.1.1.v201501240615.jar" sourcepath="C:/eclipse/plugins/com.ibm.icu_52.1.1.v201501240615.jar"/>
 	<classpathentry kind="lib" path="C:/eclipse/plugins/org.eclipse.ui.forms_3.6.100.v20140422-1825.jar" sourcepath="C:/eclipse/plugins/org.eclipse.ui.forms_3.6.100.v20140422-1825.jar"/>
+	<classpathentry kind="lib" path="swing2swt.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

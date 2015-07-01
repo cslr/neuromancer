@@ -23,6 +23,8 @@ public class NeuromancerModel
 	
 	private SignalProgram[] programs; // Emotiv meta-signal programs
 	
+	protected String programAudioFile;
+	
 	
 	public NeuromancerModel(){
 		programLength = 60;
@@ -37,6 +39,7 @@ public class NeuromancerModel
 		pictureDirectory = "";
 		keywordsFile = "";
 		modelDirectory = "";
+		programAudioFile = "";
 	}
 	
 	
@@ -60,6 +63,9 @@ public class NeuromancerModel
 	
 	public String getModelDirectory(){ return modelDirectory; }
 	public void setModelDirectory(String model){ modelDirectory = model; }
+	
+	public void setAudioFile(String audiofile){ programAudioFile = audiofile; }
+	public String getAudioFile(){ return programAudioFile; }
 	
 	public int getProgramLength(){ return programLength; }
 	

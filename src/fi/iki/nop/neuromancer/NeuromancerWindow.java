@@ -35,6 +35,7 @@ import org.eclipse.swt.events.ControlAdapter;
 import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.PaintEvent;
+import swing2swt.layout.FlowLayout;
 
 
 
@@ -57,6 +58,7 @@ public class NeuromancerWindow {
 	private Text statusLine;
 	
 	private Label lblDatabasemodelInformation;
+	private Text audioFileText;
 
 	/**
 	 * Launch the application.
@@ -639,6 +641,35 @@ public class NeuromancerWindow {
 			}
 		});
 		
+		Label lblPlayAudio = new Label(composite_2, SWT.NONE);
+		lblPlayAudio.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
+		lblPlayAudio.setText("Play audio");
+		
+		Composite composite_4 = new Composite(composite_2, SWT.NONE);
+		composite_4.setLayout(new GridLayout(2, false));
+		composite_4.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		
+		audioFileText = new Text(composite_4, SWT.BORDER);
+		audioFileText.setEnabled(false);
+		audioFileText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		
+		Button btnAudioFile = new Button(composite_4, SWT.NONE);
+		btnAudioFile.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				/** Audio File Selection */
+				FileDialog fd = new FileDialog(shell, SWT.OPEN);
+				fd.setFilterExtensions(new String[] { "*.mp3", "*.ogg" });
+				String filename = fd.open();
+				
+				if(filename != null){
+					model.setAudioFile(filename);
+					audioFileText.setText(filename);
+				}				
+			}
+		});
+		btnAudioFile.setText("Select");
+		
 		
 		Composite composite_3 = new Composite(composite_2, SWT.NONE);
 		composite_3.setLayout(new RowLayout(SWT.HORIZONTAL));
@@ -710,6 +741,7 @@ public class NeuromancerWindow {
 						model.getPictureDirectory(),
 						model.getKeywordsFile(),
 						model.getModelDirectory(),
+						model.getAudioFile(),
 						targets, programs);
 			}
 		});

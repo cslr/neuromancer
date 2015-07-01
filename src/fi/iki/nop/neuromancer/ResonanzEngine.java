@@ -55,12 +55,13 @@ public class ResonanzEngine {
 	 * @param pictureDir source picture dir to show pictures from
 	 * @param keywordsFile source keyword file to show keywords from
 	 * @param modelDir model directory to estimate reactions to a model
+	 * @param audioFile audioFile to be played together with program [can be null or empty]
 	 * @param targetNames signal target names (Emotiv metasignal names)
 	 * @param programs float valued targets for program names
 	 * @return true if starting showing the target command was successful and false otherwise
 	 */
 	public native boolean startExecuteProgram(String pictureDir, String keywordsFile, String modelDir, 
-			String[] targetNames, float[][] programs);
+			String audioFile, String[] targetNames, float[][] programs);
 	/*
 	{
 		
