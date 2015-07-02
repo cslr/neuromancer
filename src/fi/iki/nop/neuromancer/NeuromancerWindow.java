@@ -1,6 +1,8 @@
 package fi.iki.nop.neuromancer;
 
 
+import java.io.File;
+
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Menu;
@@ -35,6 +37,7 @@ import org.eclipse.swt.events.ControlAdapter;
 import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.PaintEvent;
+
 import swing2swt.layout.FlowLayout;
 
 
@@ -59,6 +62,8 @@ public class NeuromancerWindow {
 	
 	private Label lblDatabasemodelInformation;
 	private Text audioFileText;
+	
+	private MenuItem mntmResetDatabase;
 
 	/**
 	 * Launch the application.
@@ -101,12 +106,14 @@ public class NeuromancerWindow {
 									btnMeasure.setEnabled(false);
 									btnLearn.setEnabled(false);
 									btnStopAction.setEnabled(true);
+									mntmResetDatabase.setEnabled(false);
 								}
 								else{
 									btnRandom.setEnabled(true);
 									btnMeasure.setEnabled(true);
 									btnLearn.setEnabled(true);
 									btnStopAction.setEnabled(false);
+									mntmResetDatabase.setEnabled(true);
 								}
 								
 								String engineState = engine.getStatusLine();
@@ -209,8 +216,24 @@ public class NeuromancerWindow {
 		mntmSaveProgram.setText("Save program..");
 		
 		new MenuItem(menu_1, SWT.SEPARATOR);
-		
-		MenuItem mntmResetDatabase = new MenuItem(menu_1, SWT.NONE);
+				
+		mntmResetDatabase = new MenuItem(menu_1, SWT.NONE);
+		mntmResetDatabase.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				
+		        MessageBox messageBox = new MessageBox(shell, SWT.ICON_QUESTION | SWT.YES | SWT.NO);
+		        messageBox.setMessage("Do you really want to delete current measurements?");
+		        messageBox.setText("Delete database");
+		        
+		        if (messageBox.open() == SWT.YES){
+		        	String modelDir = model.getModelDirectory();
+		        	if(new File(modelDir).exists())
+		        		engine.deleteModelData(modelDir);
+		        }
+		        
+			}
+		});
 		mntmResetDatabase.setText("Reset database");
 		
 		new MenuItem(menu_1, SWT.SEPARATOR);
@@ -391,6 +414,34 @@ public class NeuromancerWindow {
 		});
 		mntmCheckStatus.setText("Check status..");
 		
+		MenuItem mntmSettings = new MenuItem(menu, SWT.CASCADE);
+		mntmSettings.setText("Settings");
+		
+		Menu menu_4 = new Menu(mntmSettings);
+		mntmSettings.setMenu(menu_4);
+		
+		final MenuItem mntmAutofill = new MenuItem(menu_4, SWT.CHECK);
+		mntmAutofill.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				model.setAutoFill(mntmAutofill.getSelection());
+			}
+		});
+		mntmAutofill.setSelection(model.getAutoFill());
+		mntmAutofill.setText("Autofill");
+		
+		new MenuItem(menu_4, SWT.SEPARATOR);
+		
+		final MenuItem mntmBlindMonteCarlo = new MenuItem(menu_4, SWT.CHECK);
+		mntmBlindMonteCarlo.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				model.setBlindMonteCarloMode(mntmBlindMonteCarlo.getSelection());
+			}
+		});
+		mntmBlindMonteCarlo.setText("Blind Monte Carlo");
+		mntmBlindMonteCarlo.setSelection(model.getBlindMonteCarloMode());
+		
 		MenuItem mntmHelp = new MenuItem(menu, SWT.CASCADE);
 		mntmHelp.setText("Help");
 		
@@ -451,19 +502,6 @@ public class NeuromancerWindow {
 
 		
 		Button btnSelect = new Button(composite, SWT.NONE);
-		btnSelect.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				DirectoryDialog dd = new DirectoryDialog(shell);
-				dd.setFilterPath("c:\\");
-				String directory = dd.open();
-				
-				if(directory != null){
-					model.setPictureDirectory(directory);
-					text_3.setText(directory);
-				}
-			}
-		});
 		btnSelect.setText("Select");
 		
 		Label lblNewLabel = new Label(composite, SWT.NONE);
@@ -515,6 +553,44 @@ public class NeuromancerWindow {
 			}
 		});
 		btnNewButton_1.setText("Select");
+		
+		btnSelect.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				DirectoryDialog dd = new DirectoryDialog(shell);
+				dd.setFilterPath("c:\\");
+				String directory = dd.open();
+				
+				if(directory != null){
+					model.setPictureDirectory(directory);
+					text_3.setText(directory);
+				}
+				
+				if(model.getAutoFill()){
+					String keywordFile = directory + File.separator + "keywords.txt";
+					String modelDir = directory + File.separator + "datamodel";
+					
+					// creates new model directory if needed/possible
+					File dir = new File(modelDir);
+					if(!dir.exists()){
+						try{ dir.mkdir(); } 
+						catch(SecurityException se){ }
+					}
+					
+					File keyword = new File(keywordFile);
+					
+					if(dir.exists()){
+						model.setModelDirectory(modelDir);
+						text_5.setText(modelDir);
+					}
+					
+					{					
+						model.setKeywordsFile(keywordFile);
+						text_4.setText(keywordFile);
+					}
+				}
+			}
+		});
 		
 		new Label(composite, SWT.NONE);
 		

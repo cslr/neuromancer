@@ -13,19 +13,20 @@ import java.util.Arrays;
 public class NeuromancerModel
 {
 	protected final String SOFTWARE_NAME = "Neuromancer Neurostim";
-	protected final String VERSION = "0.2 alpha";
+	protected final String VERSION = "0.3a";
 	
 	protected String pictureDirectory;
 	protected String keywordsFile;
 	protected String modelDirectory;
 	
 	private int programLength; // length of program in seconds
-	
 	private SignalProgram[] programs; // Emotiv meta-signal programs
-	
 	protected String programAudioFile;
+	protected boolean blindMode; // should the program execution done "blindly" without EEG values using Monte Carlo simulation 
+	
 	
 	protected int eegSourceDevice;
+	protected boolean autofill; // does program autofill values when picture folder is selected
 	
 	
 	public NeuromancerModel(){
@@ -44,6 +45,9 @@ public class NeuromancerModel
 		programAudioFile = "";
 		
 		eegSourceDevice = -1;
+		
+		autofill = true;
+		blindMode = false;
 	}
 	
 	
@@ -73,6 +77,12 @@ public class NeuromancerModel
 	
 	public void setEEGSourceDevice(int device){ eegSourceDevice = device; }
 	public int getEEGSourceDevice(){ return eegSourceDevice; }
+	
+	public void setAutoFill(boolean autofillValue){ autofill = autofillValue; }
+	public boolean getAutoFill(){ return autofill; }
+	
+	public void setBlindMonteCarloMode(boolean mode){ blindMode = mode; }
+	public boolean getBlindMonteCarloMode(){ return blindMode; }
 	
 	public int getProgramLength(){ return programLength; }
 	

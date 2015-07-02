@@ -62,25 +62,6 @@ public class ResonanzEngine {
 	 */
 	public native boolean startExecuteProgram(String pictureDir, String keywordsFile, String modelDir, 
 			String audioFile, String[] targetNames, float[][] programs);
-	/*
-	{
-		
-		System.out.println("EXECUTE COMMAND 1: " + pictureDir + " " + keywordsFile);
-		
-		if(targetNames.length != programs.length)
-			return false;
-		
-		System.out.println("EXECUTE COMMAND 2: ");
-		
-		for(int i=0;i<targetNames.length;i++)
-			System.out.println(targetNames[i]);
-		
-		for(int i=0;i<programs.length;i++)
-			System.out.println(programs[i].length);
-		
-		return true;
-	}
-	*/
 	
 	
 	/**
@@ -108,9 +89,16 @@ public class ResonanzEngine {
 	/**
 	 * Returns database size and model performance information
 	 * @param modelDir database and model directory
-	 * @return text string about database size and model performace
+	 * @return text string about database size and model performance
 	 */
 	public native String getAnalyzeModel(String modelDir);
+	
+	
+	/**
+	 * Resets/deletes measurement and model files from modelDir
+	 * @return true if model directory has been emtied of .ds and .model files and false if there was an error
+	 */
+	public native boolean deleteModelData(String modelDir);
 	
 	
 	// sets EEG device

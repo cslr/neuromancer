@@ -73,6 +73,14 @@ JNIEXPORT jstring JNICALL Java_fi_iki_nop_neuromancer_ResonanzEngine_getAnalyzeM
 
 /*
  * Class:     fi_iki_nop_neuromancer_ResonanzEngine
+ * Method:    deleteModelData
+ * Signature: (Ljava/lang/String;)Z
+ */
+JNIEXPORT jboolean JNICALL Java_fi_iki_nop_neuromancer_ResonanzEngine_deleteModelData
+  (JNIEnv *, jobject, jstring);
+
+/*
+ * Class:     fi_iki_nop_neuromancer_ResonanzEngine
  * Method:    setEEGSourceDevice
  * Signature: (I)Z
  */
