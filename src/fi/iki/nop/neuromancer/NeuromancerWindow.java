@@ -227,11 +227,187 @@ public class NeuromancerWindow {
 		});
 		mntmExit.setText("Exit");
 		
+		MenuItem mntmDevice = new MenuItem(menu, SWT.CASCADE);
+		mntmDevice.setText("Device");
+		
+		Menu menu_2 = new Menu(mntmDevice);
+		mntmDevice.setMenu(menu_2);
+		
+		final MenuItem mntmNoDevice;
+		final MenuItem mntmRandomRng;
+		final MenuItem mntmEmotivEpoc;
+		final MenuItem mntmEmotivInsight;
+		final MenuItem mntmMuseOsc;
+		
+		mntmNoDevice = new MenuItem(menu_2, SWT.RADIO);
+		mntmNoDevice.setSelection(true);
+		mntmNoDevice.setText("No device");
+		
+		mntmRandomRng = new MenuItem(menu_2, SWT.RADIO);
+		mntmRandomRng.setText("Random RNG");
+		
+		mntmEmotivEpoc = new MenuItem(menu_2, SWT.RADIO);
+		mntmEmotivEpoc.setEnabled(false);
+		mntmEmotivEpoc.setText("Emotiv EPOC");
+		
+		mntmEmotivInsight = new MenuItem(menu_2, SWT.RADIO);
+		mntmEmotivInsight.setText("Emotiv Insight");
+		
+		mntmMuseOsc = new MenuItem(menu_2, SWT.RADIO);
+		mntmMuseOsc.setEnabled(false);
+		mntmMuseOsc.setText("Muse OSC");
+
+		//////////////////////////////////////////////////////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////////
+		
+		mntmNoDevice.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				if(engine.setEEGSourceDevice(ResonanzEngine.RE_EEG_NO_DEVICE))
+					model.setEEGSourceDevice(ResonanzEngine.RE_EEG_NO_DEVICE);
+				else{
+					int selection = engine.getEEGSourceDevice();
+					mntmNoDevice.setSelection(false);
+					mntmRandomRng.setSelection(false);
+					mntmEmotivEpoc.setSelection(false);
+					mntmEmotivInsight.setSelection(false);
+					mntmMuseOsc.setSelection(false);
+					
+					if(selection == ResonanzEngine.RE_EEG_NO_DEVICE)
+						mntmNoDevice.setSelection(true);
+					else if(selection == ResonanzEngine.RE_EEG_RANDOM_DEVICE)
+						mntmRandomRng.setSelection(true);
+					else if(selection == ResonanzEngine.RE_EEG_EMOTIV_INSIGHT_DEVICE)
+						mntmEmotivInsight.setSelection(true);
+					else if(selection == ResonanzEngine.RE_EEG_IA_MUSE_DEVICE)
+						mntmMuseOsc.setSelection(true);
+				}
+			}
+		});
+		
+		mntmRandomRng.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				if(engine.setEEGSourceDevice(ResonanzEngine.RE_EEG_RANDOM_DEVICE))
+					model.setEEGSourceDevice(ResonanzEngine.RE_EEG_RANDOM_DEVICE);
+				else{
+					int selection = engine.getEEGSourceDevice();
+					mntmNoDevice.setSelection(false);
+					mntmRandomRng.setSelection(false);
+					mntmEmotivEpoc.setSelection(false);
+					mntmEmotivInsight.setSelection(false);
+					mntmMuseOsc.setSelection(false);
+					
+					if(selection == ResonanzEngine.RE_EEG_NO_DEVICE)
+						mntmNoDevice.setSelection(true);
+					else if(selection == ResonanzEngine.RE_EEG_RANDOM_DEVICE)
+						mntmRandomRng.setSelection(true);
+					else if(selection == ResonanzEngine.RE_EEG_EMOTIV_INSIGHT_DEVICE)
+						mntmEmotivInsight.setSelection(true);
+					else if(selection == ResonanzEngine.RE_EEG_IA_MUSE_DEVICE)
+						mntmMuseOsc.setSelection(true);
+				}
+			}
+		});		
+		
+		mntmEmotivEpoc.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+			}
+		});		
+		
+		mntmEmotivInsight.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				if(engine.setEEGSourceDevice(ResonanzEngine.RE_EEG_EMOTIV_INSIGHT_DEVICE))
+					model.setEEGSourceDevice(ResonanzEngine.RE_EEG_EMOTIV_INSIGHT_DEVICE);
+				else{
+					int selection = engine.getEEGSourceDevice();
+					mntmNoDevice.setSelection(false);
+					mntmRandomRng.setSelection(false);
+					mntmEmotivEpoc.setSelection(false);
+					mntmEmotivInsight.setSelection(false);
+					mntmMuseOsc.setSelection(false);
+					
+					if(selection == ResonanzEngine.RE_EEG_NO_DEVICE)
+						mntmNoDevice.setSelection(true);
+					else if(selection == ResonanzEngine.RE_EEG_RANDOM_DEVICE)
+						mntmRandomRng.setSelection(true);
+					else if(selection == ResonanzEngine.RE_EEG_EMOTIV_INSIGHT_DEVICE)
+						mntmEmotivInsight.setSelection(true);
+					else if(selection == ResonanzEngine.RE_EEG_IA_MUSE_DEVICE)
+						mntmMuseOsc.setSelection(true);
+				}
+			}
+		});		
+		
+		mntmMuseOsc.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				if(engine.setEEGSourceDevice(ResonanzEngine.RE_EEG_IA_MUSE_DEVICE))
+					model.setEEGSourceDevice(ResonanzEngine.RE_EEG_IA_MUSE_DEVICE);
+				else{
+					int selection = engine.getEEGSourceDevice();
+					mntmNoDevice.setSelection(false);
+					mntmRandomRng.setSelection(false);
+					mntmEmotivEpoc.setSelection(false);
+					mntmEmotivInsight.setSelection(false);
+					mntmMuseOsc.setSelection(false);
+					
+					if(selection == ResonanzEngine.RE_EEG_NO_DEVICE)
+						mntmNoDevice.setSelection(true);
+					else if(selection == ResonanzEngine.RE_EEG_RANDOM_DEVICE)
+						mntmRandomRng.setSelection(true);
+					else if(selection == ResonanzEngine.RE_EEG_EMOTIV_INSIGHT_DEVICE)
+						mntmEmotivInsight.setSelection(true);
+					else if(selection == ResonanzEngine.RE_EEG_IA_MUSE_DEVICE)
+						mntmMuseOsc.setSelection(true);
+				}
+			}
+		});
+		
+		//////////////////////////////////////////////////////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////////
+
+		
+		new MenuItem(menu_2, SWT.SEPARATOR);
+		
+		MenuItem mntmCheckStatus = new MenuItem(menu_2, SWT.NONE);
+		mntmCheckStatus.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				String status = engine.getEEGDeviceStatus();
+				if(status == null) status = "";
+				
+				MessageBox mbox = new MessageBox(shell, SWT.ICON_INFORMATION | SWT.OK);
+				mbox.setText("EEG Device Status");
+				
+				if(status.length() == 0)
+					status = "Internal error.";
+				
+				mbox.setMessage(status);
+				mbox.open();
+			}
+		});
+		mntmCheckStatus.setText("Check status..");
+		
 		MenuItem mntmHelp = new MenuItem(menu, SWT.CASCADE);
 		mntmHelp.setText("Help");
 		
 		Menu menu_3 = new Menu(mntmHelp);
 		mntmHelp.setMenu(menu_3);
+		
+		MenuItem mntmHtmlHelp = new MenuItem(menu_3, SWT.NONE);
+		mntmHtmlHelp.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				String path = System.getProperty("user.dir");
+				org.eclipse.swt.program.Program.launch(path + "/help/index.html");
+			}
+		});
+		mntmHtmlHelp.setText("HTML help");
+		
+		new MenuItem(menu_3, SWT.SEPARATOR);
 		
 		MenuItem mntmAbout = new MenuItem(menu_3, SWT.NONE);
 		mntmAbout.addSelectionListener(new SelectionAdapter() {

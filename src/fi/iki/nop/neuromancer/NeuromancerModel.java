@@ -25,6 +25,8 @@ public class NeuromancerModel
 	
 	protected String programAudioFile;
 	
+	protected int eegSourceDevice;
+	
 	
 	public NeuromancerModel(){
 		programLength = 60;
@@ -40,6 +42,8 @@ public class NeuromancerModel
 		keywordsFile = "";
 		modelDirectory = "";
 		programAudioFile = "";
+		
+		eegSourceDevice = -1;
 	}
 	
 	
@@ -66,6 +70,9 @@ public class NeuromancerModel
 	
 	public void setAudioFile(String audiofile){ programAudioFile = audiofile; }
 	public String getAudioFile(){ return programAudioFile; }
+	
+	public void setEEGSourceDevice(int device){ eegSourceDevice = device; }
+	public int getEEGSourceDevice(){ return eegSourceDevice; }
 	
 	public int getProgramLength(){ return programLength; }
 	

@@ -112,4 +112,31 @@ public class ResonanzEngine {
 	 */
 	public native String getAnalyzeModel(String modelDir);
 	
+	
+	// sets EEG device
+	public static int RE_EEG_NO_DEVICE = 0;
+	public static int RE_EEG_RANDOM_DEVICE = 1;
+	public static int RE_EEG_EMOTIV_INSIGHT_DEVICE = 2;
+	public static int RE_EEG_IA_MUSE_DEVICE = 3;
+	
+	/**
+	 * Sets Resonanz-Engine to use selected device as the source device.
+	 * @param deviceNumber EEG device number as described in ResonanzEngine class
+	 * @return true if eeg source device was changed successfully and false otherwise
+	 */
+	public native boolean setEEGSourceDevice(int deviceNumber);
+	
+	/**
+	 * Returns currently used EEG source device.
+	 * @return device number [0-3]
+	 */
+	public native int getEEGSourceDevice();
+	
+	/**
+	 * Returns connection status and other information about used the used EEG device.
+	 * @return status string or empty string if there was an error (no device connected?)
+	 */
+	public native String getEEGDeviceStatus();
+	
+	
 }
