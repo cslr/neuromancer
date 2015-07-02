@@ -989,12 +989,15 @@ public class NeuromancerWindow {
 				programs[0] = model.getProgram(0).getProgram();
 				programs[1] = model.getProgram(1).getProgram();
 				
+				boolean blindMonteCarlo = model.getBlindMonteCarloMode();
+				
 				engine.startExecuteProgram(
 						model.getPictureDirectory(),
 						model.getKeywordsFile(),
 						model.getModelDirectory(),
 						model.getAudioFile(),
-						targets, programs);
+						targets, programs,
+						blindMonteCarlo);
 			}
 		});
 		btnExecute.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));

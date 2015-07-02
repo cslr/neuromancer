@@ -58,10 +58,11 @@ public class ResonanzEngine {
 	 * @param audioFile audioFile to be played together with program [can be null or empty]
 	 * @param targetNames signal target names (Emotiv metasignal names)
 	 * @param programs float valued targets for program names
+	 * @param blindMode should one use blind mode with Monte Carlo simulation instead of current EEG values
 	 * @return true if starting showing the target command was successful and false otherwise
 	 */
 	public native boolean startExecuteProgram(String pictureDir, String keywordsFile, String modelDir, 
-			String audioFile, String[] targetNames, float[][] programs);
+			String audioFile, String[] targetNames, float[][] programs, boolean blindMode);
 	
 	
 	/**
