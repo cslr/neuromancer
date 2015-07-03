@@ -214,4 +214,83 @@ public class SignalProgram {
 		if(targetSignal == null) return 0;
 		else return targetSignal.length;
 	}
+	
+	
+	/**
+	 * Processes signals with "deepen" algorithm,
+	 * signal values are moved/scaled away from 0.5 towards 0 and 1
+	 */
+	public void processDeepen()
+	{
+		final double alpha = 3.0; // proper values 3-5 higher value deepens signal more
+		
+		for(int i=0;i<targetSignal.length;i++){
+			if(targetSignal[i] >= 0.0f){
+				float t = targetSignal[i];
+				
+				t = (float)((1.0 + Math.tanh((t-0.5)*alpha))/2.0);
+						
+				targetSignal[i] = t;
+			}			
+		}
+	}
+	
+	
+	/**
+	 * Process signals with "simplify" algorithm:
+	 * goes through triples of real points [x(n-1), x(n), x(n+1)] and 
+	 * calculates error of replacing x(n) with the mean value (x(n-1)+x(n+1))/2
+	 * replaces the point with smallest error with "interpolation point"
+	 */
+	public void processSimplify()
+	{
+		if(targetSignal.length < 3)
+			return; // too small signal: nothing to do
+		
+		int bestIndex = -1;
+		float bestValue = 0.5f;
+		float bestError = Float.POSITIVE_INFINITY;
+		
+		for(int i=0;i<(targetSignal.length-2);i++){
+			if(targetSignal[i] < 0.0f)
+				continue; // this is interpolation point: nothing to do
+			
+			// finds next two non-interpolation points
+			int middleIndex = -1;
+			int endIndex = -1;
+			
+			for(int j=(i+1);j<targetSignal.length;j++){
+				if(targetSignal[j] >= 0.0f){
+					middleIndex = j;
+					break;
+				}
+			}
+			
+			for(int j=(middleIndex+1);j<targetSignal.length;j++){
+				if(targetSignal[j] >= 0.0f){
+					endIndex = j;
+					break;
+				}
+			}
+			
+			if(middleIndex < 0 || endIndex < 0)
+				continue; // couldn't find next points
+			
+			// now we have a triplet (i, middleIndex, endIndex)
+			// calculates error we make if we replace middleIndex with interpolation
+			
+			float interpolation = targetSignal[i] + ((targetSignal[endIndex] - targetSignal[i])/((float)(endIndex - i)))*((float)(middleIndex - i));
+			float error = Math.abs(interpolation - targetSignal[middleIndex]);
+			
+			if(error < bestError){
+				bestIndex = middleIndex;
+				bestValue = interpolation;
+				bestError = error;
+			}
+		}
+		
+		if(bestIndex >= 0){
+			targetSignal[bestIndex] = -1;
+		}
+	}
 }

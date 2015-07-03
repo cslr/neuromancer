@@ -942,9 +942,44 @@ public class NeuromancerWindow {
 			}
 		});
 		
+		Label lblModifyPrograms = new Label(composite_2, SWT.NONE);
+		lblModifyPrograms.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
+		lblModifyPrograms.setAlignment(SWT.CENTER);
+		lblModifyPrograms.setText("Modify");
+		
+		Composite composite_6 = new Composite(composite_2, SWT.NONE);
+		composite_6.setLayout(new GridLayout(2, false));
+		composite_6.setLayoutData(new GridData(SWT.RIGHT, SWT.FILL, false, false, 1, 1));
+		
+		Button btnDeepen = new Button(composite_6, SWT.NONE);
+		btnDeepen.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				model.getProgram(0).processDeepen();
+				model.getProgram(1).processDeepen();
+				
+				canvas1.redraw();
+				canvas2.redraw();
+			}
+		});
+		btnDeepen.setText("Deepen signals");
+		
+		Button btnSimplify = new Button(composite_6, SWT.NONE);
+		btnSimplify.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				model.getProgram(0).processSimplify();
+				model.getProgram(1).processSimplify();
+				
+				canvas1.redraw();
+				canvas2.redraw();
+			}
+		});
+		btnSimplify.setText("Simplify signals");
+		
 		Label lblPlayAudio = new Label(composite_2, SWT.NONE);
 		lblPlayAudio.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
-		lblPlayAudio.setText("Play audio/video");
+		lblPlayAudio.setText("Play media");
 		
 		Composite composite_4 = new Composite(composite_2, SWT.NONE);
 		composite_4.setLayout(new GridLayout(2, false));
@@ -1030,7 +1065,28 @@ public class NeuromancerWindow {
 		composite_10.setLayout(new GridLayout(2, false));
 		
 		Button btnNewButton_2 = new Button(composite_10, SWT.NONE);
-		btnNewButton_2.setEnabled(false);
+		btnNewButton_2.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				String mediaFile = model.getAudioFile();
+				
+				String[] targets = new String[2];
+				targets[0] = model.getProgram(0).getSignalName();
+				targets[1] = model.getProgram(1).getSignalName();
+				
+				final int MSECS_PER_TICK = 1000;
+				
+				final int msecs = MSECS_PER_TICK*model.getProgramLength(); // program length in ticks
+				
+				float[][] program = engine.startMeasureProgram(mediaFile, targets, msecs);
+				
+				model.getProgram(0).setProgram(program[0]);
+				model.getProgram(1).setProgram(program[1]);
+				
+				canvas1.redraw();
+				canvas2.redraw();
+			}
+		});
 		btnNewButton_2.setBounds(0, 0, 106, 25);
 		btnNewButton_2.setText("Measure program");
 		

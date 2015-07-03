@@ -65,6 +65,28 @@ public class ResonanzEngine {
 	public native boolean startExecuteProgram(String pictureDir, String keywordsFile, String modelDir, 
 			String audioFile, String[] targetNames, float[][] programs, boolean blindMode, boolean saveVideo);
 	
+	/**
+	 * Measures users response to mediaFile (currently only audio supported, in the future video also)
+	 * 
+	 * @param mediaFile name of the audio file (*.ogg and *.mp3) or [in the future *.ogv file (theora/vorbis video)
+	 * @param targetNames target signals which we want to measure
+	 * @param msecs measured program length in milliseconds [currently one tick per second]
+	 * @return array of signals each which are N ticks long, N = msecs/MSECS_PER_TICK [currently MSECS_PER_TICK = 1000]
+	 */
+	public float[][] startMeasureProgram(String mediaFile, String[] targetNames, int msecs){
+		// stub implementation for now: generates random program
+		final int MSECS_PER_TICK = 1000;
+		final int LENGTH = msecs/MSECS_PER_TICK;
+		
+		float[][] measuredProgram = new float[targetNames.length][LENGTH];
+		
+		for(int j=0;j<measuredProgram.length;j++)
+			for(int i=0;i<LENGTH;i++)
+				measuredProgram[j][i] = (float)Math.random(); // values are between [0,1] as they should
+		
+		return measuredProgram;
+	}
+	
 	
 	/**
 	 * Stops current resonanz-engine activity and resets into idle state
