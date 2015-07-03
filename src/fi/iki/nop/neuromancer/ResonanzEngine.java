@@ -59,10 +59,11 @@ public class ResonanzEngine {
 	 * @param targetNames signal target names (Emotiv metasignal names)
 	 * @param programs float valued targets for program names
 	 * @param blindMode should one use blind mode with Monte Carlo simulation instead of current EEG values
+	 * @param saveVideo true if resonanz-engine saves program as video and false otherwise
 	 * @return true if starting showing the target command was successful and false otherwise
 	 */
 	public native boolean startExecuteProgram(String pictureDir, String keywordsFile, String modelDir, 
-			String audioFile, String[] targetNames, float[][] programs, boolean blindMode);
+			String audioFile, String[] targetNames, float[][] programs, boolean blindMode, boolean saveVideo);
 	
 	
 	/**
@@ -93,6 +94,25 @@ public class ResonanzEngine {
 	 * @return text string about database size and model performance
 	 */
 	public native String getAnalyzeModel(String modelDir);
+	
+	
+	/**
+	 * Returns measurements delta statistics. 
+	 * How much different pictures had effect on user/watcher on average and 
+	 * how lists top pictures/keywords 
+	 * @param pictureDir pictures directory
+	 * @param keywodsFile keywords file
+	 * @param modelDir measurements directory
+	 * @return Delta Statisics report
+	 */
+	public native String getDeltaStatistics(String pictureDir, String keywordsFile, String modelDirectory);
+	
+	
+	/**
+	 * Returns RMS error and other information about the last executed program.
+	 * @return Program RMS and performance report or empty string if program has not been executed
+	 */
+	public native String getLastExecutedProgramStatisics();
 	
 	
 	/**

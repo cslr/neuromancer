@@ -64,6 +64,7 @@ public class NeuromancerWindow {
 	private Text audioFileText;
 	
 	private MenuItem mntmResetDatabase;
+	private Text messages;
 
 	/**
 	 * Launch the application.
@@ -414,6 +415,44 @@ public class NeuromancerWindow {
 		});
 		mntmCheckStatus.setText("Check status..");
 		
+		MenuItem mntmCommands = new MenuItem(menu, SWT.CASCADE);
+		mntmCommands.setText("Commands");
+		
+		Menu menu_5 = new Menu(mntmCommands);
+		mntmCommands.setMenu(menu_5);
+		
+		MenuItem mntmDeltaStatistics = new MenuItem(menu_5, SWT.NONE);
+		mntmDeltaStatistics.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				String pictureDir   = model.getPictureDirectory();
+				String keywordsFile = model.getKeywordsFile();
+				String modelDirectory = model.getModelDirectory();
+				
+				String report = engine.getDeltaStatistics(pictureDir, keywordsFile, modelDirectory);
+				
+				if(report == null) return;
+				if(report.length() == 0) return;
+				
+				messages.append(report + "\n");
+			}
+		});
+		mntmDeltaStatistics.setText("Delta Statistics");
+		
+		MenuItem mntmProgramStatistics = new MenuItem(menu_5, SWT.NONE);
+		mntmProgramStatistics.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				String report = engine.getLastExecutedProgramStatisics();
+				
+				if(report == null) return;
+				if(report.length() == 0) return;
+				
+				messages.append(report + "\n");
+			}
+		});
+		mntmProgramStatistics.setText("Program Statistics");
+		
 		MenuItem mntmSettings = new MenuItem(menu, SWT.CASCADE);
 		mntmSettings.setText("Settings");
 		
@@ -441,6 +480,16 @@ public class NeuromancerWindow {
 		});
 		mntmBlindMonteCarlo.setText("Blind Monte Carlo");
 		mntmBlindMonteCarlo.setSelection(model.getBlindMonteCarloMode());
+		
+		final MenuItem mntmSaveVideo = new MenuItem(menu_4, SWT.CHECK);
+		mntmSaveVideo.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				model.setSaveVideo(mntmSaveVideo.getSelection());
+			}
+		});
+		mntmSaveVideo.setText("Save Video");
+		mntmSaveVideo.setSelection(model.getSaveVideo());
 		
 		MenuItem mntmHelp = new MenuItem(menu, SWT.CASCADE);
 		mntmHelp.setText("Help");
@@ -895,7 +944,7 @@ public class NeuromancerWindow {
 		
 		Label lblPlayAudio = new Label(composite_2, SWT.NONE);
 		lblPlayAudio.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
-		lblPlayAudio.setText("Play audio");
+		lblPlayAudio.setText("Play audio/video");
 		
 		Composite composite_4 = new Composite(composite_2, SWT.NONE);
 		composite_4.setLayout(new GridLayout(2, false));
@@ -924,7 +973,8 @@ public class NeuromancerWindow {
 		
 		
 		Composite composite_3 = new Composite(composite_2, SWT.NONE);
-		composite_3.setLayout(new RowLayout(SWT.HORIZONTAL));
+		composite_3.setLayout(new RowLayout(SWT.HORIZONTAL));		
+		
 		
 		Label lblNewLabel_2 = new Label(composite_3, SWT.NONE);
 		lblNewLabel_2.setText("Length");
@@ -975,7 +1025,16 @@ public class NeuromancerWindow {
 		Label lblSecs = new Label(composite_3, SWT.NONE);
 		lblSecs.setText("secs");
 		
-		Button btnExecute = new Button(composite_2, SWT.NONE);
+		Composite composite_10 = new Composite(composite_2, SWT.NONE);
+		composite_10.setLayoutData(new GridData(SWT.RIGHT, SWT.BOTTOM, true, false, 1, 1));
+		composite_10.setLayout(new GridLayout(2, false));
+		
+		Button btnNewButton_2 = new Button(composite_10, SWT.NONE);
+		btnNewButton_2.setEnabled(false);
+		btnNewButton_2.setBounds(0, 0, 106, 25);
+		btnNewButton_2.setText("Measure program");
+		
+		Button btnExecute = new Button(composite_10, SWT.NONE);
 		btnExecute.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -990,6 +1049,7 @@ public class NeuromancerWindow {
 				programs[1] = model.getProgram(1).getProgram();
 				
 				boolean blindMonteCarlo = model.getBlindMonteCarloMode();
+				boolean saveVideo = model.getSaveVideo();
 				
 				engine.startExecuteProgram(
 						model.getPictureDirectory(),
@@ -997,11 +1057,32 @@ public class NeuromancerWindow {
 						model.getModelDirectory(),
 						model.getAudioFile(),
 						targets, programs,
-						blindMonteCarlo);
+						blindMonteCarlo,
+						saveVideo);
 			}
 		});
 		btnExecute.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		btnExecute.setText("Execute program");
+		
+		TabItem tbtmMessages = new TabItem(tabFolder, SWT.NONE);
+		tbtmMessages.setText("Messages");
+		
+		Composite composite_5 = new Composite(tabFolder, SWT.NONE);
+		tbtmMessages.setControl(composite_5);
+		composite_5.setLayout(new GridLayout(1, false));
+		
+		messages = new Text(composite_5, SWT.BORDER | SWT.READ_ONLY | SWT.V_SCROLL | SWT.MULTI);
+		messages.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		
+		Button btnClear = new Button(composite_5, SWT.NONE);
+		btnClear.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				messages.setText("");
+			}
+		});
+		btnClear.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+		btnClear.setText("Clear messages");
 		
 		statusLine = new Text(shell, SWT.BORDER);
 		statusLine.setEditable(false);

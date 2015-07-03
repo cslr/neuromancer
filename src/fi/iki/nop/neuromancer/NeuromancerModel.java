@@ -27,6 +27,7 @@ public class NeuromancerModel
 	
 	protected int eegSourceDevice;
 	protected boolean autofill; // does program autofill values when picture folder is selected
+	protected boolean saveVideo; // should executed program try to save video [buggy]
 	
 	
 	public NeuromancerModel(){
@@ -48,6 +49,7 @@ public class NeuromancerModel
 		
 		autofill = true;
 		blindMode = false;
+		saveVideo = false;
 	}
 	
 	
@@ -83,6 +85,9 @@ public class NeuromancerModel
 	
 	public void setBlindMonteCarloMode(boolean mode){ blindMode = mode; }
 	public boolean getBlindMonteCarloMode(){ return blindMode; }
+	
+	public void setSaveVideo(boolean save){ saveVideo = save; }
+	public boolean getSaveVideo(){ return saveVideo; }
 	
 	public int getProgramLength(){ return programLength; }
 	
