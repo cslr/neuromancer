@@ -65,6 +65,17 @@ public class NeuromancerWindow {
 	
 	private MenuItem mntmResetDatabase;
 	private Text messages;
+	
+	private Combo combo1;
+	private Combo combo2;
+	
+	private MenuItem mntmNoDevice;
+	private MenuItem mntmRandomRng;
+	private MenuItem mntmEmotivEpoc;
+	private MenuItem mntmEmotivInsight;
+	private MenuItem mntmMuseOsc;
+	private MenuItem mntmWilddivineLightstone;
+	
 
 	/**
 	 * Launch the application.
@@ -72,7 +83,7 @@ public class NeuromancerWindow {
 	 */
 	public static void main(String[] args) {
 		try {
-			eeg    = new EmotivInsightSignalSourceStub();
+			eeg    = new NoEEGDeviceSignalSourceStub();
 			engine = new ResonanzEngine();
 			model  = new NeuromancerModel();
 			window = new NeuromancerWindow();
@@ -257,12 +268,7 @@ public class NeuromancerWindow {
 		Menu menu_2 = new Menu(mntmDevice);
 		mntmDevice.setMenu(menu_2);
 		
-		final MenuItem mntmNoDevice;
-		final MenuItem mntmRandomRng;
-		final MenuItem mntmEmotivEpoc;
-		final MenuItem mntmEmotivInsight;
-		final MenuItem mntmMuseOsc;
-		
+
 		mntmNoDevice = new MenuItem(menu_2, SWT.RADIO);
 		mntmNoDevice.setSelection(true);
 		mntmNoDevice.setText("No device");
@@ -278,8 +284,10 @@ public class NeuromancerWindow {
 		mntmEmotivInsight.setText("Emotiv Insight");
 		
 		mntmMuseOsc = new MenuItem(menu_2, SWT.RADIO);
-		mntmMuseOsc.setEnabled(false);
 		mntmMuseOsc.setText("Muse OSC");
+		
+		mntmWilddivineLightstone = new MenuItem(menu_2, SWT.RADIO);
+		mntmWilddivineLightstone.setText("WildDivine Lightstone");
 
 		//////////////////////////////////////////////////////////////////////////////////
 		//////////////////////////////////////////////////////////////////////////////////
@@ -287,50 +295,27 @@ public class NeuromancerWindow {
 		mntmNoDevice.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				if(engine.setEEGSourceDevice(ResonanzEngine.RE_EEG_NO_DEVICE))
-					model.setEEGSourceDevice(ResonanzEngine.RE_EEG_NO_DEVICE);
-				else{
-					int selection = engine.getEEGSourceDevice();
-					mntmNoDevice.setSelection(false);
-					mntmRandomRng.setSelection(false);
-					mntmEmotivEpoc.setSelection(false);
-					mntmEmotivInsight.setSelection(false);
-					mntmMuseOsc.setSelection(false);
-					
-					if(selection == ResonanzEngine.RE_EEG_NO_DEVICE)
-						mntmNoDevice.setSelection(true);
-					else if(selection == ResonanzEngine.RE_EEG_RANDOM_DEVICE)
-						mntmRandomRng.setSelection(true);
-					else if(selection == ResonanzEngine.RE_EEG_EMOTIV_INSIGHT_DEVICE)
-						mntmEmotivInsight.setSelection(true);
-					else if(selection == ResonanzEngine.RE_EEG_IA_MUSE_DEVICE)
-						mntmMuseOsc.setSelection(true);
-				}
+				if(mntmNoDevice.getSelection())
+					if(engine.setEEGSourceDevice(ResonanzEngine.RE_EEG_NO_DEVICE)){
+						model.setEEGSourceDevice(ResonanzEngine.RE_EEG_NO_DEVICE);
+						eeg = new NoEEGDeviceSignalSourceStub();
+						updateSignalNames();
+					}
 			}
 		});
 		
 		mntmRandomRng.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				if(engine.setEEGSourceDevice(ResonanzEngine.RE_EEG_RANDOM_DEVICE))
-					model.setEEGSourceDevice(ResonanzEngine.RE_EEG_RANDOM_DEVICE);
-				else{
-					int selection = engine.getEEGSourceDevice();
-					mntmNoDevice.setSelection(false);
-					mntmRandomRng.setSelection(false);
-					mntmEmotivEpoc.setSelection(false);
-					mntmEmotivInsight.setSelection(false);
-					mntmMuseOsc.setSelection(false);
-					
-					if(selection == ResonanzEngine.RE_EEG_NO_DEVICE)
-						mntmNoDevice.setSelection(true);
-					else if(selection == ResonanzEngine.RE_EEG_RANDOM_DEVICE)
-						mntmRandomRng.setSelection(true);
-					else if(selection == ResonanzEngine.RE_EEG_EMOTIV_INSIGHT_DEVICE)
-						mntmEmotivInsight.setSelection(true);
-					else if(selection == ResonanzEngine.RE_EEG_IA_MUSE_DEVICE)
-						mntmMuseOsc.setSelection(true);
-				}
+				if(mntmRandomRng.getSelection())
+					if(engine.setEEGSourceDevice(ResonanzEngine.RE_EEG_RANDOM_DEVICE)){
+						model.setEEGSourceDevice(ResonanzEngine.RE_EEG_RANDOM_DEVICE);
+						eeg = new RandomEEGSignalSourceStub();
+						updateSignalNames();
+					}
+					else{
+						updateMenuDeviceSelection();
+					}
 			}
 		});		
 		
@@ -343,52 +328,51 @@ public class NeuromancerWindow {
 		mntmEmotivInsight.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				if(engine.setEEGSourceDevice(ResonanzEngine.RE_EEG_EMOTIV_INSIGHT_DEVICE))
-					model.setEEGSourceDevice(ResonanzEngine.RE_EEG_EMOTIV_INSIGHT_DEVICE);
-				else{
-					int selection = engine.getEEGSourceDevice();
-					mntmNoDevice.setSelection(false);
-					mntmRandomRng.setSelection(false);
-					mntmEmotivEpoc.setSelection(false);
-					mntmEmotivInsight.setSelection(false);
-					mntmMuseOsc.setSelection(false);
-					
-					if(selection == ResonanzEngine.RE_EEG_NO_DEVICE)
-						mntmNoDevice.setSelection(true);
-					else if(selection == ResonanzEngine.RE_EEG_RANDOM_DEVICE)
-						mntmRandomRng.setSelection(true);
-					else if(selection == ResonanzEngine.RE_EEG_EMOTIV_INSIGHT_DEVICE)
-						mntmEmotivInsight.setSelection(true);
-					else if(selection == ResonanzEngine.RE_EEG_IA_MUSE_DEVICE)
-						mntmMuseOsc.setSelection(true);
-				}
+				if(mntmEmotivInsight.getSelection())
+					if(engine.setEEGSourceDevice(ResonanzEngine.RE_EEG_EMOTIV_INSIGHT_DEVICE)){
+						model.setEEGSourceDevice(ResonanzEngine.RE_EEG_EMOTIV_INSIGHT_DEVICE);
+						eeg = new EmotivInsightSignalSourceStub();
+						updateSignalNames();
+					}
+					else{
+						updateMenuDeviceSelection();
+					}
 			}
 		});		
 		
 		mntmMuseOsc.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				if(engine.setEEGSourceDevice(ResonanzEngine.RE_EEG_IA_MUSE_DEVICE))
-					model.setEEGSourceDevice(ResonanzEngine.RE_EEG_IA_MUSE_DEVICE);
-				else{
-					int selection = engine.getEEGSourceDevice();
-					mntmNoDevice.setSelection(false);
-					mntmRandomRng.setSelection(false);
-					mntmEmotivEpoc.setSelection(false);
-					mntmEmotivInsight.setSelection(false);
-					mntmMuseOsc.setSelection(false);
-					
-					if(selection == ResonanzEngine.RE_EEG_NO_DEVICE)
-						mntmNoDevice.setSelection(true);
-					else if(selection == ResonanzEngine.RE_EEG_RANDOM_DEVICE)
-						mntmRandomRng.setSelection(true);
-					else if(selection == ResonanzEngine.RE_EEG_EMOTIV_INSIGHT_DEVICE)
-						mntmEmotivInsight.setSelection(true);
-					else if(selection == ResonanzEngine.RE_EEG_IA_MUSE_DEVICE)
-						mntmMuseOsc.setSelection(true);
+				if(mntmMuseOsc.getSelection()){
+					if(engine.setEEGSourceDevice(ResonanzEngine.RE_EEG_IA_MUSE_DEVICE)){
+						model.setEEGSourceDevice(ResonanzEngine.RE_EEG_IA_MUSE_DEVICE);
+						eeg = new RandomEEGSignalSourceStub();
+						updateSignalNames();
+					}
+					else{
+						updateMenuDeviceSelection();
+					}
 				}
 			}
 		});
+		
+
+		mntmWilddivineLightstone.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				if(mntmWilddivineLightstone.getSelection()){
+					if(engine.setEEGSourceDevice(ResonanzEngine.RE_WD_LIGHTSTONE)){
+						model.setEEGSourceDevice(ResonanzEngine.RE_WD_LIGHTSTONE);
+						eeg = new WildDivineSignalSourceStub();
+						updateSignalNames();
+					}
+					else{
+						updateMenuDeviceSelection();
+					}
+				}
+			}
+		});
+
 		
 		//////////////////////////////////////////////////////////////////////////////////
 		//////////////////////////////////////////////////////////////////////////////////
@@ -701,7 +685,7 @@ public class NeuromancerWindow {
 		tbtmProgram.setControl(composite_2);
 		composite_2.setLayout(new GridLayout(2, false));
 		
-		final Combo combo1 = new Combo(composite_2, SWT.READ_ONLY);
+		combo1 = new Combo(composite_2, SWT.READ_ONLY);
 		combo1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		
 		combo1.add("<disabled>");
@@ -821,7 +805,7 @@ public class NeuromancerWindow {
 			}
 		});
 	
-		final Combo combo2 = new Combo(composite_2, SWT.READ_ONLY);
+		combo2 = new Combo(composite_2, SWT.READ_ONLY);
 		combo2.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		
 		combo2.add("<disabled>");
@@ -1191,5 +1175,60 @@ public class NeuromancerWindow {
 			}
 		});
 		
+	}
+	
+	
+	/**
+	 * Updates signal names of combo boxes
+	 */
+	public void updateSignalNames()
+	{
+		combo1.removeAll();
+		
+		combo1.add("<disabled>");
+		for(int i=0;i<eeg.getNumberOfSignals();i++)
+			combo1.add(eeg.getSignalName(i));
+		combo1.select(0);
+		
+		model.getProgram(0).setSignalName(combo1.getText());
+		
+		combo2.removeAll();
+		
+		combo2.add("<disabled>");
+		for(int i=0;i<eeg.getNumberOfSignals();i++)
+			combo2.add(eeg.getSignalName(i));
+		combo2.select(0);
+		
+		model.getProgram(1).setSignalName(combo2.getText());
+	}
+	
+	
+	void updateMenuDeviceSelection(){
+		
+		mntmNoDevice.setSelection(false);
+		mntmRandomRng.setSelection(false);
+		mntmEmotivEpoc.setSelection(false);
+		mntmEmotivInsight.setSelection(false);
+		mntmMuseOsc.setSelection(false);
+		mntmWilddivineLightstone.setSelection(false);
+		
+		if(model.getEEGSourceDevice() == ResonanzEngine.RE_EEG_NO_DEVICE){
+			mntmNoDevice.setSelection(true);
+		}
+		else if(model.getEEGSourceDevice() == ResonanzEngine.RE_EEG_RANDOM_DEVICE){
+			mntmRandomRng.setSelection(true);
+		}
+		else if(model.getEEGSourceDevice() == ResonanzEngine.RE_EEG_EMOTIV_INSIGHT_DEVICE){
+			mntmEmotivInsight.setSelection(true);
+		}
+		else if(model.getEEGSourceDevice() == ResonanzEngine.RE_EEG_IA_MUSE_DEVICE){
+			mntmEmotivInsight.setSelection(true);
+		}
+		else if(model.getEEGSourceDevice() == ResonanzEngine.RE_WD_LIGHTSTONE){
+			mntmWilddivineLightstone.setSelection(true);
+		}
+		else{
+			// should never happen
+		}
 	}
 }

@@ -73,7 +73,9 @@ public class ResonanzEngine {
 	 * @param msecs measured program length in milliseconds [currently one tick per second]
 	 * @return array of signals each which are N ticks long, N = msecs/MSECS_PER_TICK [currently MSECS_PER_TICK = 1000]
 	 */
-	public float[][] startMeasureProgram(String mediaFile, String[] targetNames, int msecs){
+	public native float[][] startMeasureProgram(String mediaFile, String[] targetNames, int msecs);
+	/*
+	{
 		// stub implementation for now: generates random program
 		final int MSECS_PER_TICK = 1000;
 		final int LENGTH = msecs/MSECS_PER_TICK;
@@ -86,6 +88,7 @@ public class ResonanzEngine {
 		
 		return measuredProgram;
 	}
+	*/
 	
 	
 	/**
@@ -149,6 +152,7 @@ public class ResonanzEngine {
 	public static int RE_EEG_RANDOM_DEVICE = 1;
 	public static int RE_EEG_EMOTIV_INSIGHT_DEVICE = 2;
 	public static int RE_EEG_IA_MUSE_DEVICE = 3;
+	public static int RE_WD_LIGHTSTONE = 4;
 	
 	/**
 	 * Sets Resonanz-Engine to use selected device as the source device.
