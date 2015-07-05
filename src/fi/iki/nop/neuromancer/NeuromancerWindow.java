@@ -610,7 +610,7 @@ public class NeuromancerWindow {
 						catch(SecurityException se){ }
 					}
 					
-					File keyword = new File(keywordFile);
+					// File keyword = new File(keywordFile);
 					
 					if(dir.exists()){
 						model.setModelDirectory(modelDir);
@@ -769,7 +769,7 @@ public class NeuromancerWindow {
 			public void mouseDoubleClick(MouseEvent e) {
 				
 				int second = model.getProgram(0).coordinateToSeconds(canvas1, e.x + bar1.getSelection());
-				float value = model.getProgram(0).coordinateToValue(canvas1, e.y);
+				// float value = model.getProgram(0).coordinateToValue(canvas1, e.y);
 				
 				model.getProgram(0).setProgramValue(second, -1.0f);
 				
@@ -859,7 +859,7 @@ public class NeuromancerWindow {
 			@Override
 			public void mouseDoubleClick(MouseEvent e) {
 				int second = model.getProgram(1).coordinateToSeconds(canvas2, e.x + bar2.getSelection());
-				float value = model.getProgram(1).coordinateToValue(canvas2, e.y);
+				// float value = model.getProgram(1).coordinateToValue(canvas2, e.y);
 				
 				model.getProgram(1).setProgramValue(second, -1.0f);
 				
@@ -1058,17 +1058,32 @@ public class NeuromancerWindow {
 				targets[0] = model.getProgram(0).getSignalName();
 				targets[1] = model.getProgram(1).getSignalName();
 				
-				final int MSECS_PER_TICK = 1000;
+				engine.invalidateMeasuredProgram();
+				boolean startOk = engine.startMeasureProgram(mediaFile, targets, model.getProgramLength());
 				
-				final int msecs = MSECS_PER_TICK*model.getProgramLength(); // program length in ticks
-				
-				float[][] program = engine.startMeasureProgram(mediaFile, targets, msecs);
-				
-				model.getProgram(0).setProgram(program[0]);
-				model.getProgram(1).setProgram(program[1]);
-				
-				canvas1.redraw();
-				canvas2.redraw();
+				if(startOk){
+					float[][] program = null;
+					
+					int MAX_WAIT_TIME = model.getProgramLength()*1000*2;
+					
+					// TODO polling loop [should do this in a separate thread?9
+					while((program = engine.getMeasuredProgram()) == null){
+						try{ Thread.sleep(500); }
+						catch(InterruptedException ie){ }
+						
+						MAX_WAIT_TIME -= 500;
+						
+						if(MAX_WAIT_TIME < 0){
+							return; // give up...
+						}
+					}
+					
+					model.getProgram(0).setProgram(program[0]);
+					model.getProgram(1).setProgram(program[1]);
+					
+					canvas1.redraw();
+					canvas2.redraw();
+				}
 			}
 		});
 		btnNewButton_2.setBounds(0, 0, 106, 25);

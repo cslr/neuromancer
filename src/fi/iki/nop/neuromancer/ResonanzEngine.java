@@ -73,7 +73,10 @@ public class ResonanzEngine {
 	 * @param msecs measured program length in milliseconds [currently one tick per second]
 	 * @return array of signals each which are N ticks long, N = msecs/MSECS_PER_TICK [currently MSECS_PER_TICK = 1000]
 	 */
-	public native float[][] startMeasureProgram(String mediaFile, String[] targetNames, int msecs);
+	public native boolean startMeasureProgram(String mediaFile, String[] targetNames, int programLengthTicks);
+	
+	public native boolean invalidateMeasuredProgram();
+	public native float[][] getMeasuredProgram();
 	/*
 	{
 		// stub implementation for now: generates random program

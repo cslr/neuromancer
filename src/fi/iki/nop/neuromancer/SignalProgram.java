@@ -58,7 +58,7 @@ public class SignalProgram {
 		if(imWidth < size.x) imWidth = size.x;
 		Image im = new Image(canvas.getDisplay(), imWidth, size.y);
 		
-		Rectangle b = im.getBounds();
+		// Rectangle b = im.getBounds();
 		
 		// draws current simulation program to the image
 		GC gc = new GC(im);
@@ -248,7 +248,6 @@ public class SignalProgram {
 			return; // too small signal: nothing to do
 		
 		int bestIndex = -1;
-		float bestValue = 0.5f;
 		float bestError = Float.POSITIVE_INFINITY;
 		
 		for(int i=0;i<(targetSignal.length-2);i++){
@@ -284,7 +283,7 @@ public class SignalProgram {
 			
 			if(error < bestError){
 				bestIndex = middleIndex;
-				bestValue = interpolation;
+				// bestValue = interpolation;
 				bestError = error;
 			}
 		}

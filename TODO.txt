@@ -1,12 +1,38 @@
 
-- integrate with resonanz (create 64bit DLL in Cygwin64/MinGW64 + Java JNI)
-  * enable showing random stimulus ("test") from the interface
-  * add direct support ("measure") to populate database with measurements
-  * add direct support ("optimize") to learn neural network model from measurements
-  * resonanz command line accepts signal preset files generated using Neuromancer
-  
-- implement "execute" using measurement database (initially fabricated data/measurements)
+- measure program
 
-- get Emotiv Insight SDKLite and implement implementation that reads (fabricated) values using
-  real Emotiv DLL interface
+- live signals monitoring
+
+
+STIMULATION: 
+
+- (picture-based) stimulation needs more high-quality pictures
+  [pictures causing calmness]
+
+  *YOU NEED *STRONG* PICTURES* IF YOU ARE GOING TO GET ANY REAL EFFECT*
+
+- licensing mess: REMOVE media files that require 
+  ShareAlike (same license as the original) instead of just Attribution
+
+  [This means that you can distribute the resulting movie commercially]
+
+- study available sound instrument software codes for Linux (and Windows),
+  VST host/instruments afaik do not support easy setting/fetching of patch
+  parameters so it is not good solution but other sound synthesizer 
+  architechtures might actually do this
+
+- study psycle and use (or implement) some better sound synthesizers,
+  more advanced post processing (filter cutoff [low/highpass filtering 
+  using fftw])
+
+- look at LADSPA plugins, VST plugins are not very good because 
+  you cannot easily manipulate and fetch synthesizer plugin parameters 
+  from the host (use as the simulator)
+
+- word stimulation needs to be rapid and needs 
+  something extra to maximize the impact, try to get text2speech working?
+
+- later: algorithmic music might make sense
+
+
 

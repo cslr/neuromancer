@@ -13,7 +13,7 @@ import java.util.Arrays;
 public class NeuromancerModel
 {
 	protected final String SOFTWARE_NAME = "Neuromancer Neurostim";
-	protected final String VERSION = "0.3a";
+	protected final String VERSION = "0.4a";
 	
 	protected String pictureDirectory;
 	protected String keywordsFile;
