@@ -1,7 +1,7 @@
 
-- measure program
-
 - live signals monitoring
+
+- music sync
 
 
 STIMULATION: 

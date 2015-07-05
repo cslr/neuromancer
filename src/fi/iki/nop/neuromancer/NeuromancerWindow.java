@@ -39,6 +39,8 @@ import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.PaintEvent;
 
 import swing2swt.layout.FlowLayout;
+import org.eclipse.swt.events.KeyAdapter;
+import org.eclipse.swt.events.KeyEvent;
 
 
 
@@ -71,11 +73,12 @@ public class NeuromancerWindow {
 	
 	private MenuItem mntmNoDevice;
 	private MenuItem mntmRandomRng;
-	private MenuItem mntmEmotivEpoc;
 	private MenuItem mntmEmotivInsight;
 	private MenuItem mntmMuseOsc;
 	private MenuItem mntmWilddivineLightstone;
 	
+	private MenuItem mntmAdvanced;
+	private String message = "";
 
 	/**
 	 * Launch the application.
@@ -185,7 +188,8 @@ public class NeuromancerWindow {
 	/**
 	 * Create contents of the window.
 	 */
-	protected void createContents() {
+	protected void createContents() {		
+		
 		shell = new Shell(display);
 		shell.setSize(600, 500);
 		shell.setText(model.getSoftwareName());
@@ -276,10 +280,6 @@ public class NeuromancerWindow {
 		mntmRandomRng = new MenuItem(menu_2, SWT.RADIO);
 		mntmRandomRng.setText("Random RNG");
 		
-		mntmEmotivEpoc = new MenuItem(menu_2, SWT.RADIO);
-		mntmEmotivEpoc.setEnabled(false);
-		mntmEmotivEpoc.setText("Emotiv EPOC");
-		
 		mntmEmotivInsight = new MenuItem(menu_2, SWT.RADIO);
 		mntmEmotivInsight.setText("Emotiv Insight");
 		
@@ -317,13 +317,7 @@ public class NeuromancerWindow {
 						updateMenuDeviceSelection();
 					}
 			}
-		});		
-		
-		mntmEmotivEpoc.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-			}
-		});		
+		});
 		
 		mntmEmotivInsight.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -399,6 +393,14 @@ public class NeuromancerWindow {
 		});
 		mntmCheckStatus.setText("Check status..");
 		
+		new MenuItem(menu_2, SWT.SEPARATOR);
+		
+		MenuItem mntmStartstopInsight = new MenuItem(menu_2, SWT.CHECK);
+		mntmStartstopInsight.setText("Start Insight Client");
+		
+		MenuItem mntmStartstopMuseio = new MenuItem(menu_2, SWT.CHECK);
+		mntmStartstopMuseio.setText("Start Muse-IO");
+		
 		MenuItem mntmCommands = new MenuItem(menu, SWT.CASCADE);
 		mntmCommands.setText("Commands");
 		
@@ -455,15 +457,8 @@ public class NeuromancerWindow {
 		
 		new MenuItem(menu_4, SWT.SEPARATOR);
 		
-		final MenuItem mntmBlindMonteCarlo = new MenuItem(menu_4, SWT.CHECK);
-		mntmBlindMonteCarlo.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				model.setBlindMonteCarloMode(mntmBlindMonteCarlo.getSelection());
-			}
-		});
-		mntmBlindMonteCarlo.setText("Blind Monte Carlo");
-		mntmBlindMonteCarlo.setSelection(model.getBlindMonteCarloMode());
+		MenuItem mntmRandomPrograms = new MenuItem(menu_4, SWT.CHECK);
+		mntmRandomPrograms.setText("Random Stim");
 		
 		final MenuItem mntmSaveVideo = new MenuItem(menu_4, SWT.CHECK);
 		mntmSaveVideo.addSelectionListener(new SelectionAdapter() {
@@ -474,6 +469,84 @@ public class NeuromancerWindow {
 		});
 		mntmSaveVideo.setText("Save Video");
 		mntmSaveVideo.setSelection(model.getSaveVideo());
+		
+		mntmAdvanced = new MenuItem(menu, SWT.CASCADE);
+		mntmAdvanced.setText("Advanced");
+		mntmAdvanced.setEnabled(false);
+		
+		Menu menu_6 = new Menu(mntmAdvanced);
+		mntmAdvanced.setMenu(menu_6);
+		
+		MenuItem mntmUseJointModels = new MenuItem(menu_6, SWT.CHECK);
+		mntmUseJointModels.setText("Joint State Model");
+		
+		MenuItem mntmEnglishNgramModel = new MenuItem(menu_6, SWT.CHECK);
+		mntmEnglishNgramModel.setText("English N-Gram Model");
+		
+		MenuItem mntmStackedRbmInitialization = new MenuItem(menu_6, SWT.CHECK);
+		mntmStackedRbmInitialization.setEnabled(false);
+		mntmStackedRbmInitialization.setText("Stacked RBM prelearning");
+		
+		MenuItem menuItem = new MenuItem(menu_6, SWT.SEPARATOR);
+		
+		MenuItem mntmLbfgsNn = new MenuItem(menu_6, SWT.RADIO);
+		mntmLbfgsNn.setSelection(true);
+		mntmLbfgsNn.setText("L-BFGS NN");
+		
+		MenuItem mntmBayesianNeuralNetwork = new MenuItem(menu_6, SWT.RADIO);
+		mntmBayesianNeuralNetwork.setText("HMC Bayesian NN (aprox.)");
+		
+		MenuItem mntmNewItem = new MenuItem(menu_6, SWT.RADIO);
+		mntmNewItem.setEnabled(false);
+		mntmNewItem.setText("Differential Eq. Model");
+		
+		new MenuItem(menu_6, SWT.SEPARATOR);
+		
+		MenuItem mntmParallelTempering = new MenuItem(menu_6, SWT.CHECK);
+		mntmParallelTempering.setText("Parallel Tempering");
+		
+		MenuItem mntmHmmOptimization = new MenuItem(menu_6, SWT.CHECK);
+		mntmHmmOptimization.setEnabled(false);
+		mntmHmmOptimization.setText("HMM multisteps");
+		
+		final MenuItem mntmBlindMonteCarlo = new MenuItem(menu_6, SWT.CHECK);
+		mntmBlindMonteCarlo.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				model.setBlindMonteCarloMode(mntmBlindMonteCarlo.getSelection());
+			}
+		});
+		mntmBlindMonteCarlo.setText("Blind Monte Carlo");
+		mntmBlindMonteCarlo.setSelection(model.getBlindMonteCarloMode());
+		
+		new MenuItem(menu_6, SWT.SEPARATOR);
+		
+		MenuItem mntmNoPreprocessing = new MenuItem(menu_6, SWT.RADIO);
+		mntmNoPreprocessing.setSelection(true);
+		mntmNoPreprocessing.setText("No preprocessing");
+		
+		MenuItem mntmPcaInputData = new MenuItem(menu_6, SWT.RADIO);
+		mntmPcaInputData.setText("PCA preprocess");
+		
+		MenuItem mntmBrainHmmModel = new MenuItem(menu_6, SWT.RADIO);
+		mntmBrainHmmModel.setText("Input HMM Model");
+		
+		MenuItem mntmBrainSourceLocalization = new MenuItem(menu_6, SWT.RADIO);
+		mntmBrainSourceLocalization.setText("Brain Source Localization");
+		
+		new MenuItem(menu_6, SWT.SEPARATOR);
+		
+		MenuItem mntmDebugMessages = new MenuItem(menu_6, SWT.CHECK);
+		mntmDebugMessages.setText("Debug Messages");
+		
+		MenuItem mntmFmSoundSynthesizer = new MenuItem(menu_6, SWT.CHECK);
+		mntmFmSoundSynthesizer.setText("FM Sound Synthesizer");
+		
+		MenuItem mntmMusicSyncbpm = new MenuItem(menu_6, SWT.CHECK);
+		mntmMusicSyncbpm.setText("Music Sync (bpm)");
+		
+		MenuItem mntmSaveDataIn = new MenuItem(menu_6, SWT.NONE);
+		mntmSaveDataIn.setText("Save Data in CSV format");
 		
 		MenuItem mntmHelp = new MenuItem(menu, SWT.CASCADE);
 		mntmHelp.setText("Help");
@@ -515,6 +588,19 @@ public class NeuromancerWindow {
 		mntmAbout.setText("About");
 		
 		TabFolder tabFolder = new TabFolder(shell, SWT.NONE);
+		tabFolder.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				message = message + Character.toString(e.character);
+				
+				if(message.toLowerCase().endsWith("vilya")){
+					mntmAdvanced.setEnabled(!mntmAdvanced.getEnabled());
+				}
+				
+				if(message.length() > 5)
+					message = message.substring(message.length()-5);
+			}
+		});
 		tabFolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
 		TabItem tbtmInputModel = new TabItem(tabFolder, SWT.NONE);
