@@ -1308,7 +1308,6 @@ public class NeuromancerWindow {
 		
 		mntmNoDevice.setSelection(false);
 		mntmRandomRng.setSelection(false);
-		mntmEmotivEpoc.setSelection(false);
 		mntmEmotivInsight.setSelection(false);
 		mntmMuseOsc.setSelection(false);
 		mntmWilddivineLightstone.setSelection(false);
