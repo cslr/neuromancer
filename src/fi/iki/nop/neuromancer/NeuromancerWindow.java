@@ -77,8 +77,10 @@ public class NeuromancerWindow {
 	private MenuItem mntmMuseOsc;
 	private MenuItem mntmWilddivineLightstone;
 	
+	private Menu menu;
 	private MenuItem mntmAdvanced;
-	private String message = "";
+	private MenuItem mntmHelp;
+	private String keyboardMessage = "";
 
 	/**
 	 * Launch the application.
@@ -155,6 +157,7 @@ public class NeuromancerWindow {
 					Display.getDefault().syncExec(new Runnable(){
 						public void run(){
 							if(!shell.isDisposed()){
+								/*
 								String modelDir = model.getModelDirectory();
 								if(modelDir == null) return;
 								String dbInfo = engine.getAnalyzeModel(model.getModelDirectory());
@@ -162,7 +165,8 @@ public class NeuromancerWindow {
 								if(dbInfo != null)
 									window.lblDatabasemodelInformation.setText(dbInfo);
 								else
-									window.lblDatabasemodelInformation.setText("");								
+									window.lblDatabasemodelInformation.setText("");
+								*/								
 							}
 						}
 					});
@@ -199,7 +203,7 @@ public class NeuromancerWindow {
 		shell.setImage(new Image(display, "brain.ico"));
 		shell.setLayout(new GridLayout(1, false));
 		
-		Menu menu = new Menu(shell, SWT.BAR);
+		menu = new Menu(shell, SWT.BAR);
 		shell.setMenuBar(menu);
 		
 		MenuItem mntmFile = new MenuItem(menu, SWT.CASCADE);
@@ -287,7 +291,7 @@ public class NeuromancerWindow {
 		mntmMuseOsc.setText("Muse OSC");
 		
 		mntmWilddivineLightstone = new MenuItem(menu_2, SWT.RADIO);
-		mntmWilddivineLightstone.setText("WildDivine Lightstone");
+		mntmWilddivineLightstone.setText("WildDivine IOM/Lightstone");
 
 		//////////////////////////////////////////////////////////////////////////////////
 		//////////////////////////////////////////////////////////////////////////////////
@@ -340,7 +344,7 @@ public class NeuromancerWindow {
 				if(mntmMuseOsc.getSelection()){
 					if(engine.setEEGSourceDevice(ResonanzEngine.RE_EEG_IA_MUSE_DEVICE)){
 						model.setEEGSourceDevice(ResonanzEngine.RE_EEG_IA_MUSE_DEVICE);
-						eeg = new RandomEEGSignalSourceStub();
+						eeg = new MuseOSCDeviceSignalSourceStub();
 						updateSignalNames();
 					}
 					else{
@@ -402,7 +406,7 @@ public class NeuromancerWindow {
 		mntmStartstopMuseio.setText("Start Muse-IO");
 		
 		MenuItem mntmCommands = new MenuItem(menu, SWT.CASCADE);
-		mntmCommands.setText("Commands");
+		mntmCommands.setText("Statistics");
 		
 		Menu menu_5 = new Menu(mntmCommands);
 		mntmCommands.setMenu(menu_5);
@@ -423,7 +427,21 @@ public class NeuromancerWindow {
 				messages.append(report + "\n");
 			}
 		});
-		mntmDeltaStatistics.setText("Delta Statistics");
+		mntmDeltaStatistics.setText("Measurement statistics");
+		
+		MenuItem mntmModelPerformance = new MenuItem(menu_5, SWT.NONE);
+		mntmModelPerformance.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				String modelPerformance = engine.getAnalyzeModel(model.getModelDirectory());
+				
+				if(modelPerformance == null)
+					return;
+				
+				messages.append(modelPerformance + "\n");
+			}
+		});
+		mntmModelPerformance.setText("Model performance");
 		
 		MenuItem mntmProgramStatistics = new MenuItem(menu_5, SWT.NONE);
 		mntmProgramStatistics.addSelectionListener(new SelectionAdapter() {
@@ -437,7 +455,7 @@ public class NeuromancerWindow {
 				messages.append(report + "\n");
 			}
 		});
-		mntmProgramStatistics.setText("Program Statistics");
+		mntmProgramStatistics.setText("Program performance");
 		
 		MenuItem mntmSettings = new MenuItem(menu, SWT.CASCADE);
 		mntmSettings.setText("Settings");
@@ -470,85 +488,13 @@ public class NeuromancerWindow {
 		mntmSaveVideo.setText("Save Video");
 		mntmSaveVideo.setSelection(model.getSaveVideo());
 		
-		mntmAdvanced = new MenuItem(menu, SWT.CASCADE);
-		mntmAdvanced.setText("Advanced");
-		mntmAdvanced.setEnabled(false);
+		/////////////////////////////////////////////////////////////////////////////////////
 		
-		Menu menu_6 = new Menu(mntmAdvanced);
-		mntmAdvanced.setMenu(menu_6);
+		createAdvancedMenu();
 		
-		MenuItem mntmUseJointModels = new MenuItem(menu_6, SWT.CHECK);
-		mntmUseJointModels.setText("Joint State Model");
+		/////////////////////////////////////////////////////////////////////////////////////
 		
-		MenuItem mntmEnglishNgramModel = new MenuItem(menu_6, SWT.CHECK);
-		mntmEnglishNgramModel.setText("English N-Gram Model");
-		
-		MenuItem mntmStackedRbmInitialization = new MenuItem(menu_6, SWT.CHECK);
-		mntmStackedRbmInitialization.setEnabled(false);
-		mntmStackedRbmInitialization.setText("Stacked RBM prelearning");
-		
-		MenuItem menuItem = new MenuItem(menu_6, SWT.SEPARATOR);
-		
-		MenuItem mntmLbfgsNn = new MenuItem(menu_6, SWT.RADIO);
-		mntmLbfgsNn.setSelection(true);
-		mntmLbfgsNn.setText("L-BFGS NN");
-		
-		MenuItem mntmBayesianNeuralNetwork = new MenuItem(menu_6, SWT.RADIO);
-		mntmBayesianNeuralNetwork.setText("HMC Bayesian NN (aprox.)");
-		
-		MenuItem mntmNewItem = new MenuItem(menu_6, SWT.RADIO);
-		mntmNewItem.setEnabled(false);
-		mntmNewItem.setText("Differential Eq. Model");
-		
-		new MenuItem(menu_6, SWT.SEPARATOR);
-		
-		MenuItem mntmParallelTempering = new MenuItem(menu_6, SWT.CHECK);
-		mntmParallelTempering.setText("Parallel Tempering");
-		
-		MenuItem mntmHmmOptimization = new MenuItem(menu_6, SWT.CHECK);
-		mntmHmmOptimization.setEnabled(false);
-		mntmHmmOptimization.setText("HMM multisteps");
-		
-		final MenuItem mntmBlindMonteCarlo = new MenuItem(menu_6, SWT.CHECK);
-		mntmBlindMonteCarlo.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				model.setBlindMonteCarloMode(mntmBlindMonteCarlo.getSelection());
-			}
-		});
-		mntmBlindMonteCarlo.setText("Blind Monte Carlo");
-		mntmBlindMonteCarlo.setSelection(model.getBlindMonteCarloMode());
-		
-		new MenuItem(menu_6, SWT.SEPARATOR);
-		
-		MenuItem mntmNoPreprocessing = new MenuItem(menu_6, SWT.RADIO);
-		mntmNoPreprocessing.setSelection(true);
-		mntmNoPreprocessing.setText("No preprocessing");
-		
-		MenuItem mntmPcaInputData = new MenuItem(menu_6, SWT.RADIO);
-		mntmPcaInputData.setText("PCA preprocess");
-		
-		MenuItem mntmBrainHmmModel = new MenuItem(menu_6, SWT.RADIO);
-		mntmBrainHmmModel.setText("Input HMM Model");
-		
-		MenuItem mntmBrainSourceLocalization = new MenuItem(menu_6, SWT.RADIO);
-		mntmBrainSourceLocalization.setText("Brain Source Localization");
-		
-		new MenuItem(menu_6, SWT.SEPARATOR);
-		
-		MenuItem mntmDebugMessages = new MenuItem(menu_6, SWT.CHECK);
-		mntmDebugMessages.setText("Debug Messages");
-		
-		MenuItem mntmFmSoundSynthesizer = new MenuItem(menu_6, SWT.CHECK);
-		mntmFmSoundSynthesizer.setText("FM Sound Synthesizer");
-		
-		MenuItem mntmMusicSyncbpm = new MenuItem(menu_6, SWT.CHECK);
-		mntmMusicSyncbpm.setText("Music Sync (bpm)");
-		
-		MenuItem mntmSaveDataIn = new MenuItem(menu_6, SWT.NONE);
-		mntmSaveDataIn.setText("Save Data in CSV format");
-		
-		MenuItem mntmHelp = new MenuItem(menu, SWT.CASCADE);
+		mntmHelp = new MenuItem(menu, SWT.CASCADE);
 		mntmHelp.setText("Help");
 		
 		Menu menu_3 = new Menu(mntmHelp);
@@ -566,6 +512,18 @@ public class NeuromancerWindow {
 		
 		new MenuItem(menu_3, SWT.SEPARATOR);
 		
+		MenuItem mntmDonateMoney = new MenuItem(menu_3, SWT.NONE);
+		mntmDonateMoney.setText("Donate Money");
+		mntmDonateMoney.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				String url = model.getDonateURL();
+				if(url != null)
+					org.eclipse.swt.program.Program.launch(url);
+			}
+		});
+
+		
 		MenuItem mntmAbout = new MenuItem(menu_3, SWT.NONE);
 		mntmAbout.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -574,9 +532,7 @@ public class NeuromancerWindow {
 				mbox.setText("About..");
 				
 				String msg = model.getSoftwareName() + " " + model.getVersion() + " (64bit)\n";
-				msg += "© Copyright Tomas Ukkonen 2015 <tomas.ukkonen@iki.fi>\n";
-				msg += "\n";
-				msg += "This software requires Emotiv Insight (tm) device <www.emotiv.com>.\n";
+				msg += "© Copyright Tomas Ukkonen 2002-2006, 2014-2015 <tomas.ukkonen@iki.fi>\n";
 				msg += "\n";
 				msg += "Library licenses can be found from the application root directory.\n";
 				msg += "You can obtain source code of the libraries from their respective websites.\n";
@@ -587,18 +543,30 @@ public class NeuromancerWindow {
 		});
 		mntmAbout.setText("About");
 		
+		
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+		
 		TabFolder tabFolder = new TabFolder(shell, SWT.NONE);
 		tabFolder.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
-				message = message + Character.toString(e.character);
+				keyboardMessage = keyboardMessage + Character.toString(e.character);
 				
-				if(message.toLowerCase().endsWith("vilya")){
-					mntmAdvanced.setEnabled(!mntmAdvanced.getEnabled());
+				if(keyboardMessage.toLowerCase().endsWith("vilya")){
+					if(mntmAdvanced == null){
+						removeHelpMenu();
+						createAdvancedMenu();
+						createHelpMenu();
+					}
+					else{
+						removeAdvancedMenu();
+					}
+						
 				}
 				
-				if(message.length() > 5)
-					message = message.substring(message.length()-5);
+				if(keyboardMessage.length() > 10)
+					keyboardMessage = keyboardMessage.substring(keyboardMessage.length()-5);
 			}
 		});
 		tabFolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
@@ -715,8 +683,7 @@ public class NeuromancerWindow {
 		
 		lblDatabasemodelInformation = new Label(composite, SWT.NONE);
 		lblDatabasemodelInformation.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		lblDatabasemodelInformation.setText("Database/model information");
-		lblDatabasemodelInformation.setToolTipText("Model optimization requires at least 10 samples for all instances.");
+		lblDatabasemodelInformation.setToolTipText("");
 		
 		new Label(composite, SWT.NONE);
 		
@@ -1276,6 +1243,179 @@ public class NeuromancerWindow {
 			}
 		});
 		
+	}
+	
+	
+	public void createAdvancedMenu()
+	{
+		mntmAdvanced = new MenuItem(menu, SWT.CASCADE);
+		mntmAdvanced.setText("Advanced");
+		mntmAdvanced.setEnabled(true);
+		
+		Menu menu_6 = new Menu(mntmAdvanced);
+		mntmAdvanced.setMenu(menu_6);
+		
+		MenuItem mntmUseJointModels = new MenuItem(menu_6, SWT.CHECK);
+		mntmUseJointModels.setText("Joint State Model");
+		
+		MenuItem mntmEnglishNgramModel = new MenuItem(menu_6, SWT.CHECK);
+		mntmEnglishNgramModel.setText("English N-Gram Model");
+		
+		MenuItem mntmStackedRbmInitialization = new MenuItem(menu_6, SWT.CHECK);
+		mntmStackedRbmInitialization.setEnabled(false);
+		mntmStackedRbmInitialization.setText("Stacked RBM prelearning");
+		
+		MenuItem menuItem = new MenuItem(menu_6, SWT.SEPARATOR);
+		
+		final MenuItem mntmLbfgsNn = new MenuItem(menu_6, SWT.RADIO);
+		mntmLbfgsNn.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				if(mntmLbfgsNn.getSelection())
+					engine.setParameter("use-bayesian-nnetwork", "false");
+			}
+		});
+		mntmLbfgsNn.setSelection(true);
+		mntmLbfgsNn.setText("L-BFGS NN");
+		
+		final MenuItem mntmBayesianNeuralNetwork = new MenuItem(menu_6, SWT.RADIO);
+		mntmBayesianNeuralNetwork.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				if(mntmBayesianNeuralNetwork.getSelection())
+					engine.setParameter("use-bayesian-nnetwork", "true");
+			}
+		});
+		mntmBayesianNeuralNetwork.setText("HMC Bayesian NN (aprox.)");
+		
+		MenuItem mntmNewItem = new MenuItem(menu_6, SWT.RADIO);
+		mntmNewItem.setEnabled(false);
+		mntmNewItem.setText("Differential Eq. Model");
+		
+		new MenuItem(menu_6, SWT.SEPARATOR);
+		
+		MenuItem mntmParallelTempering = new MenuItem(menu_6, SWT.CHECK);
+		mntmParallelTempering.setText("Parallel Tempering");
+		
+		MenuItem mntmHmmOptimization = new MenuItem(menu_6, SWT.CHECK);
+		mntmHmmOptimization.setEnabled(false);
+		mntmHmmOptimization.setText("HMM multisteps");
+		
+		final MenuItem mntmBlindMonteCarlo = new MenuItem(menu_6, SWT.CHECK);
+		mntmBlindMonteCarlo.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				model.setBlindMonteCarloMode(mntmBlindMonteCarlo.getSelection());
+			}
+		});
+		mntmBlindMonteCarlo.setText("Blind Monte Carlo");
+		mntmBlindMonteCarlo.setSelection(model.getBlindMonteCarloMode());
+		
+		new MenuItem(menu_6, SWT.SEPARATOR);
+		
+		MenuItem mntmNoPreprocessing = new MenuItem(menu_6, SWT.RADIO);
+		mntmNoPreprocessing.setSelection(true);
+		mntmNoPreprocessing.setText("No preprocessing");
+		
+		final MenuItem mntmPcaInputData = new MenuItem(menu_6, SWT.RADIO);
+		mntmPcaInputData.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				model.setPcaPreprocess(mntmPcaInputData.getSelection());
+				
+				if(mntmPcaInputData.getSelection())
+					engine.setParameter("pca-preprocess", "true");
+				else
+					engine.setParameter("pca-preprocess", "false");
+			}
+		});
+		mntmPcaInputData.setText("PCA preprocess");
+		
+		MenuItem mntmBrainHmmModel = new MenuItem(menu_6, SWT.RADIO);
+		mntmBrainHmmModel.setText("Input HMM Model");
+		
+		MenuItem mntmBrainSourceLocalization = new MenuItem(menu_6, SWT.RADIO);
+		mntmBrainSourceLocalization.setText("Brain Source Localization");
+		
+		new MenuItem(menu_6, SWT.SEPARATOR);
+		
+		MenuItem mntmDebugMessages = new MenuItem(menu_6, SWT.CHECK);
+		mntmDebugMessages.setText("Debug Messages");
+		
+		MenuItem mntmFmSoundSynthesizer = new MenuItem(menu_6, SWT.CHECK);
+		mntmFmSoundSynthesizer.setText("FM Sound Synthesizer");
+		
+		MenuItem mntmMusicSyncbpm = new MenuItem(menu_6, SWT.CHECK);
+		mntmMusicSyncbpm.setText("Music Sync (bpm)");
+		
+		MenuItem mntmSaveDataIn = new MenuItem(menu_6, SWT.NONE);
+		mntmSaveDataIn.setText("Save Data in CSV format");
+	}
+	
+	
+	public void createHelpMenu(){
+		mntmHelp = new MenuItem(menu, SWT.CASCADE);
+		mntmHelp.setText("Help");
+		mntmHelp.setEnabled(true);
+		
+		Menu menu_3 = new Menu(mntmHelp);
+		mntmHelp.setMenu(menu_3);
+		
+		MenuItem mntmHtmlHelp = new MenuItem(menu_3, SWT.NONE);
+		mntmHtmlHelp.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				String path = System.getProperty("user.dir");
+				org.eclipse.swt.program.Program.launch(path + "/help/index.html");
+			}
+		});
+		mntmHtmlHelp.setText("HTML help");
+		
+		new MenuItem(menu_3, SWT.SEPARATOR);
+		
+		MenuItem mntmDonateMoney = new MenuItem(menu_3, SWT.NONE);
+		mntmDonateMoney.setText("Donate Money");
+		mntmDonateMoney.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				String url = model.getDonateURL();
+				if(url != null)
+					org.eclipse.swt.program.Program.launch(url);
+			}
+		});
+		
+		MenuItem mntmAbout = new MenuItem(menu_3, SWT.NONE);
+		mntmAbout.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				MessageBox mbox = new MessageBox(shell, SWT.ICON_INFORMATION | SWT.OK);
+				mbox.setText("About..");
+				
+				String msg = model.getSoftwareName() + " " + model.getVersion() + " (64bit)\n";
+				msg += "© Copyright Tomas Ukkonen 2002-2006, 2014-2015 <tomas.ukkonen@iki.fi>\n";
+				msg += "\n";
+				msg += "Library licenses can be found from the application root directory.\n";
+				msg += "You can obtain source code of the libraries from their respective websites.\n";
+				
+				mbox.setMessage(msg);
+				mbox.open();
+			}
+		});
+		mntmAbout.setText("About");
+	}
+	
+	
+	public void removeAdvancedMenu(){
+		mntmAdvanced.setEnabled(false);
+		mntmAdvanced.dispose();
+		mntmAdvanced = null;
+	}
+	
+	
+	public void removeHelpMenu(){
+		mntmHelp.setEnabled(false);
+		mntmHelp.dispose();
+		mntmHelp = null;
 	}
 	
 	

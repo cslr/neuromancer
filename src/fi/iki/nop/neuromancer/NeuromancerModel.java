@@ -15,6 +15,8 @@ public class NeuromancerModel
 	protected final String SOFTWARE_NAME = "Neuromancer Neurostim";
 	protected final String VERSION = "0.4a";
 	
+	protected final String donateURL = "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=EE2PR6AJPT9AN";
+	
 	protected String pictureDirectory;
 	protected String keywordsFile;
 	protected String modelDirectory;
@@ -28,6 +30,7 @@ public class NeuromancerModel
 	protected int eegSourceDevice;
 	protected boolean autofill; // does program autofill values when picture folder is selected
 	protected boolean saveVideo; // should executed program try to save video [buggy]
+	protected boolean pcaPreprocess;
 	
 	
 	public NeuromancerModel(){
@@ -50,6 +53,7 @@ public class NeuromancerModel
 		autofill = true;
 		blindMode = false;
 		saveVideo = false;
+		pcaPreprocess = false;
 	}
 	
 	
@@ -88,6 +92,12 @@ public class NeuromancerModel
 	
 	public void setSaveVideo(boolean save){ saveVideo = save; }
 	public boolean getSaveVideo(){ return saveVideo; }
+	
+	public void setPcaPreprocess(boolean value){ pcaPreprocess = value; }
+	public boolean getPcaPreprocess(){ return pcaPreprocess; }
+	
+	
+	public String getDonateURL(){ return donateURL; }
 	
 	public int getProgramLength(){ return programLength; }
 	

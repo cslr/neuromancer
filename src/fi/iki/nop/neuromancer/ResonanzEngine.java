@@ -177,4 +177,13 @@ public class ResonanzEngine {
 	public native String getEEGDeviceStatus();
 	
 	
+	/**
+	 * Sets special configuration parameter of the resonanz engine.
+	 * 
+	 * @param parameter parameter name
+	 * @param value parameter value
+	 * @return true if there was no error and values was correctly set and false otherwise
+	 */
+	public native boolean setParameter(String parameter, String value);
+	
 }
