@@ -31,6 +31,13 @@ public class NeuromancerModel
 	protected boolean autofill; // does program autofill values when picture folder is selected
 	protected boolean saveVideo; // should executed program try to save video [buggy]
 	protected boolean pcaPreprocess;
+	protected boolean fullscreen;	
+	
+	public final int OPTIMIZATION_METHOD_RBF = 1;
+	public final int OPTIMIZATION_METHOD_NN  = 2;
+	public final int OPTIMIZATION_METHOD_BAYES_NN = 3;
+			
+	protected int optimizationMethod;
 	
 	
 	public NeuromancerModel(){
@@ -54,6 +61,9 @@ public class NeuromancerModel
 		blindMode = false;
 		saveVideo = false;
 		pcaPreprocess = false;
+		fullscreen = true;
+		
+		optimizationMethod = OPTIMIZATION_METHOD_RBF;
 	}
 	
 	
@@ -95,6 +105,12 @@ public class NeuromancerModel
 	
 	public void setPcaPreprocess(boolean value){ pcaPreprocess = value; }
 	public boolean getPcaPreprocess(){ return pcaPreprocess; }
+	
+	public void setFullscreen(boolean value){ fullscreen = value; }
+	public boolean getFullscreen(){ return fullscreen; }
+	
+	public void setOptimizationMethod(int method){ this.optimizationMethod = method; }
+	public int getOptimizationMethod(){ return optimizationMethod; }
 	
 	
 	public String getDonateURL(){ return donateURL; }

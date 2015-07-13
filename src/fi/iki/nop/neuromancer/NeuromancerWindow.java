@@ -473,7 +473,23 @@ public class NeuromancerWindow {
 		mntmAutofill.setSelection(model.getAutoFill());
 		mntmAutofill.setText("Autofill");
 		
-		new MenuItem(menu_4, SWT.SEPARATOR);
+		final MenuItem mntmFullscreen = new MenuItem(menu_4, SWT.CHECK);
+		mntmFullscreen.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				model.setFullscreen(mntmFullscreen.getSelection());
+				if(model.getFullscreen())
+					engine.setParameter("fullscreen", "true");
+				else
+					engine.setParameter("fullscreen", "false");
+			}
+		});
+		mntmFullscreen.setText("Fullscreen");
+		mntmFullscreen.setSelection(model.getFullscreen());
+		if(model.getFullscreen())
+			engine.setParameter("fullscreen", "true");
+		else
+			engine.setParameter("fullscreen", "false");
 		
 		MenuItem mntmRandomPrograms = new MenuItem(menu_4, SWT.CHECK);
 		mntmRandomPrograms.setText("Random Stim");
@@ -1267,26 +1283,62 @@ public class NeuromancerWindow {
 		
 		MenuItem menuItem = new MenuItem(menu_6, SWT.SEPARATOR);
 		
+		final MenuItem mntmDirectRbf = new MenuItem(menu_6, SWT.RADIO);
+		mntmDirectRbf.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				if(mntmDirectRbf.getSelection()){
+					engine.setParameter("use-data-rbf", "true");
+					model.setOptimizationMethod(model.OPTIMIZATION_METHOD_RBF);
+				}
+				
+				engine.setParameter("use-bayesian-nnetwork", "false");
+			}
+		});		
+		mntmDirectRbf.setText("Direct RBF");
+		if(model.getOptimizationMethod() == model.OPTIMIZATION_METHOD_RBF){
+			mntmDirectRbf.setSelection(true);
+			engine.setParameter("use-data-rbf", "true");
+			engine.setParameter("use-baysian-nnetwork", "false");
+		}
+			
+		
 		final MenuItem mntmLbfgsNn = new MenuItem(menu_6, SWT.RADIO);
 		mntmLbfgsNn.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				if(mntmLbfgsNn.getSelection())
+				if(mntmLbfgsNn.getSelection()){
 					engine.setParameter("use-bayesian-nnetwork", "false");
+					model.setOptimizationMethod(model.OPTIMIZATION_METHOD_NN);
+				}
+				
+				engine.setParameter("use-data-rbf", "false");
 			}
 		});
-		mntmLbfgsNn.setSelection(true);
 		mntmLbfgsNn.setText("L-BFGS NN");
+		if(model.getOptimizationMethod() == model.OPTIMIZATION_METHOD_NN){
+			mntmLbfgsNn.setSelection(true);
+			engine.setParameter("use-data-rbf", "false");
+			engine.setParameter("use-bayesian-nnetwork", "true");
+		}
 		
 		final MenuItem mntmBayesianNeuralNetwork = new MenuItem(menu_6, SWT.RADIO);
 		mntmBayesianNeuralNetwork.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				if(mntmBayesianNeuralNetwork.getSelection())
+				if(mntmBayesianNeuralNetwork.getSelection()){
 					engine.setParameter("use-bayesian-nnetwork", "true");
+					model.setOptimizationMethod(model.OPTIMIZATION_METHOD_BAYES_NN);
+				}
+				engine.setParameter("use-data-rbf", "false");
 			}
 		});
 		mntmBayesianNeuralNetwork.setText("HMC Bayesian NN (aprox.)");
+		if(model.getOptimizationMethod() == model.OPTIMIZATION_METHOD_BAYES_NN){
+			mntmBayesianNeuralNetwork.setSelection(true);
+			engine.setParameter("use-data-rbf", "false");
+			engine.setParameter("use-bayesian-nnetwork", "false");
+		}
 		
 		MenuItem mntmNewItem = new MenuItem(menu_6, SWT.RADIO);
 		mntmNewItem.setEnabled(false);

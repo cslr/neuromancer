@@ -74,8 +74,8 @@ public class SignalProgram {
 				int startX = SEC_WIDTH_GUI/2 + latestSecs*SEC_WIDTH_GUI;
 				int endX   = SEC_WIDTH_GUI/2 + i*SEC_WIDTH_GUI;
 				
-				int startY = (int)Math.floor(size.y*(1.0f - latestValue));
-				int endY   = (int)Math.floor(size.y*(1.0f - targetSignal[i]));
+				int startY = (int)Math.floor((size.y - 20)*(1.0f - latestValue));
+				int endY   = (int)Math.floor((size.y - 20)*(1.0f - targetSignal[i]));
 				
 				gc.drawLine(startX, startY, endX, endY);
 				gc.fillOval(endX - SEC_WIDTH_GUI/4, endY - SEC_WIDTH_GUI/4, SEC_WIDTH_GUI/2, SEC_WIDTH_GUI/2);
@@ -90,8 +90,8 @@ public class SignalProgram {
 			int startX = SEC_WIDTH_GUI/2 + latestSecs*SEC_WIDTH_GUI;
 			int endX   = SEC_WIDTH_GUI/2 + (targetSignal.length-1)*SEC_WIDTH_GUI;
 			
-			int startY = (int)Math.floor(size.y*(1.0f - latestValue));
-			int endY   = (int)Math.floor(size.y*(1.0f - latestValue));
+			int startY = (int)Math.floor((size.y-20)*(1.0f - latestValue));
+			int endY   = (int)Math.floor((size.y-20)*(1.0f - latestValue));
 			
 			gc.drawLine(startX, startY, endX, endY);
 		}
@@ -120,7 +120,7 @@ public class SignalProgram {
 	 */
 	public float coordinateToValue(Canvas canvas, int y){
 		Point size = canvas.getSize();
-		float value = (float)(size.y - y)/((float)size.y);
+		float value = (float)(size.y - 20 - y)/((float)size.y - 20);
 		if(value < 0.0f) value = 0.0f;
 		else if(value > 1.0f) value = 1.0f;
 		return value;
