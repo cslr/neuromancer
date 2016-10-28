@@ -1,0 +1,532 @@
+INFO 0.00000 Logging facilities started..
+INFO 0.08800 resonanz-engine: starting..
+INFO 0.11900 engine_loop() started
+INFO 0.11900 windows os: setting resonanz thread high priority
+INFO 1.07600 resonanz-engine::setParameter: fullscreen = true
+INFO 1.07900 resonanz-engine::setParameter: use-data-rbf = true
+INFO 1.07900 resonanz-engine::setParameter: use-baysian-nnetwork = false
+INFO 2.82200 checking command
+INFO 2.82200 resonanz-engine: sleeping..
+INFO 2.82200 eeg No EEG device 0.50
+INFO 2.82200 checking command
+INFO 2.82200 resonanz-engine: sleeping..
+INFO 2.82200 eeg No EEG device 0.50
+INFO 2.87200 checking command
+INFO 2.87200 resonanz-engine: sleeping..
+INFO 2.87200 eeg No EEG device 0.50
+INFO 3.12300 checking command
+INFO 3.12300 resonanz-engine: sleeping..
+INFO 3.12300 eeg No EEG device 0.50
+INFO 3.37400 checking command
+INFO 3.37400 resonanz-engine: sleeping..
+INFO 3.37400 eeg No EEG device 0.50
+INFO 3.62500 checking command
+INFO 3.62500 resonanz-engine: sleeping..
+INFO 3.62500 eeg No EEG device 0.50
+INFO 3.87700 checking command
+INFO 3.87700 resonanz-engine: sleeping..
+INFO 3.87700 eeg No EEG device 0.50
+INFO 4.12900 checking command
+INFO 4.12900 resonanz-engine: sleeping..
+INFO 4.12900 eeg No EEG device 0.50
+INFO 4.38000 checking command
+INFO 4.38000 resonanz-engine: sleeping..
+INFO 4.38000 eeg No EEG device 0.50
+INFO 4.63300 checking command
+INFO 4.63300 resonanz-engine: sleeping..
+INFO 4.63400 eeg No EEG device 0.50
+INFO 4.88600 checking command
+INFO 4.88600 resonanz-engine: sleeping..
+INFO 4.88600 eeg No EEG device 0.50
+INFO 5.13700 checking command
+INFO 5.13700 resonanz-engine: sleeping..
+INFO 5.13700 eeg No EEG device 0.50
+INFO 5.38900 checking command
+INFO 5.38900 resonanz-engine: sleeping..
+INFO 5.38900 eeg No EEG device 0.50
+INFO 5.64100 checking command
+INFO 5.64100 resonanz-engine: sleeping..
+INFO 5.64100 eeg No EEG device 0.50
+INFO 5.89200 checking command
+INFO 5.89200 resonanz-engine: sleeping..
+INFO 5.89200 eeg No EEG device 0.50
+INFO 6.14500 checking command
+INFO 6.14500 resonanz-engine: sleeping..
+INFO 6.14500 eeg No EEG device 0.50
+INFO 6.40400 checking command
+INFO 6.40400 resonanz-engine: sleeping..
+INFO 6.40400 eeg No EEG device 0.50
+INFO 6.65600 checking command
+INFO 6.65600 resonanz-engine: sleeping..
+INFO 6.65600 eeg No EEG device 0.50
+INFO 6.90700 checking command
+INFO 6.90700 resonanz-engine: sleeping..
+INFO 6.90700 eeg No EEG device 0.50
+INFO 7.15900 checking command
+INFO 7.15900 resonanz-engine: sleeping..
+INFO 7.15900 eeg No EEG device 0.50
+INFO 7.41000 checking command
+INFO 7.41000 resonanz-engine: sleeping..
+INFO 7.41000 eeg No EEG device 0.50
+INFO 7.66400 checking command
+INFO 7.66400 resonanz-engine: sleeping..
+INFO 7.66400 eeg No EEG device 0.50
+INFO 7.91500 checking command
+INFO 7.91500 resonanz-engine: sleeping..
+INFO 7.91500 eeg No EEG device 0.50
+INFO 8.16800 checking command
+INFO 8.16800 resonanz-engine: sleeping..
+INFO 8.16800 eeg No EEG device 0.50
+INFO 8.37000 checking command
+INFO 8.37000 resonanz-engine: sleeping..
+INFO 8.37000 eeg No EEG device 0.50
+INFO 8.62100 checking command
+INFO 8.62100 resonanz-engine: sleeping..
+INFO 8.62100 eeg No EEG device 0.50
+INFO 8.87300 checking command
+INFO 8.87300 resonanz-engine: sleeping..
+INFO 8.87300 eeg No EEG device 0.50
+INFO 9.12800 checking command
+INFO 9.12800 resonanz-engine: sleeping..
+INFO 9.12800 eeg No EEG device 0.50
+INFO 9.37900 checking command
+INFO 9.37900 resonanz-engine: sleeping..
+INFO 9.37900 eeg No EEG device 0.50
+INFO 9.63000 checking command
+INFO 9.63000 resonanz-engine: sleeping..
+INFO 9.63000 eeg No EEG device 0.50
+INFO 9.88300 checking command
+INFO 9.88300 resonanz-engine: sleeping..
+INFO 9.88300 eeg No EEG device 0.50
+INFO 10.13600 checking command
+INFO 10.13600 resonanz-engine: sleeping..
+INFO 10.13600 eeg No EEG device 0.50
+INFO 10.38800 checking command
+INFO 10.38800 resonanz-engine: sleeping..
+INFO 10.38800 eeg No EEG device 0.50
+INFO 10.63900 checking command
+INFO 10.63900 resonanz-engine: sleeping..
+INFO 10.63900 eeg No EEG device 0.50
+INFO 10.89100 checking command
+INFO 10.89100 resonanz-engine: sleeping..
+INFO 10.89100 eeg No EEG device 0.50
+INFO 11.14300 checking command
+INFO 11.14400 resonanz-engine: sleeping..
+INFO 11.14400 eeg No EEG device 0.50
+INFO 11.39700 checking command
+INFO 11.39700 resonanz-engine: sleeping..
+INFO 11.39700 eeg No EEG device 0.50
+INFO 11.65100 checking command
+INFO 11.65100 resonanz-engine: sleeping..
+INFO 11.65100 eeg No EEG device 0.50
+INFO 11.90300 checking command
+INFO 11.90300 resonanz-engine: sleeping..
+INFO 11.90300 eeg No EEG device 0.50
+INFO 12.15500 checking command
+INFO 12.15500 resonanz-engine: sleeping..
+INFO 12.15500 eeg No EEG device 0.50
+INFO 12.40600 checking command
+INFO 12.40600 resonanz-engine: sleeping..
+INFO 12.40600 eeg No EEG device 0.50
+INFO 12.65700 checking command
+INFO 12.65700 resonanz-engine: sleeping..
+INFO 12.65700 eeg No EEG device 0.50
+INFO 12.90900 checking command
+INFO 12.90900 resonanz-engine: sleeping..
+INFO 12.90900 eeg No EEG device 0.50
+INFO 13.16200 checking command
+INFO 13.16200 resonanz-engine: sleeping..
+INFO 13.16200 eeg No EEG device 0.50
+INFO 13.41300 checking command
+INFO 13.41300 resonanz-engine: sleeping..
+INFO 13.41300 eeg No EEG device 0.50
+INFO 13.66500 checking command
+INFO 13.66500 resonanz-engine: sleeping..
+INFO 13.66500 eeg No EEG device 0.50
+INFO 13.91700 checking command
+INFO 13.91700 resonanz-engine: sleeping..
+INFO 13.91700 eeg No EEG device 0.50
+INFO 14.16800 checking command
+INFO 14.16800 resonanz-engine: sleeping..
+INFO 14.16900 eeg No EEG device 0.50
+INFO 14.37100 checking command
+INFO 14.37100 resonanz-engine: sleeping..
+INFO 14.37100 eeg No EEG device 0.50
+INFO 14.62300 checking command
+INFO 14.62300 resonanz-engine: sleeping..
+INFO 14.62300 eeg No EEG device 0.50
+INFO 14.87500 checking command
+INFO 14.87500 resonanz-engine: sleeping..
+INFO 14.87500 eeg No EEG device 0.50
+INFO 15.12700 checking command
+INFO 15.12700 resonanz-engine: sleeping..
+INFO 15.12700 eeg No EEG device 0.50
+INFO 15.37900 checking command
+INFO 15.37900 resonanz-engine: sleeping..
+INFO 15.37900 eeg No EEG device 0.50
+INFO 15.63100 checking command
+INFO 15.63100 resonanz-engine: sleeping..
+INFO 15.63100 eeg No EEG device 0.50
+INFO 15.88300 checking command
+INFO 15.88300 resonanz-engine: sleeping..
+INFO 15.88300 eeg No EEG device 0.50
+INFO 16.13400 checking command
+INFO 16.13400 resonanz-engine: sleeping..
+INFO 16.13400 eeg No EEG device 0.50
+INFO 16.38600 checking command
+INFO 16.38600 resonanz-engine: sleeping..
+INFO 16.38600 eeg No EEG device 0.50
+INFO 16.63900 checking command
+INFO 16.63900 resonanz-engine: sleeping..
+INFO 16.63900 eeg No EEG device 0.50
+INFO 16.89000 checking command
+INFO 16.89000 resonanz-engine: sleeping..
+INFO 16.89000 eeg No EEG device 0.50
+INFO 17.14200 checking command
+INFO 17.14200 resonanz-engine: sleeping..
+INFO 17.14200 eeg No EEG device 0.50
+INFO 17.39300 checking command
+INFO 17.39300 resonanz-engine: sleeping..
+INFO 17.39300 eeg No EEG device 0.50
+INFO 17.64500 checking command
+INFO 17.64500 resonanz-engine: sleeping..
+INFO 17.64500 eeg No EEG device 0.50
+INFO 17.89700 checking command
+INFO 17.89700 resonanz-engine: sleeping..
+INFO 17.89700 eeg No EEG device 0.50
+INFO 18.14900 checking command
+INFO 18.14900 resonanz-engine: sleeping..
+INFO 18.14900 eeg No EEG device 0.50
+INFO 18.40000 checking command
+INFO 18.40000 resonanz-engine: sleeping..
+INFO 18.40000 eeg No EEG device 0.50
+INFO 18.65100 checking command
+INFO 18.65100 resonanz-engine: sleeping..
+INFO 18.65100 eeg No EEG device 0.50
+INFO 18.90200 checking command
+INFO 18.90200 resonanz-engine: sleeping..
+INFO 18.90200 eeg No EEG device 0.50
+INFO 19.15400 checking command
+INFO 19.15400 resonanz-engine: sleeping..
+INFO 19.15400 eeg No EEG device 0.50
+INFO 19.40500 checking command
+INFO 19.40500 resonanz-engine: sleeping..
+INFO 19.40500 eeg No EEG device 0.50
+INFO 19.65800 checking command
+INFO 19.65800 resonanz-engine: sleeping..
+INFO 19.65800 eeg No EEG device 0.50
+INFO 19.91000 checking command
+INFO 19.91000 resonanz-engine: sleeping..
+INFO 19.91000 eeg No EEG device 0.50
+INFO 20.16200 checking command
+INFO 20.16200 resonanz-engine: sleeping..
+INFO 20.16200 eeg No EEG device 0.50
+INFO 20.41400 checking command
+INFO 20.41400 resonanz-engine: sleeping..
+INFO 20.41400 eeg No EEG device 0.50
+INFO 20.66500 checking command
+INFO 20.66500 resonanz-engine: sleeping..
+INFO 20.66500 eeg No EEG device 0.50
+INFO 20.86900 checking command
+INFO 20.86900 resonanz-engine: sleeping..
+INFO 20.86900 eeg No EEG device 0.50
+INFO 21.12000 checking command
+INFO 21.12000 resonanz-engine: sleeping..
+INFO 21.12000 eeg No EEG device 0.50
+INFO 21.37100 checking command
+INFO 21.37100 resonanz-engine: sleeping..
+INFO 21.37100 eeg No EEG device 0.50
+INFO 21.62400 checking command
+INFO 21.62400 resonanz-engine: sleeping..
+INFO 21.62400 eeg No EEG device 0.50
+INFO 21.87500 checking command
+INFO 21.87500 resonanz-engine: sleeping..
+INFO 21.87500 eeg No EEG device 0.50
+INFO 22.12700 checking command
+INFO 22.12700 resonanz-engine: sleeping..
+INFO 22.12700 eeg No EEG device 0.50
+INFO 22.37800 checking command
+INFO 22.37800 resonanz-engine: sleeping..
+INFO 22.37800 eeg No EEG device 0.50
+INFO 22.62900 checking command
+INFO 22.62900 resonanz-engine: sleeping..
+INFO 22.62900 eeg No EEG device 0.50
+INFO 22.88100 checking command
+INFO 22.88100 resonanz-engine: sleeping..
+INFO 22.88100 eeg No EEG device 0.50
+INFO 23.13200 checking command
+INFO 23.13200 resonanz-engine: sleeping..
+INFO 23.13200 eeg No EEG device 0.50
+INFO 23.38300 checking command
+INFO 23.38300 resonanz-engine: sleeping..
+INFO 23.38300 eeg No EEG device 0.50
+INFO 23.63500 checking command
+INFO 23.63500 resonanz-engine: sleeping..
+INFO 23.63500 eeg No EEG device 0.50
+INFO 23.88600 checking command
+INFO 23.88600 resonanz-engine: sleeping..
+INFO 23.88600 eeg No EEG device 0.50
+INFO 24.13900 checking command
+INFO 24.13900 resonanz-engine: sleeping..
+INFO 24.13900 eeg No EEG device 0.50
+INFO 24.39000 checking command
+INFO 24.39000 resonanz-engine: sleeping..
+INFO 24.39000 eeg No EEG device 0.50
+INFO 24.64200 checking command
+INFO 24.64200 resonanz-engine: sleeping..
+INFO 24.64200 eeg No EEG device 0.50
+INFO 24.89200 checking command
+INFO 24.89200 resonanz-engine: sleeping..
+INFO 24.89200 eeg No EEG device 0.50
+INFO 25.14500 checking command
+INFO 25.14500 resonanz-engine: sleeping..
+INFO 25.14500 eeg No EEG device 0.50
+INFO 25.39700 checking command
+INFO 25.39700 resonanz-engine: sleeping..
+INFO 25.39700 eeg No EEG device 0.50
+INFO 25.64900 checking command
+INFO 25.64900 resonanz-engine: sleeping..
+INFO 25.64900 eeg No EEG device 0.50
+INFO 25.90000 checking command
+INFO 25.90000 resonanz-engine: sleeping..
+INFO 25.90000 eeg No EEG device 0.50
+INFO 26.15100 checking command
+INFO 26.15100 resonanz-engine: sleeping..
+INFO 26.15100 eeg No EEG device 0.50
+INFO 26.40300 checking command
+INFO 26.40300 resonanz-engine: sleeping..
+INFO 26.40300 eeg No EEG device 0.50
+INFO 26.65400 checking command
+INFO 26.65400 resonanz-engine: sleeping..
+INFO 26.65400 eeg No EEG device 0.50
+INFO 26.90600 checking command
+INFO 26.90600 resonanz-engine: sleeping..
+INFO 26.90600 eeg No EEG device 0.50
+INFO 27.15700 checking command
+INFO 27.15700 resonanz-engine: sleeping..
+INFO 27.15700 eeg No EEG device 0.50
+INFO 27.40900 checking command
+INFO 27.40900 resonanz-engine: sleeping..
+INFO 27.40900 eeg No EEG device 0.50
+INFO 27.66100 checking command
+INFO 27.66100 resonanz-engine: sleeping..
+INFO 27.66100 eeg No EEG device 0.50
+INFO 27.91200 checking command
+INFO 27.91200 resonanz-engine: sleeping..
+INFO 27.91200 eeg No EEG device 0.50
+INFO 28.16300 checking command
+INFO 28.16300 resonanz-engine: sleeping..
+INFO 28.16300 eeg No EEG device 0.50
+INFO 28.41600 checking command
+INFO 28.41600 resonanz-engine: sleeping..
+INFO 28.41600 eeg No EEG device 0.50
+INFO 28.66700 checking command
+INFO 28.66700 resonanz-engine: sleeping..
+INFO 28.66700 eeg No EEG device 0.50
+INFO 28.91800 checking command
+INFO 28.91800 resonanz-engine: sleeping..
+INFO 28.91800 eeg No EEG device 0.50
+INFO 29.12000 checking command
+INFO 29.12000 resonanz-engine: sleeping..
+INFO 29.12000 eeg No EEG device 0.50
+INFO 29.37200 checking command
+INFO 29.37200 resonanz-engine: sleeping..
+INFO 29.37200 eeg No EEG device 0.50
+INFO 29.62300 checking command
+INFO 29.62300 resonanz-engine: sleeping..
+INFO 29.62300 eeg No EEG device 0.50
+INFO 29.87500 checking command
+INFO 29.87500 resonanz-engine: sleeping..
+INFO 29.87500 eeg No EEG device 0.50
+INFO 30.12700 checking command
+INFO 30.12700 resonanz-engine: sleeping..
+INFO 30.12700 eeg No EEG device 0.50
+INFO 30.37900 checking command
+INFO 30.37900 resonanz-engine: sleeping..
+INFO 30.37900 eeg No EEG device 0.50
+INFO 30.63000 checking command
+INFO 30.63000 resonanz-engine: sleeping..
+INFO 30.63000 eeg No EEG device 0.50
+INFO 30.88100 checking command
+INFO 30.88100 resonanz-engine: sleeping..
+INFO 30.88100 eeg No EEG device 0.50
+INFO 31.13300 checking command
+INFO 31.13300 resonanz-engine: sleeping..
+INFO 31.13300 eeg No EEG device 0.50
+INFO 31.38500 checking command
+INFO 31.38500 resonanz-engine: sleeping..
+INFO 31.38600 eeg No EEG device 0.50
+INFO 31.63800 checking command
+INFO 31.63800 resonanz-engine: sleeping..
+INFO 31.63800 eeg No EEG device 0.50
+INFO 31.89100 checking command
+INFO 31.89100 resonanz-engine: sleeping..
+INFO 31.89100 eeg No EEG device 0.50
+INFO 32.14100 checking command
+INFO 32.14100 resonanz-engine: sleeping..
+INFO 32.14100 eeg No EEG device 0.50
+INFO 32.39300 checking command
+INFO 32.39300 resonanz-engine: sleeping..
+INFO 32.39300 eeg No EEG device 0.50
+INFO 32.64400 checking command
+INFO 32.64400 resonanz-engine: sleeping..
+INFO 32.64400 eeg No EEG device 0.50
+INFO 32.89500 checking command
+INFO 32.89500 resonanz-engine: sleeping..
+INFO 32.89500 eeg No EEG device 0.50
+INFO 33.14700 checking command
+INFO 33.14700 resonanz-engine: sleeping..
+INFO 33.14700 eeg No EEG device 0.50
+INFO 33.39900 checking command
+INFO 33.39900 resonanz-engine: sleeping..
+INFO 33.39900 eeg No EEG device 0.50
+INFO 33.65100 checking command
+INFO 33.65100 resonanz-engine: sleeping..
+INFO 33.65100 eeg No EEG device 0.50
+INFO 33.90200 checking command
+INFO 33.90200 resonanz-engine: sleeping..
+INFO 33.90200 eeg No EEG device 0.50
+INFO 34.15300 checking command
+INFO 34.15300 resonanz-engine: sleeping..
+INFO 34.15300 eeg No EEG device 0.50
+INFO 34.40500 checking command
+INFO 34.40500 resonanz-engine: sleeping..
+INFO 34.40500 eeg No EEG device 0.50
+INFO 34.65600 checking command
+INFO 34.65600 resonanz-engine: sleeping..
+INFO 34.65600 eeg No EEG device 0.50
+INFO 34.90800 checking command
+INFO 34.90800 resonanz-engine: sleeping..
+INFO 34.90800 eeg No EEG device 0.50
+INFO 35.16000 checking command
+INFO 35.16000 resonanz-engine: sleeping..
+INFO 35.16000 eeg No EEG device 0.50
+INFO 35.41100 checking command
+INFO 35.41100 resonanz-engine: sleeping..
+INFO 35.41100 eeg No EEG device 0.50
+INFO 35.66200 checking command
+INFO 35.66200 resonanz-engine: sleeping..
+INFO 35.66200 eeg No EEG device 0.50
+INFO 35.91400 checking command
+INFO 35.91400 resonanz-engine: sleeping..
+INFO 35.91400 eeg No EEG device 0.50
+INFO 36.16600 checking command
+INFO 36.16600 resonanz-engine: sleeping..
+INFO 36.16600 eeg No EEG device 0.50
+INFO 36.41700 checking command
+INFO 36.41700 resonanz-engine: sleeping..
+INFO 36.41700 eeg No EEG device 0.50
+INFO 36.61900 checking command
+INFO 36.61900 resonanz-engine: sleeping..
+INFO 36.61900 eeg No EEG device 0.50
+INFO 36.87000 checking command
+INFO 36.87000 resonanz-engine: sleeping..
+INFO 36.87000 eeg No EEG device 0.50
+INFO 37.12300 checking command
+INFO 37.12300 resonanz-engine: sleeping..
+INFO 37.12300 eeg No EEG device 0.50
+INFO 37.37500 checking command
+INFO 37.37500 resonanz-engine: sleeping..
+INFO 37.37500 eeg No EEG device 0.50
+INFO 37.62600 checking command
+INFO 37.62600 resonanz-engine: sleeping..
+INFO 37.62600 eeg No EEG device 0.50
+INFO 37.87700 checking command
+INFO 37.87700 resonanz-engine: sleeping..
+INFO 37.87700 eeg No EEG device 0.50
+INFO 38.12800 checking command
+INFO 38.12800 resonanz-engine: sleeping..
+INFO 38.12800 eeg No EEG device 0.50
+INFO 38.37900 checking command
+INFO 38.37900 resonanz-engine: sleeping..
+INFO 38.37900 eeg No EEG device 0.50
+INFO 38.63000 checking command
+INFO 38.63000 resonanz-engine: sleeping..
+INFO 38.63000 eeg No EEG device 0.50
+INFO 38.88100 checking command
+INFO 38.88100 resonanz-engine: sleeping..
+INFO 38.88100 eeg No EEG device 0.50
+INFO 39.13300 checking command
+INFO 39.13300 resonanz-engine: sleeping..
+INFO 39.13300 eeg No EEG device 0.50
+INFO 39.38400 checking command
+INFO 39.38400 resonanz-engine: sleeping..
+INFO 39.38400 eeg No EEG device 0.50
+INFO 39.63600 checking command
+INFO 39.63600 resonanz-engine: sleeping..
+INFO 39.63600 eeg No EEG device 0.50
+INFO 39.88800 checking command
+INFO 39.88800 resonanz-engine: sleeping..
+INFO 39.88800 eeg No EEG device 0.50
+INFO 40.13900 checking command
+INFO 40.13900 resonanz-engine: sleeping..
+INFO 40.13900 eeg No EEG device 0.50
+INFO 40.39000 checking command
+INFO 40.39000 resonanz-engine: sleeping..
+INFO 40.39000 eeg No EEG device 0.50
+INFO 40.64200 checking command
+INFO 40.64200 resonanz-engine: sleeping..
+INFO 40.64200 eeg No EEG device 0.50
+INFO 40.89400 checking command
+INFO 40.89400 resonanz-engine: sleeping..
+INFO 40.89400 eeg No EEG device 0.50
+INFO 41.14500 checking command
+INFO 41.14500 resonanz-engine: sleeping..
+INFO 41.14500 eeg No EEG device 0.50
+INFO 41.39600 checking command
+INFO 41.39600 resonanz-engine: sleeping..
+INFO 41.39600 eeg No EEG device 0.50
+INFO 41.64700 checking command
+INFO 41.64700 resonanz-engine: sleeping..
+INFO 41.64700 eeg No EEG device 0.50
+INFO 41.89800 checking command
+INFO 41.89800 resonanz-engine: sleeping..
+INFO 41.89800 eeg No EEG device 0.50
+INFO 42.15000 checking command
+INFO 42.15000 resonanz-engine: sleeping..
+INFO 42.15000 eeg No EEG device 0.50
+INFO 42.40100 checking command
+INFO 42.40100 resonanz-engine: sleeping..
+INFO 42.40100 eeg No EEG device 0.50
+INFO 42.65300 checking command
+INFO 42.65300 resonanz-engine: sleeping..
+INFO 42.65300 eeg No EEG device 0.50
+INFO 42.90400 checking command
+INFO 42.90400 resonanz-engine: sleeping..
+INFO 42.90400 eeg No EEG device 0.50
+INFO 43.15600 checking command
+INFO 43.15600 resonanz-engine: sleeping..
+INFO 43.15600 eeg No EEG device 0.50
+INFO 43.40800 checking command
+INFO 43.40800 resonanz-engine: sleeping..
+INFO 43.40800 eeg No EEG device 0.50
+INFO 43.66000 checking command
+INFO 43.66000 resonanz-engine: sleeping..
+INFO 43.66000 eeg No EEG device 0.50
+INFO 43.91200 checking command
+INFO 43.91200 resonanz-engine: sleeping..
+INFO 43.91200 eeg No EEG device 0.50
+INFO 44.16300 checking command
+INFO 44.16300 resonanz-engine: sleeping..
+INFO 44.16300 eeg No EEG device 0.50
+INFO 44.41500 checking command
+INFO 44.41500 resonanz-engine: sleeping..
+INFO 44.41500 eeg No EEG device 0.50
+INFO 44.66600 checking command
+INFO 44.66600 resonanz-engine: sleeping..
+INFO 44.66600 eeg No EEG device 0.50
+INFO 44.91700 checking command
+INFO 44.91700 resonanz-engine: sleeping..
+INFO 44.91700 eeg No EEG device 0.50
+INFO 45.16900 checking command
+INFO 45.16900 resonanz-engine: sleeping..
+INFO 45.16900 eeg No EEG device 0.50
+INFO 45.37000 checking command
+INFO 45.37000 resonanz-engine: sleeping..
+INFO 45.37000 eeg No EEG device 0.50
+INFO 45.62400 checking command
+INFO 45.62400 resonanz-engine: sleeping..
+INFO 45.62400 eeg No EEG device 0.50
+INFO 45.76300 resonanz-engine: shutdown..
+INFO 46.76300 resonanz-engine: halted
+INFO 46.86800 Shutdown? Logging class destroyed.
