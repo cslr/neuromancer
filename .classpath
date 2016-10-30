@@ -2,18 +2,18 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
-	<classpathentry kind="lib" path="C:/eclipse/plugins/org.eclipse.osgi_3.11.1.v20160708-1632.jar" sourcepath="C:/eclipse/plugins/org.eclipse.osgi_3.10.2.v20150203-1939.jar"/>
-	<classpathentry kind="lib" path="C:/eclipse/plugins/org.eclipse.core.commands_3.8.0.v20160316-1921.jar" sourcepath="C:/eclipse/plugins/org.eclipse.core.commands_3.6.100.v20140528-1422.jar"/>
-	<classpathentry kind="lib" path="C:/eclipse/plugins/org.eclipse.equinox.common_3.8.0.v20160509-1230.jar" sourcepath="C:/eclipse/plugins/org.eclipse.equinox.common_3.6.200.v20130402-1505.jar"/>
-	<classpathentry kind="lib" path="C:/eclipse/plugins/org.eclipse.equinox.registry_3.6.100.v20160223-2218.jar" sourcepath="C:/eclipse/plugins/org.eclipse.equinox.registry_3.5.400.v20140428-1507.jar"/>
-	<classpathentry kind="lib" path="C:/eclipse/plugins/org.eclipse.core.runtime_3.12.0.v20160606-1342.jar" sourcepath="C:/eclipse/plugins/org.eclipse.core.runtime_3.10.0.v20140318-2214.jar"/>
-	<classpathentry kind="lib" path="C:/eclipse/plugins/org.eclipse.text_3.6.0.v20160503-1849.jar" sourcepath="C:/eclipse/plugins/org.eclipse.text_3.5.300.v20130515-1451.jar"/>
-	<classpathentry kind="lib" path="C:/eclipse/plugins/org.eclipse.swt.win32.win32.x86_64_3.105.1.v20160907-0248.jar" sourcepath="C:/eclipse/plugins/org.eclipse.swt.win32.win32.x86_64_3.103.2.v20150203-1351.jar"/>
-	<classpathentry kind="lib" path="C:/eclipse/plugins/org.eclipse.jface_3.12.0.v20160518-1929.jar" sourcepath="C:/eclipse/plugins/org.eclipse.jface_3.10.2.v20141021-1035.jar"/>
-	<classpathentry kind="lib" path="C:/eclipse/plugins/org.eclipse.jface.text_3.11.1.v20160819-1517.jar" sourcepath="C:/eclipse/plugins/org.eclipse.jface.text_3.9.2.v20141003-1326.jar"/>
-	<classpathentry kind="lib" path="C:/eclipse/plugins/org.eclipse.ui.workbench_3.108.1.v20160819-2118.jar" sourcepath="C:/eclipse/plugins/org.eclipse.ui.workbench_3.106.2.v20150204-1030.jar"/>
-	<classpathentry kind="lib" path="C:/eclipse/plugins/com.ibm.icu_56.1.0.v201601250100.jar" sourcepath="C:/eclipse/plugins/com.ibm.icu_52.1.1.v201501240615.jar"/>
-	<classpathentry kind="lib" path="C:/eclipse/plugins/org.eclipse.ui.forms_3.7.0.v20160518-1929.jar" sourcepath="C:/eclipse/plugins/org.eclipse.ui.forms_3.6.100.v20140422-1825.jar"/>
+	<classpathentry kind="lib" path="/home/cutesolar/p2/pool/plugins/org.eclipse.osgi_3.11.1.v20160708-1632.jar" sourcepath="C:/eclipse/plugins/org.eclipse.osgi_3.10.2.v20150203-1939.jar"/>
+	<classpathentry kind="lib" path="/home/cutesolar/p2/pool/plugins/org.eclipse.core.commands_3.8.0.v20160316-1921.jar" sourcepath="C:/eclipse/plugins/org.eclipse.core.commands_3.6.100.v20140528-1422.jar"/>
+	<classpathentry kind="lib" path="/home/cutesolar/p2/pool/plugins/org.eclipse.equinox.common_3.8.0.v20160509-1230.jar" sourcepath="C:/eclipse/plugins/org.eclipse.equinox.common_3.6.200.v20130402-1505.jar"/>
+	<classpathentry kind="lib" path="/home/cutesolar/p2/pool/plugins/org.eclipse.equinox.registry_3.6.100.v20160223-2218.jar" sourcepath="C:/eclipse/plugins/org.eclipse.equinox.registry_3.5.400.v20140428-1507.jar"/>
+	<classpathentry kind="lib" path="/home/cutesolar/p2/pool/plugins/org.eclipse.core.runtime_3.12.0.v20160606-1342.jar" sourcepath="C:/eclipse/plugins/org.eclipse.core.runtime_3.10.0.v20140318-2214.jar"/>
+	<classpathentry kind="lib" path="/home/cutesolar/p2/pool/plugins/org.eclipse.text_3.6.0.v20160503-1849.jar" sourcepath="C:/eclipse/plugins/org.eclipse.text_3.5.300.v20130515-1451.jar"/>
+	<classpathentry kind="lib" path="/home/cutesolar/p2/pool/plugins/org.eclipse.swt.gtk.linux.x86_64_3.105.1.v20160907-0248.jar" sourcepath="C:/eclipse/plugins/org.eclipse.swt.win32.win32.x86_64_3.103.2.v20150203-1351.jar"/>
+	<classpathentry kind="lib" path="/home/cutesolar/p2/pool/plugins/org.eclipse.jface_3.12.0.v20160518-1929.jar" sourcepath="C:/eclipse/plugins/org.eclipse.jface_3.10.2.v20141021-1035.jar"/>
+	<classpathentry kind="lib" path="/home/cutesolar/p2/pool/plugins/org.eclipse.jface.text_3.11.1.v20160819-1517.jar" sourcepath="C:/eclipse/plugins/org.eclipse.jface.text_3.9.2.v20141003-1326.jar"/>
+	<classpathentry kind="lib" path="/home/cutesolar/p2/pool/plugins/org.eclipse.ui.workbench_3.108.1.v20160819-2118.jar" sourcepath="C:/eclipse/plugins/org.eclipse.ui.workbench_3.106.2.v20150204-1030.jar"/>
+	<classpathentry kind="lib" path="/home/cutesolar/p2/pool/plugins/com.ibm.icu_56.1.0.v201601250100.jar" sourcepath="C:/eclipse/plugins/com.ibm.icu_52.1.1.v201501240615.jar"/>
+	<classpathentry kind="lib" path="/home/cutesolar/p2/pool/plugins/org.eclipse.ui.forms_3.7.0.v20160518-1929.jar" sourcepath="C:/eclipse/plugins/org.eclipse.ui.forms_3.6.100.v20140422-1825.jar"/>
 	<classpathentry kind="lib" path="swing2swt.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

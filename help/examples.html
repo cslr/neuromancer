@@ -1,0 +1,58 @@
+<html>
+  <head>
+    <title>How to use Neuromancer program</title>
+  </head>
+
+  <body>
+    <h1>Examples</h1>
+
+    <h3>Basic neuromarketing</h3>
+
+    <p>
+      One way to use Neuromancer is to measure the amount of change what is happening in brain when watching stimulation. It is possible to find the keywords and pictures that have the largest impact on the user. The changes noticed in watchers is called delta analysis because it calculates which pictures causes largest changes to the user.
+    </p>
+
+    <p>
+      1. Put pictures (png and jpg files) into a folder and add "keywords.txt" text-file into a same directory/folder. The keywords file must be ASCII text file containing one keyword per each line.
+    <p>
+      2. Start Neuromancer and select wanted Device that will be used to do measurements using "Device"-menu.
+    <p>
+      3. Select "Input & Model" and use "Select" to set Picture folder where and choose the folder/picture where pictures and keywords.txt file is stored to.
+    <p>
+      4. You can now "Test input" to test that pictures and keywords are properly shown and then "Measure database" to collect measurements from the selected device.
+    <p>
+      5. When you have finished collecting measurements, click on the screen and press key to stop showing further stimulation.
+    <p>
+      6. Go to "Messages" tab and select "Measurement statistics" from "Statistics" menu.
+    <p>
+      7. Messages tab show now delta analysis of the pictures and keywords.
+    </p>
+
+    <p>
+      You can now analyze the results by looking at the delta values of different pictures and keywords. Pictures and keywords that have the larest impact on the watcher has the largest values. Essentially, delta values larger than mean+stdev mean that a stimuli causes statistically significant changes to the watcher.
+    </p>
+
+    
+    <h3>Visual stimulation</h3>
+
+    <p>
+      Another way to use Neuromancer is to create visual stimulation that tries to push brain as well as possible towards a target state. User watches stimulation wearing measurement device and the software optimizes stimulation sequence to push brain as well as possible towards the user selected target.
+    </p>
+
+    <p>
+      Do the same steps as given in "Basic neuromarketing" instructions. Then
+    <p>
+      1. Select "Optimize model" to calculate mathematical prediction models that predict output given currently measured state and the stimulation.
+    <p>
+      2. Go to "Targets / Program" and create/set target measurement values for the stimulation. For simplicity, this can be
+      initially a constant during the stimulation period.
+    <p>
+      3. Select "File" and save the stimulation program to disk.
+    <p>
+      4. Finally, go to "Input & Model" tab and select "Optimize model". This optimization process will take a while and is faster when there is multiple modern CPUs available.
+    <p>
+      5. After calculations. Select "Targets / Program" again and click on "Execute Program" to create video stimulation that aims to push brain towards target target values as well as possible. Additionally, it is also possible to "Measure program" to collect target values during audio stimulus which can be set using "Play media" / "Select" button.
+    </p>
+    
+  </body>
+</html>

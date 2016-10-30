@@ -548,7 +548,7 @@ public class NeuromancerWindow {
 				mbox.setText("About..");
 				
 				String msg = model.getSoftwareName() + " " + model.getVersion() + " (64bit)\n";
-				msg += "© Copyright Tomas Ukkonen 2002-2006, 2014-2015 <tomas.ukkonen@iki.fi>\n";
+				msg += "(C) Copyright Tomas Ukkonen 2016 <tomas.ukkonen@iki.fi>\n";
 				msg += "\n";
 				msg += "Library licenses can be found from the application root directory.\n";
 				msg += "You can obtain source code of the libraries from their respective websites.\n";
@@ -1444,7 +1444,7 @@ public class NeuromancerWindow {
 				mbox.setText("About..");
 				
 				String msg = model.getSoftwareName() + " " + model.getVersion() + " (64bit)\n";
-				msg += "© Copyright Tomas Ukkonen 2002-2006, 2014-2015 <tomas.ukkonen@iki.fi>\n";
+				msg += "ï¿½ Copyright Tomas Ukkonen 2002-2006, 2014-2015 <tomas.ukkonen@iki.fi>\n";
 				msg += "\n";
 				msg += "Library licenses can be found from the application root directory.\n";
 				msg += "You can obtain source code of the libraries from their respective websites.\n";
