@@ -13,7 +13,7 @@ import java.util.Arrays;
 public class NeuromancerModel
 {
 	protected final String SOFTWARE_NAME = "Neuromancer Neurostim";
-	protected final String VERSION = "0.4a";
+	protected final String VERSION = "0.5a";
 	
 	protected final String donateURL = "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=EE2PR6AJPT9AN";
 	

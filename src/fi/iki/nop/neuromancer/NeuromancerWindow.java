@@ -285,12 +285,15 @@ public class NeuromancerWindow {
 		mntmRandomRng.setText("Random RNG");
 		
 		mntmEmotivInsight = new MenuItem(menu_2, SWT.RADIO);
+		mntmEmotivInsight.setEnabled(false);
 		mntmEmotivInsight.setText("Emotiv Insight");
 		
 		mntmMuseOsc = new MenuItem(menu_2, SWT.RADIO);
+		mntmMuseOsc.setToolTipText("osc.udp://localhost:4545");
 		mntmMuseOsc.setText("Muse OSC");
 		
 		mntmWilddivineLightstone = new MenuItem(menu_2, SWT.RADIO);
+		mntmWilddivineLightstone.setEnabled(false);
 		mntmWilddivineLightstone.setText("WildDivine IOM/Lightstone");
 
 		//////////////////////////////////////////////////////////////////////////////////
@@ -400,9 +403,11 @@ public class NeuromancerWindow {
 		new MenuItem(menu_2, SWT.SEPARATOR);
 		
 		MenuItem mntmStartstopInsight = new MenuItem(menu_2, SWT.CHECK);
+		mntmStartstopInsight.setEnabled(false);
 		mntmStartstopInsight.setText("Start Insight Client");
 		
 		MenuItem mntmStartstopMuseio = new MenuItem(menu_2, SWT.CHECK);
+		mntmStartstopMuseio.setEnabled(false);
 		mntmStartstopMuseio.setText("Start Muse-IO");
 		
 		MenuItem mntmCommands = new MenuItem(menu, SWT.CASCADE);
@@ -550,7 +555,6 @@ public class NeuromancerWindow {
 				String msg = model.getSoftwareName() + " " + model.getVersion() + " (64bit)\n";
 				msg += "(C) Copyright Tomas Ukkonen 2016 <tomas.ukkonen@iki.fi>\n";
 				msg += "\n";
-				msg += "Library licenses can be found from the application root directory.\n";
 				msg += "You can obtain source code of the libraries from their respective websites.\n";
 				
 				mbox.setMessage(msg);
@@ -1272,9 +1276,11 @@ public class NeuromancerWindow {
 		mntmAdvanced.setMenu(menu_6);
 		
 		MenuItem mntmUseJointModels = new MenuItem(menu_6, SWT.CHECK);
+		mntmUseJointModels.setEnabled(false);
 		mntmUseJointModels.setText("Joint State Model");
 		
 		MenuItem mntmEnglishNgramModel = new MenuItem(menu_6, SWT.CHECK);
+		mntmEnglishNgramModel.setEnabled(false);
 		mntmEnglishNgramModel.setText("English N-Gram Model");
 		
 		MenuItem mntmStackedRbmInitialization = new MenuItem(menu_6, SWT.CHECK);
@@ -1284,6 +1290,7 @@ public class NeuromancerWindow {
 		MenuItem menuItem = new MenuItem(menu_6, SWT.SEPARATOR);
 		
 		final MenuItem mntmDirectRbf = new MenuItem(menu_6, SWT.RADIO);
+		mntmDirectRbf.setEnabled(false);
 		mntmDirectRbf.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -1304,6 +1311,7 @@ public class NeuromancerWindow {
 			
 		
 		final MenuItem mntmLbfgsNn = new MenuItem(menu_6, SWT.RADIO);
+		mntmLbfgsNn.setSelection(true);
 		mntmLbfgsNn.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -1323,6 +1331,7 @@ public class NeuromancerWindow {
 		}
 		
 		final MenuItem mntmBayesianNeuralNetwork = new MenuItem(menu_6, SWT.RADIO);
+		mntmBayesianNeuralNetwork.setEnabled(false);
 		mntmBayesianNeuralNetwork.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -1347,6 +1356,7 @@ public class NeuromancerWindow {
 		new MenuItem(menu_6, SWT.SEPARATOR);
 		
 		MenuItem mntmParallelTempering = new MenuItem(menu_6, SWT.CHECK);
+		mntmParallelTempering.setEnabled(false);
 		mntmParallelTempering.setText("Parallel Tempering");
 		
 		MenuItem mntmHmmOptimization = new MenuItem(menu_6, SWT.CHECK);
@@ -1354,6 +1364,7 @@ public class NeuromancerWindow {
 		mntmHmmOptimization.setText("HMM multisteps");
 		
 		final MenuItem mntmBlindMonteCarlo = new MenuItem(menu_6, SWT.CHECK);
+		mntmBlindMonteCarlo.setEnabled(false);
 		mntmBlindMonteCarlo.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -1384,9 +1395,11 @@ public class NeuromancerWindow {
 		mntmPcaInputData.setText("PCA preprocess");
 		
 		MenuItem mntmBrainHmmModel = new MenuItem(menu_6, SWT.RADIO);
+		mntmBrainHmmModel.setEnabled(false);
 		mntmBrainHmmModel.setText("Input HMM Model");
 		
 		MenuItem mntmBrainSourceLocalization = new MenuItem(menu_6, SWT.RADIO);
+		mntmBrainSourceLocalization.setEnabled(false);
 		mntmBrainSourceLocalization.setText("Brain Source Localization");
 		
 		new MenuItem(menu_6, SWT.SEPARATOR);
@@ -1395,12 +1408,15 @@ public class NeuromancerWindow {
 		mntmDebugMessages.setText("Debug Messages");
 		
 		MenuItem mntmFmSoundSynthesizer = new MenuItem(menu_6, SWT.CHECK);
+		mntmFmSoundSynthesizer.setEnabled(false);
 		mntmFmSoundSynthesizer.setText("FM Sound Synthesizer");
 		
 		MenuItem mntmMusicSyncbpm = new MenuItem(menu_6, SWT.CHECK);
+		mntmMusicSyncbpm.setEnabled(false);
 		mntmMusicSyncbpm.setText("Music Sync (bpm)");
 		
 		MenuItem mntmSaveDataIn = new MenuItem(menu_6, SWT.NONE);
+		mntmSaveDataIn.setEnabled(false);
 		mntmSaveDataIn.setText("Save Data in CSV format");
 	}
 	
