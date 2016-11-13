@@ -55,7 +55,7 @@ public class NeuromancerModel
 		modelDirectory = "";
 		programAudioFile = "";
 		
-		eegSourceDevice = -1;
+		eegSourceDevice = ResonanzEngine.RE_EEG_NO_DEVICE; // -1
 		
 		autofill = true;
 		blindMode = false;
@@ -63,7 +63,7 @@ public class NeuromancerModel
 		pcaPreprocess = false;
 		fullscreen = true;
 		
-		optimizationMethod = OPTIMIZATION_METHOD_RBF;
+		optimizationMethod = OPTIMIZATION_METHOD_NN; // RBF gives better results?
 	}
 	
 	

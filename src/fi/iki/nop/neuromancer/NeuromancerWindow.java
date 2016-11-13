@@ -281,8 +281,11 @@ public class NeuromancerWindow {
 		mntmNoDevice.setSelection(true);
 		mntmNoDevice.setText("No device");
 		
+		eeg = new NoEEGDeviceSignalSourceStub();
+		
 		mntmRandomRng = new MenuItem(menu_2, SWT.RADIO);
 		mntmRandomRng.setText("Random RNG");
+		
 		
 		mntmEmotivInsight = new MenuItem(menu_2, SWT.RADIO);
 		mntmEmotivInsight.setEnabled(false);
@@ -1263,14 +1266,16 @@ public class NeuromancerWindow {
 			}
 		});
 		
+		
+		
 	}
 	
 	
 	public void createAdvancedMenu()
 	{
 		mntmAdvanced = new MenuItem(menu, SWT.CASCADE);
+		mntmAdvanced.setEnabled(false);
 		mntmAdvanced.setText("Advanced");
-		mntmAdvanced.setEnabled(true);
 		
 		Menu menu_6 = new Menu(mntmAdvanced);
 		mntmAdvanced.setMenu(menu_6);
@@ -1290,7 +1295,6 @@ public class NeuromancerWindow {
 		MenuItem menuItem = new MenuItem(menu_6, SWT.SEPARATOR);
 		
 		final MenuItem mntmDirectRbf = new MenuItem(menu_6, SWT.RADIO);
-		mntmDirectRbf.setEnabled(false);
 		mntmDirectRbf.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -1311,7 +1315,6 @@ public class NeuromancerWindow {
 			
 		
 		final MenuItem mntmLbfgsNn = new MenuItem(menu_6, SWT.RADIO);
-		mntmLbfgsNn.setSelection(true);
 		mntmLbfgsNn.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
