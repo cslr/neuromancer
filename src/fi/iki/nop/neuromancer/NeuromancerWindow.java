@@ -536,6 +536,7 @@ public class NeuromancerWindow {
 		
 		new MenuItem(menu_3, SWT.SEPARATOR);
 		
+		/*
 		MenuItem mntmDonateMoney = new MenuItem(menu_3, SWT.NONE);
 		mntmDonateMoney.setText("Donate Money");
 		mntmDonateMoney.addSelectionListener(new SelectionAdapter() {
@@ -546,7 +547,7 @@ public class NeuromancerWindow {
 					org.eclipse.swt.program.Program.launch(url);
 			}
 		});
-
+		*/
 		
 		MenuItem mntmAbout = new MenuItem(menu_3, SWT.NONE);
 		mntmAbout.addSelectionListener(new SelectionAdapter() {
@@ -556,9 +557,12 @@ public class NeuromancerWindow {
 				mbox.setText("About..");
 				
 				String msg = model.getSoftwareName() + " " + model.getVersion() + " (64bit)\n";
-				msg += "(C) Copyright Tomas Ukkonen 2016 <tomas.ukkonen@iki.fi>\n";
+				msg += "(C) Copyright Tomas Ukkonen 2021 <tomas.ukkonen@iki.fi>\n";
 				msg += "\n";
 				msg += "You can obtain source code of the libraries from their respective websites.\n";
+				msg += "\n";
+				msg += "This software is motivated by antipsychiatry. Psychiatrists rely on meds and their side-effects ";
+				msg += "and don't want to genuinely try to improve individuals.\n";
 				
 				mbox.setMessage(msg);
 				mbox.open();
