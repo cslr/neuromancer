@@ -288,8 +288,9 @@ public class NeuromancerWindow {
 		
 		
 		mntmEmotivInsight = new MenuItem(menu_2, SWT.RADIO);
-		mntmEmotivInsight.setEnabled(false);
-		mntmEmotivInsight.setText("Emotiv Insight");
+		//mntmEmotivInsight.setEnabled(false);
+		mntmEmotivInsight.setText("Emotiv Insight [experimental]");
+		mntmEmotivInsight.setToolTipText("Code is not tested with a real device!");
 		
 		mntmMuseOsc = new MenuItem(menu_2, SWT.RADIO);
 		mntmMuseOsc.setToolTipText("osc.udp://localhost:4545");
@@ -514,7 +515,7 @@ public class NeuromancerWindow {
 		
 		/////////////////////////////////////////////////////////////////////////////////////
 		
-		createAdvancedMenu();
+		// createAdvancedMenu();
 		
 		/////////////////////////////////////////////////////////////////////////////////////
 		
@@ -1278,7 +1279,7 @@ public class NeuromancerWindow {
 	public void createAdvancedMenu()
 	{
 		mntmAdvanced = new MenuItem(menu, SWT.CASCADE);
-		mntmAdvanced.setEnabled(false);
+		mntmAdvanced.setEnabled(true);
 		mntmAdvanced.setText("Advanced");
 		
 		Menu menu_6 = new Menu(mntmAdvanced);
@@ -1448,7 +1449,7 @@ public class NeuromancerWindow {
 		
 		new MenuItem(menu_3, SWT.SEPARATOR);
 		
-		MenuItem mntmDonateMoney = new MenuItem(menu_3, SWT.NONE);
+		/*MenuItem mntmDonateMoney = new MenuItem(menu_3, SWT.NONE);
 		mntmDonateMoney.setText("Donate Money");
 		mntmDonateMoney.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -1458,6 +1459,7 @@ public class NeuromancerWindow {
 					org.eclipse.swt.program.Program.launch(url);
 			}
 		});
+		*/
 		
 		MenuItem mntmAbout = new MenuItem(menu_3, SWT.NONE);
 		mntmAbout.addSelectionListener(new SelectionAdapter() {
@@ -1519,8 +1521,8 @@ public class NeuromancerWindow {
 	}
 	
 	
-	void updateMenuDeviceSelection(){
-		
+	void updateMenuDeviceSelection()
+	{
 		mntmNoDevice.setSelection(false);
 		mntmRandomRng.setSelection(false);
 		mntmEmotivInsight.setSelection(false);
@@ -1537,7 +1539,7 @@ public class NeuromancerWindow {
 			mntmEmotivInsight.setSelection(true);
 		}
 		else if(model.getEEGSourceDevice() == ResonanzEngine.RE_EEG_IA_MUSE_DEVICE){
-			mntmEmotivInsight.setSelection(true);
+			mntmMuseOsc.setSelection(true);
 		}
 		else if(model.getEEGSourceDevice() == ResonanzEngine.RE_WD_LIGHTSTONE){
 			mntmWilddivineLightstone.setSelection(true);
