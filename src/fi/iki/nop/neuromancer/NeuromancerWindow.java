@@ -92,6 +92,10 @@ public class NeuromancerWindow {
 			engine = new ResonanzEngine();
 			model  = new NeuromancerModel();
 			window = new NeuromancerWindow();
+			
+			engine.setParameter("use-bayesian-nnetwork", "false");
+			engine.setParameter("debug-messages", "true");
+			
 			window.open();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -500,8 +504,28 @@ public class NeuromancerWindow {
 		else
 			engine.setParameter("fullscreen", "false");
 		
-		MenuItem mntmRandomPrograms = new MenuItem(menu_4, SWT.CHECK);
+		final MenuItem mntmRandomPrograms = new MenuItem(menu_4, SWT.CHECK);
 		mntmRandomPrograms.setText("Random Stim");
+		mntmRandomPrograms.setSelection(model.getRandomPrograms());
+		mntmRandomPrograms.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				model.setRandomPrograms(mntmRandomPrograms.getSelection());
+				if(model.getRandomPrograms()) {
+					engine.setParameter("random-programs", "true");
+				}
+				else {
+					engine.setParameter("random-programs", "false");
+				}
+			}
+		});
+		if(model.getRandomPrograms()) {
+			engine.setParameter("random-programs", "true");
+		}
+		else {
+			engine.setParameter("random-programs", "false");
+		}
+
 		
 		final MenuItem mntmSaveVideo = new MenuItem(menu_4, SWT.CHECK);
 		mntmSaveVideo.addSelectionListener(new SelectionAdapter() {
@@ -1412,8 +1436,20 @@ public class NeuromancerWindow {
 		
 		new MenuItem(menu_6, SWT.SEPARATOR);
 		
-		MenuItem mntmDebugMessages = new MenuItem(menu_6, SWT.CHECK);
+		final MenuItem mntmDebugMessages = new MenuItem(menu_6, SWT.CHECK);
 		mntmDebugMessages.setText("Debug Messages");
+		mntmDebugMessages.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				model.setDebugMessages(mntmDebugMessages.getSelection());
+				
+				if(mntmDebugMessages.getSelection())
+					engine.setParameter("debug-messages", "true");
+				else
+					engine.setParameter("debug-messages", "false");
+			}
+		});
+		
 		
 		MenuItem mntmFmSoundSynthesizer = new MenuItem(menu_6, SWT.CHECK);
 		mntmFmSoundSynthesizer.setEnabled(false);

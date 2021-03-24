@@ -31,7 +31,10 @@ public class NeuromancerModel
 	protected boolean autofill; // does program autofill values when picture folder is selected
 	protected boolean saveVideo; // should executed program try to save video [buggy]
 	protected boolean pcaPreprocess;
-	protected boolean fullscreen;	
+	protected boolean fullscreen;
+	
+	protected boolean debugMessages;
+	protected boolean randomPrograms;
 	
 	public final int OPTIMIZATION_METHOD_RBF = 1;
 	public final int OPTIMIZATION_METHOD_NN  = 2;
@@ -62,6 +65,9 @@ public class NeuromancerModel
 		saveVideo = false;
 		pcaPreprocess = false;
 		fullscreen = true;
+		
+		debugMessages = false;
+		randomPrograms = false;
 		
 		optimizationMethod = OPTIMIZATION_METHOD_NN; // RBF gives better results?
 	}
@@ -108,10 +114,15 @@ public class NeuromancerModel
 	
 	public void setFullscreen(boolean value){ fullscreen = value; }
 	public boolean getFullscreen(){ return fullscreen; }
+
+	public void setDebugMessages(boolean value){ debugMessages = value; }
+	public boolean getDebugMessages() { return debugMessages; }
+	
+	public void setRandomPrograms(boolean value) { randomPrograms = value; }
+	public boolean getRandomPrograms() { return randomPrograms; }
 	
 	public void setOptimizationMethod(int method){ this.optimizationMethod = method; }
 	public int getOptimizationMethod(){ return optimizationMethod; }
-	
 	
 	public String getDonateURL(){ return donateURL; }
 	
