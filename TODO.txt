@@ -14,7 +14,7 @@ STIMULATION:
 - licensing mess: REMOVE media files that require 
   ShareAlike (same license as the original) instead of just Attribution
 
-  [This means that you can distribute the resulting movie commercially]
+  [This means that you can distribute the resulting video commercially]
 
 - study available sound instrument software codes for Linux (and Windows),
   VST host/instruments afaik do not support easy setting/fetching of patch
