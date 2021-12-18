@@ -23,7 +23,7 @@ STIMULATION:
 
 - study psycle and use (or implement) some better sound synthesizers,
   more advanced post processing (filter cutoff [low/highpass filtering 
-  using fftw])
+  using FFT])
 
 - look at LADSPA plugins, VST plugins are not very good because 
   you cannot easily manipulate and fetch synthesizer plugin parameters 
